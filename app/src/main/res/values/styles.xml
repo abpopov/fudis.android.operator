@@ -1,80 +1,129 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
+
     <style name="EditStyle">
-        <item name="android:textSize" tools:ignore="SpUsage">24dp</item>
+        <item name="android:textSize" tools:ignore="SpUsage">@dimen/dp24</item>
         <item name="android:fontFamily">@font/euclid_circular_400</item>
         <item name="android:textColor">@color/black</item>
         <item name="android:singleLine">true</item>
         <item name="android:textColorHint">@color/black_20</item>
         <item name="android:background">@null</item>
-        <item name="android:paddingTop">15dp</item>
-        <item name="android:paddingBottom">15dp</item>
-        <item name="android:paddingStart">32dp</item>
-        <item name="android:paddingEnd">32dp</item>
+        <item name="android:paddingTop">@dimen/dp15</item>
+        <item name="android:paddingBottom">@dimen/dp15</item>
+        <item name="android:paddingStart">@dimen/dp32</item>
+        <item name="android:paddingEnd">@dimen/dp32</item>
     </style>
+
     <style name="TextStyle">
         <item name="android:fontFamily">@font/euclid_circular_400</item>
     </style>
+
     <style name="TextStyle.White">
         <item name="android:textColor">@color/white</item>
     </style>
+
     <style name="TextStyle.White.24">
-        <item name="android:textSize" tools:ignore="SpUsage">24dp</item>
+        <item name="android:textSize" tools:ignore="SpUsage">@dimen/dp24</item>
     </style>
+
     <style name="TextStyle.Grey">
         <item name="android:textColor">@color/black_40</item>
     </style>
+
     <style name="TextStyle.Grey.20">
-        <item name="android:textSize" tools:ignore="SpUsage">20dp</item>
+        <item name="android:textSize" tools:ignore="SpUsage">@dimen/dp20</item>
     </style>
+
     <style name="TextStyle.Grey.20.Italic">
         <item name="android:textStyle">italic</item>
     </style>
+
     <style name="TextStyle.Grey.24">
-        <item name="android:textSize" tools:ignore="SpUsage">24dp</item>
+        <item name="android:textSize" tools:ignore="SpUsage">@dimen/dp24</item>
     </style>
+
     <style name="TextStyle.Grey.40">
-        <item name="android:textSize" tools:ignore="SpUsage">40dp</item>
+        <item name="android:textSize" tools:ignore="SpUsage">@dimen/dp40</item>
     </style>
+
     <style name="TextStyle.Black">
         <item name="android:textColor">@color/black</item>
     </style>
+
     <style name="TextStyle.Black.20">
-        <item name="android:textSize" tools:ignore="SpUsage">20dp</item>
+        <item name="android:textSize" tools:ignore="SpUsage">@dimen/dp20</item>
     </style>
+
     <style name="TextStyle.Black.24">
-        <item name="android:textSize" tools:ignore="SpUsage">24dp</item>
+        <item name="android:textSize" tools:ignore="SpUsage">@dimen/dp24</item>
     </style>
+
     <style name="TextStyle.Black.32">
-        <item name="android:textSize" tools:ignore="SpUsage">32dp</item>
+        <item name="android:textSize" tools:ignore="SpUsage">@dimen/dp32</item>
     </style>
+
     <style name="TextStyle.Black.40">
-        <item name="android:textSize" tools:ignore="SpUsage">40dp</item>
+        <item name="android:textSize" tools:ignore="SpUsage">@dimen/dp40</item>
     </style>
+
     <style name="ButtonStyleGreen">
-        <item name="android:textSize" tools:ignore="SpUsage">24dp</item>
+        <item name="android:textSize" tools:ignore="SpUsage">@dimen/dp24</item>
         <item name="android:fontFamily">@font/euclid_circular_400</item>
         <item name="android:gravity">center</item>
-        <item name="android:paddingStart">24dp</item>
-        <item name="android:paddingEnd">24dp</item>
+        <item name="android:paddingStart">@dimen/dp24</item>
+        <item name="android:paddingEnd">@dimen/dp24</item>
         <item name="android:background">@drawable/sl_green_button</item>
         <item name="android:textColor">@color/sl_green_button</item>
-        <item name="android:layout_height">64dp</item>
+        <item name="android:layout_height">@dimen/dp64</item>
         <item name="android:layout_width">match_parent</item>
     </style>
+
     <style name="ButtonStyleBlack">
-        <item name="android:textSize" tools:ignore="SpUsage">18dp</item>
+        <item name="android:textSize" tools:ignore="SpUsage">@dimen/dp18</item>
         <item name="android:fontFamily">@font/euclid_circular_400</item>
         <item name="android:gravity">center</item>
-        <item name="android:paddingStart">12dp</item>
-        <item name="android:paddingEnd">12dp</item>
+        <item name="android:paddingStart">@dimen/dp12</item>
+        <item name="android:paddingEnd">@dimen/dp12</item>
         <item name="android:background">@drawable/ic_bg_rounded_bl_8_ripple</item>
         <item name="android:textColor">@color/white</item>
-        <item name="android:layout_height">36dp</item>
+        <item name="android:layout_height">@dimen/dp36</item>
         <item name="android:layout_width">match_parent</item>
     </style>
-    <style name="ButtonStyleBlack.Small">
-        <item name="android:layout_height">40dp</item>
+
+    <style name="ButtonStyleBlackBig">
+        <item name="android:textSize" tools:ignore="SpUsage">@dimen/dp24</item>
+        <item name="android:fontFamily">@font/euclid_circular_400</item>
+        <item name="android:gravity">center</item>
+        <item name="android:paddingStart">@dimen/dp24</item>
+        <item name="android:paddingEnd">@dimen/dp24</item>
+        <item name="android:background">@drawable/ic_bg_rounded_bl_12_ripple</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:layout_height">@dimen/dp64</item>
         <item name="android:layout_width">match_parent</item>
+    </style>
+
+    <style name="ButtonStyleText">
+        <item name="android:textSize" tools:ignore="SpUsage">@dimen/dp24</item>
+        <item name="android:fontFamily">@font/euclid_circular_400</item>
+        <item name="android:background">@drawable/ic_bg_rounded_tr_8_ripple</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:drawablePadding">@dimen/dp16</item>
+        <item name="android:drawableStart">@drawable/ic_arrow_back</item>
+        <item name="android:paddingStart">@dimen/dp8</item>
+        <item name="android:paddingEnd">@dimen/dp8</item>
+    </style>
+
+    <style name="ButtonStyleMenu">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:ellipsize">marquee</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:textSize" tools:ignore="SpUsage">@dimen/dp40</item>
+        <item name="android:fontFamily">@font/euclid_circular_400</item>
+        <item name="android:background">@drawable/ic_bg_rounded_tr_8_ripple</item>
+        <item name="android:textColor">@color/sl_menu_button</item>
+        <item name="android:drawablePadding">@dimen/dp20</item>
+        <item name="android:paddingEnd">@dimen/dp10</item>
     </style>
 </resources>

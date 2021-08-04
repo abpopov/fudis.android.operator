@@ -17,7 +17,7 @@ class ApiImpl(
 ) : Api {
 
     companion object {
-        private const val BASE_URL = "https://google.com/"
+        private const val BASE_URL = "https://project95.account.thapl.com/"
     }
 
     private var service: ApiService
@@ -48,5 +48,7 @@ class ApiImpl(
 
         service = retrofit.create(ApiService::class.java)
     }
+
+    override suspend fun auth(username: String?, password: String?) = service.auth(username, password)
 
 }

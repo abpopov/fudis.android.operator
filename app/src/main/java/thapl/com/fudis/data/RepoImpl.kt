@@ -21,4 +21,8 @@ class RepoImpl(
     override fun setUserToken(value: String?) {
         prefs.setUserToken(value)
     }
+
+    // api
+
+    override suspend fun auth(username: String?, password: String?) = api.auth(username, password)
 }

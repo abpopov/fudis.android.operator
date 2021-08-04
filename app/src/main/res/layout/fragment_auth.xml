@@ -1,6 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.motion.widget.MotionLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/vRoot"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    app:layoutDescription="@xml/fragment_auth_scene">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ivLogo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/etLogin"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed"
+        app:srcCompat="@drawable/ic_fudis_logo_v" />
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/etLogin"
+        style="@style/EditStyle"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/dp64"
+        android:layout_marginTop="@dimen/dp72"
+        android:background="@drawable/ic_bg_rounded_wh_12"
+        android:elevation="2dp"
+        android:hint="@string/auth_login_hint"
+        android:nextFocusDown="@+id/etPwd"
+        app:layout_constraintBottom_toTopOf="@+id/etPwd"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ivLogo"
+        app:layout_constraintWidth_percent="0.33" />
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/etPwd"
+        style="@style/EditStyle"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/dp64"
+        android:layout_marginTop="@dimen/dp36"
+        android:background="@drawable/ic_bg_rounded_wh_12"
+        android:elevation="2dp"
+        android:hint="@string/auth_pwd_hint"
+        android:nextFocusDown="@+id/tvNext"
+        app:layout_constraintBottom_toTopOf="@+id/tvNext"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etLogin"
+        app:layout_constraintWidth_percent="0.33" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvNext"
+        style="@style/ButtonStyleGreen"
+        android:layout_width="0dp"
+        android:layout_marginTop="@dimen/dp36"
+        android:elevation="2dp"
+        android:text="@string/auth_next"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etPwd"
+        app:layout_constraintWidth_percent="0.33" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvError"
+        style="@style/TextStyle.White.24"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/dp80"
+        android:elevation="2dp"
+        android:background="@color/red"
+        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:text="@tools:sample/lorem" />
+
+</androidx.constraintlayout.motion.widget.MotionLayout>

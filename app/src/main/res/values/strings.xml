@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">Fudis</string>
+
+    <string name="auth_login_hint">Логин</string>
+    <string name="auth_pwd_hint">Пароль</string>
+    <string name="auth_next">Войти в систему</string>
+    <string name="auth_error">Возможно, вы ошиблись при вводе логина или пароля. Попробуйте еще раз.</string>
+
+    <string name="menu_orders">Заказы</string>
+    <string name="menu_pause">Пауза</string>
+    <string name="menu_stops">Стоп-лист</string>
+    <string name="menu_help">Нужна помощь</string>
+
 </resources>

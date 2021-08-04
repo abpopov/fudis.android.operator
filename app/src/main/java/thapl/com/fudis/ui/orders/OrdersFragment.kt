@@ -42,10 +42,30 @@ class OrdersFragment : BaseFragment() {
     }
 
     private fun initListeners() {
-
+        binding?.tvOrders?.setOnClickListener {
+            viewModel.selectMenu(0)
+        }
+        binding?.tvPause?.setOnClickListener {
+            viewModel.selectMenu(1)
+        }
+        binding?.tvStops?.setOnClickListener {
+            navigate(OrdersFragmentDirections.actionStops())
+        }
+        binding?.tvHelp?.setOnClickListener {
+            viewModel.selectMenu(3)
+        }
     }
 
     private fun initObservers() {
-
+        viewModel.menuPos.observe(viewLifecycleOwner, { pos ->
+            binding?.tvOrders?.isChecked = pos == 0
+            binding?.tvPause?.isChecked = pos == 1
+            binding?.tvStops?.isChecked = pos == 2
+            binding?.tvHelp?.isChecked = pos == 3
+            binding?.tvOrders?.isEnabled = pos != 0
+            binding?.tvPause?.isEnabled = pos != 1
+            binding?.tvStops?.isEnabled = pos != 2
+            binding?.tvHelp?.isEnabled = pos != 3
+        })
     }
 }

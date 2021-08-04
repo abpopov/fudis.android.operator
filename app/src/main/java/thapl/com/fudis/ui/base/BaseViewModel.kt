@@ -10,6 +10,7 @@ import thapl.com.fudis.data.api.model.ErrorApi
 import thapl.com.fudis.domain.mapper.ErrorApiToEntityMapper
 import thapl.com.fudis.domain.model.ErrorEntity
 import thapl.com.fudis.domain.model.ResultEntity
+import thapl.com.fudis.utils.FudisException
 import java.io.IOException
 import java.net.UnknownHostException
 
@@ -42,19 +43,21 @@ abstract class BaseViewModel : ViewModel() {
         return try {
             val r: T = withContext(Dispatchers.IO) { block() }
             ResultEntity.Success(r)
+        } catch (ex: FudisException) {
+            ResultEntity.Error(ex.error, 999)
         } catch (ex: IOException) {
-            ResultEntity.Error(ErrorEntity(0, "io", "IOException", ex.message ?: ""), 999)
+            ResultEntity.Error(ErrorEntity(0, "io", "IOException", ex.message ?: ""), 998)
         } catch (ex: UnknownHostException) {
-            ResultEntity.Error(ErrorEntity(0, "host", "UnknownHostException", ex.message ?: ""), 998)
+            ResultEntity.Error(ErrorEntity(0, "host", "UnknownHostException", ex.message ?: ""), 997)
         } catch (ex: HttpException) {
             val error = try {
                 val json = JSONObject(ex.response()?.errorBody()?.string() ?: "")
                 val e = json.getJSONObject("error")
                 ErrorApi(
-                    code = e.optInt("code"),
+                    code = e.optInt("error_code"),
                     textCode = e.optString("textCode"),
                     type = e.optString("type"),
-                    message = e.optString("message")
+                    message = e.optString("error_msg")
                 )
             } catch (e: Exception) {
                 ErrorApi()
