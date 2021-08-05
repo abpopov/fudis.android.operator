@@ -5,6 +5,48 @@
     android:id="@+id/navigation"
     app:startDestination="@id/splashFragment">
 
+    <action
+        android:id="@+id/action_help"
+        app:destination="@id/helpFragment"
+        app:launchSingleTop="true" />
+
+    <action
+        android:id="@+id/action_pause"
+        app:destination="@id/pauseFragment"
+        app:launchSingleTop="true" />
+
+    <dialog
+        android:id="@+id/helpFragment"
+        android:name="thapl.com.fudis.ui.dialogs.HelpFragment"
+        android:label="helpFragment"
+        tools:layout="@layout/fragment_help">
+        <argument
+            android:name="source"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_close"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim"
+            app:popUpTo="@+id/helpFragment"
+            app:popUpToInclusive="true" />
+    </dialog>
+
+    <dialog
+        android:id="@+id/pauseFragment"
+        android:name="thapl.com.fudis.ui.dialogs.PauseFragment"
+        android:label="pauseFragment"
+        tools:layout="@layout/fragment_pause">
+        <argument
+            android:name="source"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_close"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim"
+            app:popUpTo="@+id/pauseFragment"
+            app:popUpToInclusive="true" />
+    </dialog>
+
     <fragment
         android:id="@+id/splashFragment"
         android:name="thapl.com.fudis.ui.splash.SplashFragment"
@@ -45,14 +87,6 @@
             app:launchSingleTop="true"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim" />
-    </fragment>
-
-    <fragment
-        android:id="@+id/stopsFragment"
-        android:name="thapl.com.fudis.ui.stops.StopsFragment"
-        android:label="stopsFragment"
-        tools:layout="@layout/fragment_stops">
-
     </fragment>
 
     <fragment

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dp80">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/item_name"
+        style="@style/TextStyle.Black.24"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/item_switch"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Помидоры" />
+
+    <androidx.appcompat.widget.SwitchCompat
+        android:id="@+id/item_switch"
+        android:layout_width="wrap_content"
+        android:theme="@style/SwitchStop"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/item_disable"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="@+id/item_switch"
+        app:layout_constraintEnd_toEndOf="@+id/item_switch"
+        app:layout_constraintStart_toStartOf="@+id/item_switch"
+        app:layout_constraintTop_toTopOf="@+id/item_switch" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

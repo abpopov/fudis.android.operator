@@ -16,6 +16,7 @@
     <dimen name="dp18">9dp</dimen>
     <dimen name="dp16">8dp</dimen>
     <dimen name="dp15">7.5dp</dimen>
+    <dimen name="dp14">7dp</dimen>
     <dimen name="dp12">6dp</dimen>
     <dimen name="dp10">5dp</dimen>
     <dimen name="dp8">4dp</dimen>

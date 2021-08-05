@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/grey_bg_80"
     android:fitsSystemWindows="true">
 
     <thapl.com.fudis.ui.components.CheckableTextView
@@ -13,6 +14,7 @@
         android:layout_marginEnd="@dimen/dp10"
         android:drawableStart="@drawable/sl_orders"
         android:text="@string/menu_orders"
+        android:visibility="invisible"
         app:layout_constraintEnd_toStartOf="@+id/tvPause"
         app:layout_constraintHorizontal_chainStyle="spread_inside"
         app:layout_constraintStart_toStartOf="parent"
@@ -25,6 +27,7 @@
         android:layout_marginEnd="@dimen/dp10"
         android:drawableStart="@drawable/sl_pause"
         android:text="@string/menu_pause"
+        android:visibility="invisible"
         app:layout_constraintEnd_toStartOf="@+id/tvStops"
         app:layout_constraintStart_toEndOf="@+id/tvOrders"
         app:layout_constraintTop_toTopOf="parent" />
@@ -36,6 +39,7 @@
         android:layout_marginEnd="@dimen/dp10"
         android:drawableStart="@drawable/sl_stops"
         android:text="@string/menu_stops"
+        android:visibility="invisible"
         app:layout_constraintEnd_toStartOf="@+id/tvHelp"
         app:layout_constraintStart_toEndOf="@+id/tvPause"
         app:layout_constraintTop_toTopOf="parent" />
@@ -47,20 +51,58 @@
         android:layout_marginEnd="@dimen/dp50"
         android:drawableStart="@drawable/sl_help"
         android:text="@string/menu_help"
+        android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/tvStops"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/orders_fragment"
-        android:name="androidx.navigation.fragment.NavHostFragment"
+    <LinearLayout
+        android:id="@+id/vContentWrapper"
         android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_margin="@dimen/dp60"
+        android:layout_height="wrap_content"
+        android:background="@drawable/ic_bg_rounded_wh_32"
+        android:elevation="2dp"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvHelp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:navGraph="@navigation/orders" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintWidth_percent="0.45">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvContent"
+            style="@style/TextStyle.Black.24"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp48"
+            android:layout_marginTop="@dimen/dp48"
+            android:layout_marginEnd="@dimen/dp48"
+            android:text="@string/help_text" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvPhone"
+            style="@style/TextStyle.Black.40"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp48"
+            android:layout_marginTop="@dimen/dp36"
+            android:layout_marginEnd="@dimen/dp48"
+            android:layout_marginBottom="@dimen/dp48"
+            android:background="@drawable/ic_bg_rounded_tr_8_ripple"
+            android:text="@string/help_phone" />
+
+    </LinearLayout>
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ivClose"
+        android:layout_width="@dimen/dp64"
+        android:layout_height="@dimen/dp64"
+        android:layout_marginStart="@dimen/dp24"
+        android:background="@drawable/ic_bg_circle_tr_ripple"
+        android:elevation="2dp"
+        android:padding="@dimen/dp14"
+        app:layout_constraintStart_toEndOf="@+id/vContentWrapper"
+        app:layout_constraintTop_toTopOf="@+id/vContentWrapper"
+        app:srcCompat="@drawable/ic_close_36_g" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

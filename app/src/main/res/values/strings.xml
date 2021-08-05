@@ -11,4 +11,23 @@
     <string name="menu_stops">Стоп-лист</string>
     <string name="menu_help">Нужна помощь</string>
 
+    <string name="help_text">Если у вас возник срочный вопрос, позвоните в нашу службу поддержки:</string>
+    <string name="help_phone">+7 495 111 22 33</string>
+
+    <string name="pause_period_title">На какой период?</string>
+    <string name="pause_period_15">15 мин</string>
+    <string name="pause_period_30">30 мин</string>
+    <string name="pause_period_60">Час</string>
+    <string name="pause_period_day">До конца дня</string>
+    <string name="pause_reason_title">В чем причина?</string>
+    <string name="pause_reason_time">Не успеваем</string>
+    <string name="pause_reason_food">Закончились продукты</string>
+    <string name="pause_reason_other">Другое</string>
+    <string name="pause_action">Поставить на паузу</string>
+
+    <string name="stops_search_hint">Найти ингредиент</string>
+    <string name="stops_dialog_text">Вы уверены, что хотите добавить продукт в стоп-лист?</string>
+    <string name="stops_dialog_yes">Да</string>
+    <string name="stops_dialog_no">Нет</string>
+
 </resources>

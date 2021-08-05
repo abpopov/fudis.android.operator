@@ -8,7 +8,9 @@
       <color name="white">#FFFFFFFF</color>
       <color name="red">#E42E2E</color>
       <color name="green">#37CE52</color>
+      <color name="grey_switch">#8B8B89</color>
       <color name="grey_bg">#F4F3F0</color>
+      <color name="grey_bg_80">#CCF4F3F0</color>
       <color name="grey_btn_text">#C6C6C6</color>
       <color name="grey_btn_bg">#EFEFEF</color>
       <color name="grey_dark_btn_bg">#4E4E4E</color>
