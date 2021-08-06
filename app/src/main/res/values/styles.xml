@@ -87,7 +87,7 @@
         <item name="android:background">@drawable/ic_bg_rounded_bl_8_ripple</item>
         <item name="android:textColor">@color/white</item>
         <item name="android:layout_height">@dimen/dp36</item>
-        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_width">wrap_content</item>
     </style>
 
     <style name="ButtonStyleBlackBig">
