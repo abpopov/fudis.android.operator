@@ -49,6 +49,11 @@ class ApiImpl(
         service = retrofit.create(ApiService::class.java)
     }
 
-    override suspend fun auth(username: String?, password: String?) = service.auth(username, password)
+    override suspend fun auth(
+        username: String?,
+        password: String?
+    ) = service.auth(username, password)
+
+    override suspend fun orders() = service.orders("Bearer ${prefs.getUserToken()}")
 
 }

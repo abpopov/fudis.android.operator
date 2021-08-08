@@ -25,4 +25,6 @@ class RepoImpl(
     // api
 
     override suspend fun auth(username: String?, password: String?) = api.auth(username, password)
+
+    override suspend fun orders() = api.orders()
 }

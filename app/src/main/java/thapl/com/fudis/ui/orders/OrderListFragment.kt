@@ -1,11 +1,13 @@
 package thapl.com.fudis.ui.orders
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import thapl.com.fudis.databinding.FragmentOrderListBinding
+import thapl.com.fudis.domain.model.ResultEntity
 import thapl.com.fudis.ui.base.BaseFragment
 
 class OrderListFragment : BaseFragment() {
@@ -46,6 +48,18 @@ class OrderListFragment : BaseFragment() {
     }
 
     private fun initObservers() {
+        viewModel.orders.observe(viewLifecycleOwner, { result ->
+            when (result) {
+                is ResultEntity.Loading -> {
 
+                }
+                is ResultEntity.Error -> {
+
+                }
+                is ResultEntity.Success -> {
+
+                }
+            }
+        })
     }
 }

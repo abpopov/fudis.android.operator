@@ -37,7 +37,7 @@ val appModule = module {
             .build()
     }
     single {
-        GsonBuilder().setLenient().create()
+        GsonBuilder().setLenient().setDateFormat("yyyy-MM-dd HH:mm:ss").create()
     }
     viewModel { SplashViewModel(get()) }
     viewModel { RegisterViewModel(get()) }

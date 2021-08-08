@@ -1,6 +1,5 @@
 package thapl.com.fudis.domain.case
 
-import android.util.Log
 import thapl.com.fudis.data.Repo
 import thapl.com.fudis.domain.model.ErrorEntity
 import thapl.com.fudis.utils.FudisException
@@ -14,7 +13,6 @@ class RegisterUseCaseImpl(private val repo: Repo) : RegisterUseCase {
             username = login,
             password = pwd
         )
-        Log.d("okh", "user ${result.user}")
         if (result.errorCode != null || result.errorMessage != null) {
             throw FudisException(
                 ErrorEntity(
