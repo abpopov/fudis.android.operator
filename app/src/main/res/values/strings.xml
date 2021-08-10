@@ -30,12 +30,18 @@
     <string name="stops_dialog_yes">Да</string>
     <string name="stops_dialog_no">Нет</string>
 
+    <string name="order_active">Активные</string>
+    <string name="order_inactive">Отправленные</string>
     <string name="order_more">Подробнее о заказе</string>
+    <string name="order_time_today">Сегодня</string>
+    <string name="order_time_at">в</string>
     <string name="order_time_label">Время создания</string>
     <string name="order_due_label">Приготовить к</string>
     <string name="order_status_label">Текущий статус</string>
+    <string name="order_status_new">Новый</string>
     <string name="order_status_queue">Принят</string>
     <string name="order_status_ready">Готов</string>
     <string name="order_status_delivery">Передан курьеру</string>
+    <string name="order_status_delivered">Доставлен</string>
 
 </resources>

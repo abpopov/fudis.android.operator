@@ -1,5 +1,8 @@
 package thapl.com.fudis.utils
 
+import androidx.annotation.StringRes
+import thapl.com.fudis.R
+import thapl.com.fudis.domain.model.*
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -15,4 +18,39 @@ fun String?.toTimestamp(): Long? {
 fun Long?.toDate(): Date? {
     this ?: return null
     return Date(this)
+}
+
+@StringRes
+fun Int.toOrderStatus(): Int {
+    return when (this) {
+        ORDER_STATUS_IN_PROGRESS -> R.string.order_status_queue
+        ORDER_STATUS_READY -> R.string.order_status_ready
+        ORDER_STATUS_IN_DELIVERY -> R.string.order_status_delivery
+        ORDER_STATUS_DELIVERED -> R.string.order_status_delivered
+        else -> R.string.order_status_new
+    }
+}
+
+@StringRes
+fun Int.toOrderAction(): Int {
+    return when (this) {
+        ORDER_STATUS_IN_PROGRESS -> R.string.order_status_ready
+        ORDER_STATUS_READY -> R.string.order_status_delivery
+        ORDER_STATUS_IN_DELIVERY -> 0
+        ORDER_STATUS_DELIVERED -> 0
+        else -> R.string.order_status_queue
+    }
+}
+
+fun List<OrderEntity>.addHeaders(): List<OrderEntity> {
+    val result = this.sortedBy { it.createdAt }
+
+    return mutableListOf<OrderEntity>().apply {
+        addAll(result.filter { it.status < ORDER_STATUS_IN_DELIVERY }.also {
+            it.getOrNull(0)?.header = R.string.order_active
+        })
+        addAll(result.filter { it.status >= ORDER_STATUS_IN_DELIVERY }.also {
+            it.getOrNull(0)?.header = R.string.order_inactive
+        })
+    }
 }
