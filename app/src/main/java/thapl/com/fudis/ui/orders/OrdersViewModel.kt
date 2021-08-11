@@ -14,6 +14,7 @@ class OrdersViewModel(private val useCase: OrdersUseCase) : BaseViewModel() {
 
     val menuPos = Transformations.distinctUntilChanged(_menuPos)
     val orders = MutableLiveData<ResultEntity<List<OrderEntity>>>()
+    val order = MutableLiveData<ResultEntity<OrderEntity>>()
 
     init {
         getOrders()
@@ -25,6 +26,10 @@ class OrdersViewModel(private val useCase: OrdersUseCase) : BaseViewModel() {
 
     fun refresh() {
         getOrders()
+    }
+
+    fun initOrder(order: OrderEntity) {
+
     }
 
     private fun getOrders() {

@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import thapl.com.fudis.GlideApp
 import thapl.com.fudis.databinding.FragmentOrderListBinding
@@ -53,7 +54,7 @@ class OrderListFragment : BaseFragment() {
             click = { item, type ->
                 when (type) {
                     MORE -> {
-
+                        navigate(OrderListFragmentDirections.actionOrder(item))
                     }
                     ACTION -> {
 
@@ -61,6 +62,7 @@ class OrderListFragment : BaseFragment() {
                 }
             }
         )
+        binding?.rvOrders?.adapter?.stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
     }
 
     private fun initListeners() {

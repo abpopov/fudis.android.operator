@@ -44,4 +44,6 @@
     <string name="order_status_delivery">Передан курьеру</string>
     <string name="order_status_delivered">Доставлен</string>
 
+    <string name="order_single_back">Все заказы</string>
+
 </resources>

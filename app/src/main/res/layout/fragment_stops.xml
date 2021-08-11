@@ -4,6 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginStart="@dimen/dp60"
+    android:layout_marginTop="@dimen/dp20"
+    android:layout_marginEnd="@dimen/dp60"
     android:layout_marginBottom="@dimen/dp60"
     android:background="@drawable/ic_bg_rounded_bl05_32">
 
