@@ -22,6 +22,7 @@
     <dimen name="dp12">9.6dp</dimen>
     <dimen name="dp10">8dp</dimen>
     <dimen name="dp8">6.4dp</dimen>
+    <dimen name="dp4">3.2dp</dimen>
     <dimen name="dp2">1.6dp</dimen>
     <dimen name="dp1">0.8dp</dimen>
 </resources>

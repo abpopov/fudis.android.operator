@@ -45,5 +45,7 @@
     <string name="order_status_delivered">Доставлен</string>
 
     <string name="order_single_back">Все заказы</string>
+    <string name="order_single_total">Итого к оплате</string>
+    <string name="order_single_more">Техкарта</string>
 
 </resources>
