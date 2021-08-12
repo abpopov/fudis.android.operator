@@ -48,4 +48,14 @@
     <string name="order_single_total">Итого к оплате</string>
     <string name="order_single_more">Техкарта</string>
 
+    <string name="receipt_back">Заказ № %s</string>
+    <string name="receipt_weight">Вес готового продукта в расчете на 1 порцию - %s кг</string>
+    <string name="receipt_column_number">№</string>
+    <string name="receipt_column_title">Наименование\nпродукта</string>
+    <string name="receipt_column_piece">Ед.\nизм</string>
+    <string name="receipt_column_piece_weight">Брутто\nв ед. изм</string>
+    <string name="receipt_column_gross_weight">Вес\nбрутто, кг</string>
+    <string name="receipt_column_net_weight">Вес нетто\nили п/ф, кг</string>
+    <string name="receipt_column_ready_weight">Вес готового\nпродукта, кг</string>
+
 </resources>

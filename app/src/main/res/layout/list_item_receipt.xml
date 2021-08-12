@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvColumnNumber"
+        style="@style/TextStyle.Black.20"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp16"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintWidth_percent="0.05"
+        tools:text="1" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvColumnTitle"
+        style="@style/TextStyle.Black.20"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp16"
+        app:layout_constraintStart_toEndOf="@+id/tvColumnNumber"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintWidth_percent="0.35"
+        tools:text="Булочка для бургера" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvColumnPiece"
+        style="@style/TextStyle.Black.20"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp16"
+        android:gravity="center_horizontal"
+        app:layout_constraintStart_toEndOf="@+id/tvColumnTitle"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintWidth_percent="0.12"
+        tools:text="шт." />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvColumnPieceWeight"
+        style="@style/TextStyle.Black.20"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp16"
+        android:gravity="center_horizontal"
+        app:layout_constraintStart_toEndOf="@+id/tvColumnPiece"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintWidth_percent="0.12"
+        tools:text="1,000" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvColumnGrossWeight"
+        style="@style/TextStyle.Black.20"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp16"
+        android:gravity="center_horizontal"
+        app:layout_constraintStart_toEndOf="@+id/tvColumnPieceWeight"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintWidth_percent="0.12"
+        tools:text="0,100" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvColumnNetWeight"
+        style="@style/TextStyle.Black.20"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp16"
+        android:gravity="center_horizontal"
+        app:layout_constraintStart_toEndOf="@+id/tvColumnGrossWeight"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintWidth_percent="0.12"
+        tools:text="0,055" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvColumnReadyWeight"
+        style="@style/TextStyle.Black.20"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp16"
+        android:gravity="center_horizontal"
+        app:layout_constraintStart_toEndOf="@+id/tvColumnNetWeight"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintWidth_percent="0.12"
+        tools:text="0,050" />
+
+    <View
+        android:layout_width="0dp"
+        android:layout_marginTop="@dimen/dp16"
+        android:background="@color/black_05"
+        app:layout_constraintTop_toBottomOf="@id/tvColumnTitle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_height="@dimen/dp2" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

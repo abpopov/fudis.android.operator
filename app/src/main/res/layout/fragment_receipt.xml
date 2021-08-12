@@ -1,6 +1,242 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvBack"
+        style="@style/ButtonStyleText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp60"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Заказ № 10876" />
+
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/dp40"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvBack">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/vContentWrapper"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp60"
+                android:layout_marginEnd="@dimen/dp60"
+                android:background="@drawable/ic_bg_rounded_bl05_32"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/ivFoodPicture"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginTop="@dimen/dp60"
+                    android:layout_marginEnd="@dimen/dp60"
+                    app:layout_constraintDimensionRatio="1:1"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintWidth_percent="0.3"
+                    tools:background="@tools:sample/backgrounds/scenic" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvTitleText"
+                    style="@style/TextStyle.Black.32"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp60"
+                    android:layout_marginTop="@dimen/dp60"
+                    android:layout_marginEnd="@dimen/dp60"
+                    app:layout_constraintEnd_toStartOf="@+id/ivFoodPicture"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="Паноцца с тунцом и овощами" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvDescText"
+                    style="@style/TextStyle.Black.20"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp60"
+                    android:layout_marginTop="@dimen/dp48"
+                    android:layout_marginEnd="@dimen/dp60"
+                    app:layout_constraintEnd_toStartOf="@+id/ivFoodPicture"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tvTitleText"
+                    tools:text="Выложите говяжий фарш в глубокую чашу. Половину луковицы измельчите и добавьте к фаршу, выдавите или потрите чеснок. Добавьте в фарш 1 яйцо, посолите и поперчите. Тщательно перемешайте фарш и уберите его в холодильник на 30 минут. Тем временем подготовьте другие ингредиенты. Нарежьте помидор кружочками толщиной около 5-8 мм, оставшуюся половину луковицы — кольцами. Сыр порежьте ломтиками толщиной 2 мм. Достаньте охлажденный фарш из холодильника. Сформируйте из него двекотлеты круглой или произвольной формы. Добавьте в фарш 1 яйцо, посолите и поперчите. Тщательно перемешайте фарш и уберите его в холодильник на 30 минут.Тем временем подготовьте другие ингредиенты. Нарежьте помидор кружочками толщиной около 5-8 мм, оставшуюся половину луковицы — кольцами. " />
+
+                <androidx.constraintlayout.widget.Barrier
+                    android:id="@+id/barrierContent"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    app:barrierDirection="bottom"
+                    app:constraint_referenced_ids="ivFoodPicture,tvDescText" />
+
+                <View
+                    android:id="@+id/vDividerTop"
+                    android:layout_width="0dp"
+                    android:layout_height="2dp"
+                    android:layout_marginStart="@dimen/dp60"
+                    android:layout_marginTop="@dimen/dp48"
+                    android:layout_marginEnd="@dimen/dp60"
+                    android:background="@color/black_05"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/barrierContent" />
+
+                <View
+                    android:id="@+id/vDividerBottom"
+                    android:layout_width="0dp"
+                    android:layout_height="2dp"
+                    android:layout_marginStart="@dimen/dp60"
+                    android:layout_marginTop="@dimen/dp16"
+                    android:layout_marginEnd="@dimen/dp60"
+                    android:background="@color/black_05"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/vTableHeader" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/vTableHeader"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp60"
+                    android:layout_marginTop="@dimen/dp16"
+                    android:layout_marginEnd="@dimen/dp60"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/vDividerTop">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvColumnNumber"
+                        style="@style/TextStyle.Grey.20.Italic"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/receipt_column_number"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintWidth_percent="0.05" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvColumnTitle"
+                        style="@style/TextStyle.Grey.20.Italic"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/receipt_column_title"
+                        app:layout_constraintStart_toEndOf="@+id/tvColumnNumber"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintWidth_percent="0.35" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvColumnPiece"
+                        style="@style/TextStyle.Grey.20.Italic"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
+                        android:text="@string/receipt_column_piece"
+                        app:layout_constraintStart_toEndOf="@+id/tvColumnTitle"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintWidth_percent="0.12" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvColumnPieceWeight"
+                        style="@style/TextStyle.Grey.20.Italic"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
+                        android:text="@string/receipt_column_piece_weight"
+                        app:layout_constraintStart_toEndOf="@+id/tvColumnPiece"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintWidth_percent="0.12" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvColumnGrossWeight"
+                        style="@style/TextStyle.Grey.20.Italic"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
+                        android:text="@string/receipt_column_gross_weight"
+                        app:layout_constraintStart_toEndOf="@+id/tvColumnPieceWeight"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintWidth_percent="0.12" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvColumnNetWeight"
+                        style="@style/TextStyle.Grey.20.Italic"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
+                        android:text="@string/receipt_column_net_weight"
+                        app:layout_constraintStart_toEndOf="@+id/tvColumnGrossWeight"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintWidth_percent="0.12" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvColumnReadyWeight"
+                        style="@style/TextStyle.Grey.20.Italic"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
+                        android:text="@string/receipt_column_ready_weight"
+                        app:layout_constraintStart_toEndOf="@+id/tvColumnNetWeight"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintWidth_percent="0.12" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvReceiptList"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp60"
+                    android:layout_marginEnd="@dimen/dp60"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/vDividerBottom"
+                    tools:itemCount="8"
+                    tools:listitem="@layout/list_item_receipt" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvWeightText"
+                    style="@style/TextStyle.Black.20"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp60"
+                    android:layout_marginTop="@dimen/dp28"
+                    android:layout_marginEnd="@dimen/dp60"
+                    android:layout_marginBottom="@dimen/dp48"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/rvReceiptList"
+                    tools:text="Вес готового продукта в расчете на 1 порцию - 0,52 кг" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <View
+                android:id="@+id/vSpace"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/dp60"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/vContentWrapper" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
