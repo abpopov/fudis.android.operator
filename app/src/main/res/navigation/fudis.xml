@@ -15,6 +15,11 @@
         app:destination="@id/pauseFragment"
         app:launchSingleTop="true" />
 
+    <action
+        android:id="@+id/action_start"
+        app:destination="@id/startFragment"
+        app:launchSingleTop="true" />
+
     <dialog
         android:id="@+id/helpFragment"
         android:name="thapl.com.fudis.ui.dialogs.HelpFragment"
@@ -44,6 +49,22 @@
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim"
             app:popUpTo="@+id/pauseFragment"
+            app:popUpToInclusive="true" />
+    </dialog>
+
+    <dialog
+        android:id="@+id/startFragment"
+        android:name="thapl.com.fudis.ui.dialogs.StartFragment"
+        android:label="startFragment"
+        tools:layout="@layout/fragment_start">
+        <argument
+            android:name="source"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_close"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim"
+            app:popUpTo="@+id/startFragment"
             app:popUpToInclusive="true" />
     </dialog>
 

@@ -42,6 +42,23 @@ fun Int.toOrderAction(): Int {
     }
 }
 
+fun Int?.toTimePause(): Int {
+    return when (this) {
+        R.id.rb15 -> 15
+        R.id.rb30 -> 30
+        R.id.rb60 -> 60
+        else -> 0
+    }
+}
+
+fun Int?.toCausePause(): Int {
+    return when (this) {
+        R.id.rbFood -> 20
+        R.id.rbTime -> 10
+        else -> 5
+    }
+}
+
 fun List<OrderEntity>.addHeaders(): List<OrderEntity> {
     val result = this.sortedBy { it.createdAt }
 

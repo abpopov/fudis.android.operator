@@ -17,7 +17,7 @@ class ApiImpl(
 ) : Api {
 
     companion object {
-        private const val BASE_URL = "https://project95.account.thapl.com/"
+        private const val BASE_URL = "https://account.fudis.thapl.com/"
     }
 
     private var service: ApiService
@@ -54,6 +54,47 @@ class ApiImpl(
         password: String?
     ) = service.auth(username, password)
 
-    override suspend fun orders() = service.orders("Bearer ${prefs.getUserToken()}")
+    override suspend fun orders() = service.orders(
+        "Bearer ${prefs.getUserToken()}",
+        1,
+        100
+    )
 
+    override suspend fun categories() = service.categories(
+        "Bearer ${prefs.getUserToken()}"
+    )
+
+    override suspend fun catalog(id: Long?) = service.catalog(
+        "Bearer ${prefs.getUserToken()}",
+        id
+    )
+
+    override suspend fun products(id: Int?) = service.products(
+        "Bearer ${prefs.getUserToken()}",
+        id
+    )
+
+    override suspend fun stopProduct(id: Int?, product: Long?, stop: Boolean?) = service.stopProduct(
+        "Bearer ${prefs.getUserToken()}",
+        id,
+        product,
+        if (stop == true) 1 else 0
+    )
+
+    override suspend fun receipt(id: Long?) = service.receipt(
+        "Bearer ${prefs.getUserToken()}",
+        id
+    )
+
+    override suspend fun stopOrganization(id: Int?, time: Int?, cause: Int?) = service.stopOrganization(
+        "Bearer ${prefs.getUserToken()}",
+        id,
+        time,
+        cause
+    )
+
+    override suspend fun startOrganization(id: Int?) = service.startOrganization(
+        "Bearer ${prefs.getUserToken()}",
+        id
+    )
 }

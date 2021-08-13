@@ -1,4 +1,4 @@
-package thapl.com.fudis.ui.stops
+package thapl.com.fudis.ui.categories
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,38 +6,28 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.core.widget.doAfterTextChanged
-import androidx.fragment.app.setFragmentResultListener
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import thapl.com.fudis.R
-import thapl.com.fudis.databinding.FragmentStopsBinding
+import thapl.com.fudis.databinding.FragmentCategoriesBinding
 import thapl.com.fudis.domain.model.ResultEntity
-import thapl.com.fudis.ui.adapters.ProductsAdapter
+import thapl.com.fudis.ui.adapters.CategoriesAdapter
 import thapl.com.fudis.ui.base.BaseFragment
 
-class StopsFragment : BaseFragment() {
+class CategoriesFragment : BaseFragment() {
 
-    private val viewModel: StopsViewModel by sharedViewModel()
+    private val viewModel: CategoriesViewModel by sharedViewModel()
 
-    private var _binding: FragmentStopsBinding? = null
+    private var _binding: FragmentCategoriesBinding? = null
     private val binding get() = _binding
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setFragmentResultListener(GOOD_ID) { key, bundle ->
-            bundle.getLong(key).let {
-                viewModel.stopItem(it, true)
-            }
-        }
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentStopsBinding.inflate(inflater, container, false)
+        _binding = FragmentCategoriesBinding.inflate(inflater, container, false)
         return binding?.root
     }
 
@@ -57,8 +47,8 @@ class StopsFragment : BaseFragment() {
         binding?.etSearch?.doAfterTextChanged {
             binding?.ivClear?.visibility = if (it.isNullOrEmpty()) View.GONE else View.VISIBLE
         }
-        if (binding?.rvStopList?.itemDecorationCount == 0) {
-            binding?.rvStopList?.addItemDecoration(
+        if (binding?.rvCategoriesList?.itemDecorationCount == 0) {
+            binding?.rvCategoriesList?.addItemDecoration(
                 DividerItemDecoration(
                     requireContext(), LinearLayoutManager.VERTICAL
                 ).also {
@@ -71,18 +61,11 @@ class StopsFragment : BaseFragment() {
         binding?.etSearch?.doAfterTextChanged {
             viewModel.search.postValue(it?.toString())
         }
-        binding?.rvStopList?.adapter = ProductsAdapter(
+        binding?.rvCategoriesList?.adapter = CategoriesAdapter(
             glide = null,
             viewModel = viewModel,
             click = { item, enable ->
-                when (enable) {
-                    true -> {
-                        navigate(StopsFragmentDirections.actionConfirm(item.id))
-                    }
-                    false -> {
-                        viewModel.stopItem(item.id, false)
-                    }
-                }
+
             }
         )
     }
@@ -97,31 +80,27 @@ class StopsFragment : BaseFragment() {
     }
 
     private fun initObservers() {
-        viewModel.products.observe(viewLifecycleOwner, { result ->
+        viewModel.categories.observe(viewLifecycleOwner, { result ->
             when (result) {
                 is ResultEntity.Loading -> {
                     binding?.tvReload?.visibility = View.GONE
-                    binding?.rvStopList?.visibility = View.VISIBLE
+                    binding?.rvCategoriesList?.visibility = View.VISIBLE
                 }
                 is ResultEntity.Error -> {
                     binding?.tvReload?.visibility = View.VISIBLE
-                    binding?.rvStopList?.visibility = View.INVISIBLE
+                    binding?.rvCategoriesList?.visibility = View.INVISIBLE
                 }
                 is ResultEntity.Success -> {
                     binding?.tvReload?.visibility = View.GONE
-                    binding?.rvStopList?.visibility = View.VISIBLE
+                    binding?.rvCategoriesList?.visibility = View.VISIBLE
                     viewModel.search.postValue(viewModel.search.value)
                 }
             }
         })
-        viewModel.filteredProducts.observe(viewLifecycleOwner, { result ->
+        viewModel.filteredCategories.observe(viewLifecycleOwner, { result ->
             if (result != null) {
-                (binding?.rvStopList?.adapter as? ProductsAdapter)?.submitList(result)
+                (binding?.rvCategoriesList?.adapter as? CategoriesAdapter)?.submitList(result)
             }
         })
-    }
-
-    companion object {
-        const val GOOD_ID = "good_id"
     }
 }

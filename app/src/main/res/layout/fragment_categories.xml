@@ -20,7 +20,7 @@
         android:layout_marginEnd="@dimen/dp60"
         android:background="@drawable/ic_bg_rounded_wh_12"
         android:elevation="2dp"
-        android:hint="@string/stops_search_hint"
+        android:hint="@string/categories_search_hint"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -38,11 +38,11 @@
         app:srcCompat="@drawable/ic_close_24_g" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvStopList"
+        android:id="@+id/rvCategoriesList"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="@dimen/dp60"
-        android:layout_marginTop="@dimen/dp48"
+        android:layout_marginTop="@dimen/dp8"
         android:layout_marginEnd="@dimen/dp60"
         android:layout_marginBottom="@dimen/dp48"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
@@ -50,7 +50,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etSearch"
-        tools:listitem="@layout/list_item_stop" />
+        tools:listitem="@layout/list_item_category" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tvReload"

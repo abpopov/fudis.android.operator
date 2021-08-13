@@ -3,35 +3,31 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/dp80">
+    android:layout_height="wrap_content">
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tvItemName"
-        style="@style/TextStyle.Black.24"
+        style="@style/TextStyle.Black.32"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp48"
+        android:layout_marginBottom="@dimen/dp48"
+        android:paddingStart="0dp"
+        android:paddingEnd="@dimen/dp32"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/scItemSwitch"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Помидоры" />
 
-    <androidx.appcompat.widget.SwitchCompat
-        android:id="@+id/scItemSwitch"
-        android:layout_width="wrap_content"
-        android:theme="@style/SwitchStop"
-        android:layout_height="wrap_content"
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ivArrow"
+        android:layout_width="@dimen/dp28"
+        android:layout_height="@dimen/dp28"
+        android:rotation="180"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <View
-        android:id="@+id/vItemDisable"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="@+id/scItemSwitch"
-        app:layout_constraintEnd_toEndOf="@+id/scItemSwitch"
-        app:layout_constraintStart_toStartOf="@+id/scItemSwitch"
-        app:layout_constraintTop_toTopOf="@+id/scItemSwitch" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_chevron_big_down" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

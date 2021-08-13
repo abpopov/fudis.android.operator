@@ -39,7 +39,7 @@ class StopConfirmFragment : BaseDialogFragment() {
     }
 
     private fun initViews() {
-        binding?.tvHelp?.isChecked = true
+        binding?.tvStops?.isChecked = true
     }
 
     private fun initListeners() {

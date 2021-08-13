@@ -8,15 +8,15 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.setFragmentResult
 import androidx.navigation.fragment.navArgs
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
-import thapl.com.fudis.databinding.FragmentPauseBinding
+import thapl.com.fudis.databinding.FragmentStartBinding
 import thapl.com.fudis.ui.base.BaseDialogFragment
 import thapl.com.fudis.ui.orders.OrdersFragment
 
-class PauseFragment : BaseDialogFragment() {
+class StartFragment : BaseDialogFragment() {
 
     private val viewModel: PauseViewModel by sharedViewModel()
 
-    private var _binding: FragmentPauseBinding? = null
+    private var _binding: FragmentStartBinding? = null
     private val binding get() = _binding
 
     private val args: PauseFragmentArgs by navArgs()
@@ -26,7 +26,7 @@ class PauseFragment : BaseDialogFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentPauseBinding.inflate(inflater, container, false)
+        _binding = FragmentStartBinding.inflate(inflater, container, false)
         return binding?.root
     }
 
@@ -40,34 +40,21 @@ class PauseFragment : BaseDialogFragment() {
         viewModel.drop()
         initViews()
         initListeners()
-        initObservers()
     }
 
     private fun initViews() {
         binding?.tvPause?.isChecked = true
-        binding?.rgPeriod?.setOnCheckedChangeListener { _, i ->
-            viewModel.selectState(i, true)
-        }
-        binding?.rgReason?.setOnCheckedChangeListener { _, i ->
-            viewModel.selectState(i, false)
-        }
     }
 
     private fun initListeners() {
         binding?.ivClose?.setOnClickListener {
             setFragmentResult(OrdersFragment.SOURCE_MENU, bundleOf(OrdersFragment.SOURCE_MENU to args.source))
-            navigate(PauseFragmentDirections.actionClose())
+            navigate(StartFragmentDirections.actionClose())
         }
         binding?.tvActionPause?.setOnClickListener {
-            viewModel.pause()
+            viewModel.start()
             setFragmentResult(OrdersFragment.SOURCE_MENU, bundleOf(OrdersFragment.SOURCE_MENU to args.source))
             navigate(StartFragmentDirections.actionClose())
         }
-    }
-
-    private fun initObservers() {
-        viewModel.pauseState.observe(this, { state ->
-            binding?.tvActionPause?.isEnabled = state?.first != null && state.second != null
-        })
     }
 }

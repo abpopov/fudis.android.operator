@@ -8,6 +8,7 @@
 
     <string name="menu_orders">Заказы</string>
     <string name="menu_pause">Пауза</string>
+    <string name="menu_cats">Меню</string>
     <string name="menu_stops">Стоп-лист</string>
     <string name="menu_help">Нужна помощь</string>
 
@@ -24,11 +25,15 @@
     <string name="pause_reason_food">Закончились продукты</string>
     <string name="pause_reason_other">Другое</string>
     <string name="pause_action">Поставить на паузу</string>
+    <string name="pause_start_action">Снять с паузы</string>
+
+    <string name="categories_search_hint">Найти блюдо</string>
 
     <string name="stops_search_hint">Найти ингредиент</string>
     <string name="stops_dialog_text">Вы уверены, что хотите добавить продукт в стоп-лист?</string>
     <string name="stops_dialog_yes">Да</string>
     <string name="stops_dialog_no">Нет</string>
+    <string name="stops_reload">Загрузить товары</string>
 
     <string name="order_active">Активные</string>
     <string name="order_inactive">Отправленные</string>

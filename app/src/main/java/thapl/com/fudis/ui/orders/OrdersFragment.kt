@@ -4,17 +4,21 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.setFragmentResultListener
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import thapl.com.fudis.R
 import thapl.com.fudis.databinding.FragmentOrdersBinding
+import thapl.com.fudis.domain.model.ResultEntity
 import thapl.com.fudis.ui.base.BaseFragment
+import thapl.com.fudis.ui.dialogs.PauseViewModel
 
 class OrdersFragment : BaseFragment() {
 
     private val viewModel: OrdersViewModel by sharedViewModel()
+    private val pauseViewModel: PauseViewModel by sharedViewModel()
 
     private var _binding: FragmentOrdersBinding? = null
     private val binding get() = _binding
@@ -69,18 +73,17 @@ class OrdersFragment : BaseFragment() {
             viewModel.selectMenu(0)
             navController?.navigate(R.id.orderListFragment)
         }
-        binding?.tvPause?.setOnClickListener {
-            val source = viewModel.menuPos.value ?: 0
-            viewModel.selectMenu(1)
-            navigate(OrdersFragmentDirections.actionPause(source))
+        binding?.tvCats?.setOnClickListener {
+            viewModel.selectMenu(2)
+            navController?.navigate(R.id.categoriesFragment)
         }
         binding?.tvStops?.setOnClickListener {
-            viewModel.selectMenu(2)
+            viewModel.selectMenu(3)
             navController?.navigate(R.id.stopsFragment)
         }
         binding?.tvHelp?.setOnClickListener {
             val source = viewModel.menuPos.value ?: 0
-            viewModel.selectMenu(3)
+            viewModel.selectMenu(4)
             navigate(OrdersFragmentDirections.actionHelp(source))
         }
     }
@@ -89,12 +92,42 @@ class OrdersFragment : BaseFragment() {
         viewModel.menuPos.observe(viewLifecycleOwner, { pos ->
             binding?.tvOrders?.isChecked = pos == 0
             binding?.tvPause?.isChecked = pos == 1
-            binding?.tvStops?.isChecked = pos == 2
-            binding?.tvHelp?.isChecked = pos == 3
+            binding?.tvCats?.isChecked = pos == 2
+            binding?.tvStops?.isChecked = pos == 3
+            binding?.tvHelp?.isChecked = pos == 4
             binding?.tvOrders?.isEnabled = pos != 0
             binding?.tvPause?.isEnabled = pos != 1
-            binding?.tvStops?.isEnabled = pos != 2
-            binding?.tvHelp?.isEnabled = pos != 3
+            binding?.tvCats?.isEnabled = pos != 2
+            binding?.tvStops?.isEnabled = pos != 3
+            binding?.tvHelp?.isEnabled = pos != 4
+        })
+        pauseViewModel.pauseRequest.observe(viewLifecycleOwner, { result ->
+            when (result) {
+                is ResultEntity.Loading -> {
+
+                }
+                is ResultEntity.Error -> {
+                    result.error.message.let {
+                        if (it.isEmpty().not()) {
+                            Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                }
+                is ResultEntity.Success -> {
+                    pauseViewModel.working.postValue(result.data)
+                }
+            }
+        })
+        pauseViewModel.working.observe(viewLifecycleOwner, { working ->
+            binding?.tvPause?.setOnClickListener {
+                val source = viewModel.menuPos.value ?: 0
+                viewModel.selectMenu(1)
+                if (working == true) {
+                    navigate(OrdersFragmentDirections.actionPause(source))
+                } else {
+                    navigate(OrdersFragmentDirections.actionStart(source))
+                }
+            }
         })
     }
 
