@@ -25,7 +25,7 @@ interface ApiService {
         @Query("id") id: Long?
     ): ReceiptApi
 
-    @GET("catalog/get-categories")
+    @GET("catalog/get-menu")
     suspend fun categories(
         @Header("Authorization") token: String?
     ): List<CategoryApi>

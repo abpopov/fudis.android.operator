@@ -36,6 +36,7 @@ class ProductHolder(view: View) : BaseHolder<StopsViewModel, ProductEntity>(view
 
     override fun bind(
         item: ProductEntity,
+        position: Int,
         glide: GlideRequests?,
         viewModel: StopsViewModel,
         isLast: Boolean,

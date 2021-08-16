@@ -7,9 +7,8 @@ import kotlinx.parcelize.Parcelize
 data class CatalogEntity(
     val id: Long,
     val title: String,
-    val extCode: String?,
-    val isActive: Boolean,
-    val createdAt: Long?
+    var counter: String = "",
+    var isRoot: Boolean = false
 ) : Parcelable, ListItem {
 
     override fun unique() = id

@@ -64,7 +64,7 @@ class CategoriesFragment : BaseFragment() {
         binding?.rvCategoriesList?.adapter = CategoriesAdapter(
             glide = null,
             viewModel = viewModel,
-            click = { item, enable ->
+            click = { _, _ ->
 
             }
         )

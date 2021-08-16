@@ -2,7 +2,6 @@ package thapl.com.fudis.domain.mapper
 
 import thapl.com.fudis.data.api.model.CatalogApi
 import thapl.com.fudis.domain.model.CatalogEntity
-import thapl.com.fudis.utils.toTimestamp
 
 object CatalogListApiToEntityMapper : BaseMapperSafe<List<CatalogApi>, List<CatalogEntity>> {
 
@@ -19,10 +18,7 @@ object CatalogApiToEntityMapper : BaseMapperNullable<CatalogApi, CatalogEntity> 
         type.title ?: return null
         return CatalogEntity(
             id = type.id,
-            title = type.title,
-            isActive = type.active ?: false,
-            extCode = type.extCode,
-            createdAt = type.createdAt?.toTimestamp(),
+            title = type.title
         )
     }
 

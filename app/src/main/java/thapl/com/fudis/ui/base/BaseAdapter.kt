@@ -23,7 +23,7 @@ abstract class BaseListAdapter<VM : BaseViewModel, T : ListItem, VH : BaseHolder
     }
 
     override fun onBindViewHolder(holder: VH, position: Int) {
-        holder.bind(getItem(position), glide, viewModel, currentList.size - 1 == position, click)
+        holder.bind(getItem(position), position, glide, viewModel, currentList.size - 1 == position, click)
     }
 
     override fun onViewAttachedToWindow(holder: VH) {
@@ -38,7 +38,7 @@ abstract class BaseListAdapter<VM : BaseViewModel, T : ListItem, VH : BaseHolder
 }
 
 abstract class BaseHolder<VM : BaseViewModel, T : ListItem>(view: View) : RecyclerView.ViewHolder(view), LifecycleOwner {
-    abstract fun bind(item: T, glide: GlideRequests?, viewModel: VM, isLast: Boolean, click: (T, Any?) -> Unit)
+    abstract fun bind(item: T, position: Int, glide: GlideRequests?, viewModel: VM, isLast: Boolean, click: (T, Any?) -> Unit)
 
     private val lifecycleRegistry = LifecycleRegistry(this)
 

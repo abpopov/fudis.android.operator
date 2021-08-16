@@ -7,10 +7,9 @@ import kotlinx.parcelize.Parcelize
 data class CategoryEntity(
     val id: Long,
     val title: String,
-    val isActive: Boolean,
-    val onMainPage: Boolean,
-    val onTopMenu: Boolean,
-    val children: List<CategoryEntity>
+    val subCategories: List<CategoryEntity>,
+    val children: List<CatalogEntity>,
+    var counter: String = ""
 ) : Parcelable, ListItem {
 
     override fun unique() = id

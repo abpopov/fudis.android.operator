@@ -19,10 +19,8 @@ object CategoryApiToEntityMapper : BaseMapperNullable<CategoryApi, CategoryEntit
         return CategoryEntity(
             id = type.id,
             title = type.title,
-            isActive = type.isActive ?: false,
-            onMainPage = type.showMainPage ?: false,
-            onTopMenu = type.showTopMenu ?: false,
-            children = CategoryListApiToEntityMapper.map(type.children)
+            subCategories = CategoryListApiToEntityMapper.map(type.subCategories),
+            children = CatalogListApiToEntityMapper.map(type.catalogItems)
         )
     }
 

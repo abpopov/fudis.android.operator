@@ -8,12 +8,8 @@ data class CategoryApi(
     val id: Long?,
     @SerializedName("title")
     val title: String?,
-    @SerializedName("is_active")
-    val isActive: Boolean?,
-    @SerializedName("show_on_main_page")
-    val showMainPage: Boolean?,
-    @SerializedName("show_in_top_menu")
-    val showTopMenu: Boolean?,
-    @SerializedName("children")
-    val children: List<CategoryApi>?
+    @SerializedName("sub_categories")
+    val subCategories: List<CategoryApi>?,
+    @SerializedName("catalog_items")
+    val catalogItems: List<CatalogApi>?
 ) : Serializable

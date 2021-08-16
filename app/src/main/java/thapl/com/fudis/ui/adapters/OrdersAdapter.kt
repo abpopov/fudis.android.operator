@@ -59,6 +59,7 @@ class OrderHolder(view: View) : BaseHolder<OrdersViewModel, OrderEntity>(view) {
 
     override fun bind(
         item: OrderEntity,
+        position: Int,
         glide: GlideRequests?,
         viewModel: OrdersViewModel,
         isLast: Boolean,

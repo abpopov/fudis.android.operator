@@ -4,33 +4,35 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.recyclerview.widget.ConcatAdapter
+import androidx.constraintlayout.motion.widget.MotionLayout
 import androidx.recyclerview.widget.RecyclerView
 import thapl.com.fudis.GlideRequests
 import thapl.com.fudis.R
-import thapl.com.fudis.domain.model.*
+import thapl.com.fudis.domain.model.CategoryEntity
 import thapl.com.fudis.ui.base.BaseHolder
 import thapl.com.fudis.ui.base.BaseListAdapter
 import thapl.com.fudis.ui.categories.CategoriesViewModel
 
-class CategoriesAdapter(
+class SubCategoriesAdapter(
     glide: GlideRequests?,
     viewModel: CategoriesViewModel,
     click: (CategoryEntity, Any?) -> Unit
 ) :
-    BaseListAdapter<CategoriesViewModel, CategoryEntity, CategoryHolder>(
+    BaseListAdapter<CategoriesViewModel, CategoryEntity, SubCategoryHolder>(
         glide,
         viewModel,
         click,
         getHolder = { parent, _ ->
-            CategoryHolder.from(parent)
+            SubCategoryHolder.from(parent)
         }
     )
 
-class CategoryHolder(view: View) : BaseHolder<CategoriesViewModel, CategoryEntity>(view) {
+class SubCategoryHolder(view: View) : BaseHolder<CategoriesViewModel, CategoryEntity>(view) {
 
     private val textName = view.findViewById<TextView>(R.id.tvItemName)
-    private val listSubCategories = view.findViewById<RecyclerView>(R.id.rvSubs)
+    private val textCounter = view.findViewById<TextView>(R.id.tvItemCount)
+    private val listCatalog = view.findViewById<RecyclerView>(R.id.rvCatalog)
+    private val viewMotion = view.findViewById<MotionLayout>(R.id.vRoot)
 
     override fun bind(
         item: CategoryEntity,
@@ -41,33 +43,30 @@ class CategoryHolder(view: View) : BaseHolder<CategoriesViewModel, CategoryEntit
         click: (CategoryEntity, Any?) -> Unit
     ) {
         textName.text = item.title
-        val subCategoryAdapter = SubCategoriesAdapter(glide, viewModel, click = { _, deepChild ->
-            click(item, deepChild)
-        })
+        textCounter.text = item.counter
+        textName.setOnClickListener {
+            if (viewMotion.progress < 0.5f) {
+                viewMotion.transitionToEnd()
+            } else {
+                viewMotion.transitionToStart()
+            }
+        }
         val catalogAdapter = CatalogAdapter(glide, viewModel, click = { child, _ ->
             click(item, child)
         })
-        listSubCategories.adapter = ConcatAdapter(subCategoryAdapter, catalogAdapter)
-        subCategoryAdapter.submitList(item.subCategories.mapIndexedNotNull { index, categoryEntity ->
-            if (categoryEntity.children.isEmpty()) null else categoryEntity.also {
-                it.counter = "${index + 1}"
-            }
-        })
+        listCatalog.adapter = catalogAdapter
         catalogAdapter.submitList(item.children.mapIndexed { index, catalogEntity ->
             catalogEntity.also {
-                it.counter = (item.subCategories.mapNotNull { categoryEntity ->
-                    if (categoryEntity.children.isEmpty()) null else categoryEntity
-                }.size + index + 1).toString()
-                it.isRoot = true
+                it.counter = "${position + 1}.${index + 1}"
             }
         })
     }
 
     companion object {
-        fun from(parent: ViewGroup): CategoryHolder {
+        fun from(parent: ViewGroup): SubCategoryHolder {
             val layoutInflater = LayoutInflater.from(parent.context)
-            val view = layoutInflater.inflate(R.layout.list_item_category, parent, false)
-            return CategoryHolder(view)
+            val view = layoutInflater.inflate(R.layout.list_item_sub, parent, false)
+            return SubCategoryHolder(view)
         }
     }
 }
