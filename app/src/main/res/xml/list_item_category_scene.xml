@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MotionScene xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ConstraintSet android:id="@+id/start">
+        <Constraint android:id="@+id/ivArrow">
+            <Layout
+                android:layout_width="@dimen/dp28"
+                android:layout_height="@dimen/dp28"
+                app:layout_constraintBottom_toBottomOf="@+id/tvItemName"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+            <Transform android:rotation="180" />
+        </Constraint>
+        <Constraint android:id="@+id/rvSubs">
+            <Layout
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvItemName" />
+        </Constraint>
+    </ConstraintSet>
+
+    <ConstraintSet android:id="@+id/end">
+        <Constraint android:id="@+id/ivArrow">
+            <Layout
+                android:layout_width="@dimen/dp28"
+                android:layout_height="@dimen/dp28"
+                app:layout_constraintBottom_toBottomOf="@+id/tvItemName"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+            <Transform android:rotation="0" />
+        </Constraint>
+        <Constraint android:id="@+id/rvSubs">
+            <Layout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvItemName" />
+        </Constraint>
+    </ConstraintSet>
+
+    <Transition
+        app:constraintSetEnd="@+id/end"
+        app:constraintSetStart="@+id/start" />
+</MotionScene>

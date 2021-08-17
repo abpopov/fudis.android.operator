@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.constraintlayout.motion.widget.MotionLayout
 import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.RecyclerView
 import thapl.com.fudis.GlideRequests
@@ -31,6 +32,7 @@ class CategoryHolder(view: View) : BaseHolder<CategoriesViewModel, CategoryEntit
 
     private val textName = view.findViewById<TextView>(R.id.tvItemName)
     private val listSubCategories = view.findViewById<RecyclerView>(R.id.rvSubs)
+    private val viewMotion = view.findViewById<MotionLayout>(R.id.vRoot)
 
     override fun bind(
         item: CategoryEntity,
@@ -41,26 +43,70 @@ class CategoryHolder(view: View) : BaseHolder<CategoriesViewModel, CategoryEntit
         click: (CategoryEntity, Any?) -> Unit
     ) {
         textName.text = item.title
-        val subCategoryAdapter = SubCategoriesAdapter(glide, viewModel, click = { _, deepChild ->
-            click(item, deepChild)
-        })
-        val catalogAdapter = CatalogAdapter(glide, viewModel, click = { child, _ ->
-            click(item, child)
-        })
-        listSubCategories.adapter = ConcatAdapter(subCategoryAdapter, catalogAdapter)
-        subCategoryAdapter.submitList(item.subCategories.mapIndexedNotNull { index, categoryEntity ->
-            if (categoryEntity.children.isEmpty()) null else categoryEntity.also {
-                it.counter = "${index + 1}"
+        textName.setOnClickListener {
+            if (viewMotion.progress < 0.5f) {
+                viewMotion.transitionToEnd()
+            } else {
+                viewMotion.transitionToStart()
             }
-        })
-        catalogAdapter.submitList(item.children.mapIndexed { index, catalogEntity ->
-            catalogEntity.also {
-                it.counter = (item.subCategories.mapNotNull { categoryEntity ->
-                    if (categoryEntity.children.isEmpty()) null else categoryEntity
-                }.size + index + 1).toString()
-                it.isRoot = true
+        }
+        fun initAdapter() {
+            val subCategoryAdapter = SubCategoriesAdapter(glide, viewModel, click = { _, deepChild ->
+                click(item, deepChild)
+            })
+            val catalogAdapter = CatalogAdapter(glide, viewModel, click = { child, _ ->
+                click(item, child)
+            })
+            listSubCategories.adapter = ConcatAdapter(subCategoryAdapter, catalogAdapter)
+            subCategoryAdapter.submitList(item.subCategories.mapIndexedNotNull { index, categoryEntity ->
+                if (categoryEntity.children.isEmpty()) null else categoryEntity.also {
+                    it.counter = "${index + 1}"
+                }
+            })
+            catalogAdapter.submitList(item.children.mapIndexed { index, catalogEntity ->
+                catalogEntity.also {
+                    it.counter = (item.subCategories.mapNotNull { categoryEntity ->
+                        if (categoryEntity.children.isEmpty()) null else categoryEntity
+                    }.size + index + 1).toString()
+                    it.isRoot = true
+                }
+            })
+        }
+        viewMotion.addTransitionListener(object : MotionLayout.TransitionListener {
+            override fun onTransitionStarted(
+                motionLayout: MotionLayout?,
+                startId: Int,
+                endId: Int
+            ) {
+
             }
+
+            override fun onTransitionChange(
+                motionLayout: MotionLayout?,
+                startId: Int,
+                endId: Int,
+                progress: Float
+            ) {
+
+            }
+
+            override fun onTransitionCompleted(motionLayout: MotionLayout?, currentId: Int) {
+                if (currentId == R.id.start) {
+                    initAdapter()
+                }
+            }
+
+            override fun onTransitionTrigger(
+                motionLayout: MotionLayout?,
+                triggerId: Int,
+                positive: Boolean,
+                progress: Float
+            ) {
+
+            }
+
         })
+        initAdapter()
     }
 
     companion object {

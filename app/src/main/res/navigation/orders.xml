@@ -61,7 +61,16 @@
         android:name="thapl.com.fudis.ui.orders.ReceiptFragment"
         android:label="receiptFragment"
         tools:layout="@layout/fragment_receipt">
-
+        <argument
+            android:name="id"
+            app:argType="long" />
+        <argument
+            android:name="order"
+            app:argType="long" />
+        <action
+            android:id="@+id/action_back"
+            app:popUpTo="@+id/receiptFragment"
+            app:popUpToInclusive="true" />
     </fragment>
 
     <fragment
@@ -80,6 +89,13 @@
         android:name="thapl.com.fudis.ui.categories.CategoriesFragment"
         android:label="categoriesFragment"
         tools:layout="@layout/fragment_categories">
+        <action
+            android:id="@+id/action_receipt"
+            app:destination="@id/receiptFragment"
+            app:enterAnim="@anim/anim_enter_from_right"
+            app:exitAnim="@anim/anim_exit_to_left"
+            app:popEnterAnim="@anim/anim_enter_from_left"
+            app:popExitAnim="@anim/anim_exit_to_right" />
     </fragment>
 
 </navigation>

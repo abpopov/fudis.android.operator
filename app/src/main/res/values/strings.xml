@@ -28,6 +28,7 @@
     <string name="pause_start_action">Снять с паузы</string>
 
     <string name="categories_search_hint">Найти блюдо</string>
+    <string name="categories_reload">Загрузить меню</string>
 
     <string name="stops_search_hint">Найти ингредиент</string>
     <string name="stops_dialog_text">Вы уверены, что хотите добавить продукт в стоп-лист?</string>
@@ -54,6 +55,7 @@
     <string name="order_single_more">Техкарта</string>
 
     <string name="receipt_back">Заказ № %s</string>
+    <string name="receipt_back_menu">Меню</string>
     <string name="receipt_weight">Вес готового продукта в расчете на 1 порцию - %s кг</string>
     <string name="receipt_column_number">№</string>
     <string name="receipt_column_title">Наименование\nпродукта</string>

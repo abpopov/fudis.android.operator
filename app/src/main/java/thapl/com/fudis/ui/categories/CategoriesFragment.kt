@@ -8,9 +8,11 @@ import androidx.core.content.ContextCompat
 import androidx.core.widget.doAfterTextChanged
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import thapl.com.fudis.R
 import thapl.com.fudis.databinding.FragmentCategoriesBinding
+import thapl.com.fudis.domain.model.CatalogEntity
 import thapl.com.fudis.domain.model.ResultEntity
 import thapl.com.fudis.ui.adapters.CategoriesAdapter
 import thapl.com.fudis.ui.base.BaseFragment
@@ -64,10 +66,13 @@ class CategoriesFragment : BaseFragment() {
         binding?.rvCategoriesList?.adapter = CategoriesAdapter(
             glide = null,
             viewModel = viewModel,
-            click = { _, _ ->
-
+            click = { _, child ->
+                if (child is CatalogEntity) {
+                    navigate(CategoriesFragmentDirections.actionReceipt(child.id, -1L))
+                }
             }
         )
+        binding?.rvCategoriesList?.adapter?.stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
     }
 
     private fun initListeners() {

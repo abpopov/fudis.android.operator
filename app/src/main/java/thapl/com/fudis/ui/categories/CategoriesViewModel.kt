@@ -15,7 +15,13 @@ class CategoriesViewModel(private val useCase: CategoriesUseCase) : BaseViewMode
     val search = MutableLiveData("")
     val filteredCategories: LiveData<List<CategoryEntity>> = Transformations.map(search) { s ->
         val productList = (categories.value as? ResultEntity.Success)?.data
-        productList?.filter { s.isNullOrEmpty() || it.title.containsWord(s) } ?: listOf()
+        productList?.filter { ce ->
+            s.isNullOrEmpty() || ce.title.containsWord(s) || ce.subCategories.any {
+                it.title.containsWord(s)
+            } || ce.children.any {
+                it.title.containsWord(s)
+            }
+        } ?: listOf()
     }
 
     init {
