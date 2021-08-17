@@ -10,5 +10,11 @@ data class ReceiptProductEntity(
     val grossWeightPerItem: String?,
     val grossWeight: String?,
     val netWeight: String?,
-    val doneWeightWeight: String?
-) : Parcelable
+    val doneWeightWeight: String?,
+    var counter: String = ""
+) : Parcelable, ListItem {
+
+    override fun unique() = title
+
+    override fun sameContent(other: ListItem) = this == other
+}

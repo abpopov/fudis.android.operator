@@ -4,11 +4,16 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.navigation.fragment.navArgs
+import com.bumptech.glide.load.resource.bitmap.CenterCrop
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
+import thapl.com.fudis.GlideApp
 import thapl.com.fudis.R
 import thapl.com.fudis.databinding.FragmentReceiptBinding
 import thapl.com.fudis.domain.model.ResultEntity
+import thapl.com.fudis.ui.adapters.ReceiptAdapter
 import thapl.com.fudis.ui.base.BaseFragment
 
 class ReceiptFragment : BaseFragment() {
@@ -60,13 +65,68 @@ class ReceiptFragment : BaseFragment() {
         viewModel.receipt.observe(viewLifecycleOwner, { result ->
             when (result) {
                 is ResultEntity.Loading -> {
-
+                    binding?.vTitlePlaceholder?.visibility = View.VISIBLE
+                    binding?.vTitlePlaceholder?.startAnim()
+                    binding?.vDescPlaceholder?.visibility = View.VISIBLE
+                    binding?.vDescPlaceholder?.startAnim()
+                    binding?.vImgPlaceholder?.visibility = View.VISIBLE
+                    binding?.vImgPlaceholder?.startAnim()
+                    binding?.tvTitleText?.text = ""
+                    binding?.tvDescText?.text = ""
+                    binding?.tvWeightText?.text = ""
+                    binding?.ivFoodPicture?.setImageResource(0)
+                    binding?.rvReceiptList?.adapter = null
                 }
                 is ResultEntity.Error -> {
-
+                    binding?.vTitlePlaceholder?.visibility = View.GONE
+                    binding?.vTitlePlaceholder?.stopAnim()
+                    binding?.vDescPlaceholder?.visibility = View.GONE
+                    binding?.vDescPlaceholder?.stopAnim()
+                    binding?.vImgPlaceholder?.visibility = View.GONE
+                    binding?.vImgPlaceholder?.stopAnim()
+                    Toast.makeText(requireContext(), result.error.message, Toast.LENGTH_SHORT).show()
                 }
                 is ResultEntity.Success -> {
+                    //if (result.data.id == args.id) {
+                    binding?.vTitlePlaceholder?.visibility = View.GONE
+                    binding?.vTitlePlaceholder?.stopAnim()
+                    binding?.vDescPlaceholder?.visibility = View.GONE
+                    binding?.vDescPlaceholder?.stopAnim()
+                    binding?.vImgPlaceholder?.visibility = View.GONE
+                    binding?.vImgPlaceholder?.stopAnim()
+                    binding?.tvTitleText?.text = result.data.title
+                    binding?.tvDescText?.text = result.data.description
+                    binding?.tvWeightText?.text =
+                        getString(R.string.receipt_weight, result.data.doneWeight)
+                    binding?.ivFoodPicture?.let { v ->
+                        result.data.image?.let { i ->
+                            val radius = v.context.resources.getDimensionPixelSize(R.dimen.dp12)
+                            GlideApp.with(this)
+                                .load(i)
+                                .transform(CenterCrop(), RoundedCorners(radius))
+                                .placeholder(0)
+                                .fallback(0)
+                                .error(0)
+                                .into(v)
+                        } ?: run {
+                            v.setImageResource(0)
+                        }
 
+                    }
+                    binding?.rvReceiptList?.adapter = ReceiptAdapter(
+                        null,
+                        viewModel
+                    ) { _, _ ->
+
+                    }
+                    (binding?.rvReceiptList?.adapter as? ReceiptAdapter)?.submitList(
+                        result.data.products.mapIndexed { index, receiptProductEntity ->
+                            receiptProductEntity.also {
+                                it.counter = (index + 1).toString()
+                            }
+                        }
+                    )
+                    //}
                 }
             }
         })

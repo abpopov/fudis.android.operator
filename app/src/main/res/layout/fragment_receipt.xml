@@ -39,6 +39,39 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
+                <thapl.com.fudis.ui.components.FlarePlaceHolderView
+                    android:id="@+id/vTitlePlaceholder"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginStart="@dimen/dp60"
+                    android:layout_marginTop="@dimen/dp60"
+                    android:layout_marginEnd="@dimen/dp60"
+                    app:layout_constraintBottom_toBottomOf="@+id/tvTitleText"
+                    app:layout_constraintEnd_toStartOf="@+id/ivFoodPicture"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <thapl.com.fudis.ui.components.FlarePlaceHolderView
+                    android:id="@+id/vImgPlaceholder"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/ivFoodPicture"
+                    app:layout_constraintEnd_toEndOf="@+id/ivFoodPicture"
+                    app:layout_constraintStart_toStartOf="@+id/ivFoodPicture"
+                    app:layout_constraintTop_toTopOf="@+id/ivFoodPicture" />
+
+                <thapl.com.fudis.ui.components.FlarePlaceHolderView
+                    android:id="@+id/vDescPlaceholder"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginStart="@dimen/dp60"
+                    android:layout_marginTop="@dimen/dp48"
+                    android:layout_marginEnd="@dimen/dp60"
+                    app:layout_constraintBottom_toBottomOf="@+id/ivFoodPicture"
+                    app:layout_constraintEnd_toStartOf="@+id/ivFoodPicture"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tvTitleText" />
+
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/ivFoodPicture"
                     android:layout_width="0dp"
@@ -202,6 +235,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/dp60"
                     android:layout_marginEnd="@dimen/dp60"
+                    android:nestedScrollingEnabled="false"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
