@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.core.widget.doAfterTextChanged
+import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -15,6 +16,7 @@ import thapl.com.fudis.databinding.FragmentCategoriesBinding
 import thapl.com.fudis.domain.model.CatalogEntity
 import thapl.com.fudis.domain.model.ResultEntity
 import thapl.com.fudis.ui.adapters.CategoriesAdapter
+import thapl.com.fudis.ui.adapters.SearchCatalogAdapter
 import thapl.com.fudis.ui.base.BaseFragment
 
 class CategoriesFragment : BaseFragment() {
@@ -23,6 +25,9 @@ class CategoriesFragment : BaseFragment() {
 
     private var _binding: FragmentCategoriesBinding? = null
     private val binding get() = _binding
+
+    private var catAdapter: CategoriesAdapter? = null
+    private var productAdapter: SearchCatalogAdapter? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -63,7 +68,7 @@ class CategoriesFragment : BaseFragment() {
         binding?.etSearch?.doAfterTextChanged {
             viewModel.search.postValue(it?.toString())
         }
-        binding?.rvCategoriesList?.adapter = CategoriesAdapter(
+        catAdapter = CategoriesAdapter(
             glide = null,
             viewModel = viewModel,
             click = { _, child ->
@@ -72,7 +77,16 @@ class CategoriesFragment : BaseFragment() {
                 }
             }
         )
-        binding?.rvCategoriesList?.adapter?.stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
+        productAdapter = SearchCatalogAdapter(
+            glide = null,
+            viewModel = viewModel,
+            click = { item, _ ->
+                navigate(CategoriesFragmentDirections.actionReceipt(item.id, -1L))
+            }
+        )
+        binding?.rvCategoriesList?.adapter = ConcatAdapter(productAdapter, catAdapter)
+        productAdapter?.stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
+        catAdapter?.stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
     }
 
     private fun initListeners() {
@@ -104,7 +118,8 @@ class CategoriesFragment : BaseFragment() {
         })
         viewModel.filteredCategories.observe(viewLifecycleOwner, { result ->
             if (result != null) {
-                (binding?.rvCategoriesList?.adapter as? CategoriesAdapter)?.submitList(result)
+                productAdapter?.submitList(result.first)
+                catAdapter?.submitList(result.second)
             }
         })
     }
