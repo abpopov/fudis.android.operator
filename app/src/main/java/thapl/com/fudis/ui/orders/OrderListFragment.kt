@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import thapl.com.fudis.GlideApp
@@ -77,7 +78,7 @@ class OrderListFragment : BaseFragment() {
                 }
                 is ResultEntity.Error -> {
                     binding?.vSwipeRefresh?.isRefreshing = false
-
+                    Toast.makeText(requireContext(), result.error.message, Toast.LENGTH_SHORT).show()
                 }
                 is ResultEntity.Success -> {
                     binding?.vSwipeRefresh?.isRefreshing = false

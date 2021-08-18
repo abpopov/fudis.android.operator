@@ -15,7 +15,6 @@ import thapl.com.fudis.ui.base.BaseListAdapter
 import thapl.com.fudis.ui.orders.OrdersViewModel
 import thapl.com.fudis.utils.toOrderAction
 import thapl.com.fudis.utils.toOrderStatus
-import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -52,11 +51,6 @@ class OrderHolder(view: View) : BaseHolder<OrdersViewModel, OrderEntity>(view) {
     private val imgLogoService = view.findViewById<ImageView>(R.id.ivLogoService)
     private val bgRoot = view.findViewById<View>(R.id.vRoot)
 
-    private val formatter: NumberFormat = NumberFormat.getNumberInstance().also {
-        it.minimumFractionDigits = 0
-        it.maximumFractionDigits = 2
-    }
-
     override fun bind(
         item: OrderEntity,
         position: Int,
@@ -77,7 +71,7 @@ class OrderHolder(view: View) : BaseHolder<OrdersViewModel, OrderEntity>(view) {
             else -> imgLogoService.setImageResource(0)
         }
         textOrderContent.text = item.cartData.filter { it.count > 0 }
-            .joinToString(separator = "  •  ") { "${it.count} × ${it.title}" }
+            .joinToString(separator = "  •  ") { "${it.count} × ${it.item.title}" }
         item.createdAt?.let { date ->
             textOrderTime.text = SimpleDateFormat(
                 "dd.MM.yy ${itemView.context.getString(R.string.order_time_at)} HH:mm",

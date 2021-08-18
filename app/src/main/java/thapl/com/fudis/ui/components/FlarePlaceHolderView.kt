@@ -26,8 +26,9 @@ class FlarePlaceHolderView @JvmOverloads constructor(
         addView(bg, ViewGroup.LayoutParams(MATCH_PARENT, MATCH_PARENT))
         addView(flare, ViewGroup.LayoutParams(MATCH_PARENT, MATCH_PARENT))
         bg.setImageResource(R.drawable.ic_bg_rounded_bl05_12)
-        bg.alpha = 0.5f
+        bg.alpha = 0.4f
         flare.setImageResource(R.drawable.ic_bg_rounded_flare_12)
+        flare.alpha = 0.8f
     }
 
     fun startAnim() {
@@ -37,7 +38,7 @@ class FlarePlaceHolderView @JvmOverloads constructor(
             0f,
             0f
         )
-        anim?.duration = 1200
+        anim?.duration = 1400
         anim?.fillAfter = false
         anim?.repeatCount = Animation.INFINITE
         anim?.repeatMode = Animation.RESTART

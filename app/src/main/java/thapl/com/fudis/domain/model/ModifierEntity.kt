@@ -4,13 +4,12 @@ import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class CartEntity(
-    val item: CatalogItemEntity,
-    val modifiers: List<ModifierEntity>,
-    val count: Int
+class ModifierEntity(
+    val count: Int,
+    val modificator: ModificatorEntity
 ) : Parcelable, ListItem {
 
-    override fun unique() = item.id
+    override fun unique() = modificator.id
 
     override fun sameContent(other: ListItem) = this == other
 }

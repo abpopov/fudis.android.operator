@@ -15,6 +15,7 @@ import thapl.com.fudis.domain.model.OrderEntity
 import thapl.com.fudis.domain.model.ResultEntity
 import thapl.com.fudis.domain.model.SOURCE_TYPE_DC
 import thapl.com.fudis.domain.model.SOURCE_TYPE_YA
+import thapl.com.fudis.ui.adapters.CartAdapter
 import thapl.com.fudis.ui.base.BaseFragment
 import thapl.com.fudis.utils.toOrderAction
 import thapl.com.fudis.utils.toOrderStatus
@@ -115,6 +116,13 @@ class OrderFragment : BaseFragment() {
             binding?.tvVendorName?.visibility = View.GONE
             binding?.ivLogoVendor?.visibility = View.GONE
         }
+        binding?.rvCartList?.adapter = CartAdapter(
+            null,
+            viewModel
+        ) { receipt, _ ->
+            navigate(OrderFragmentDirections.actionReceipt(receipt.item.id, item.id))
+        }
+        (binding?.rvCartList?.adapter as? CartAdapter)?.submitList(item.cartData)
         setChangeableData(item)
     }
 

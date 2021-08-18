@@ -1,8 +1,6 @@
 package thapl.com.fudis.domain.mapper
 
-import thapl.com.fudis.data.api.model.CartApi
-import thapl.com.fudis.data.api.model.ConceptionApi
-import thapl.com.fudis.data.api.model.OrderApi
+import thapl.com.fudis.data.api.model.*
 import thapl.com.fudis.domain.model.*
 import thapl.com.fudis.utils.toTimestamp
 
@@ -45,7 +43,7 @@ object OrderApiToEntityMapper : BaseMapperNullable<OrderApi, OrderEntity> {
             deliveryAt = type.deliveryAt?.toTimestamp(),
             updatedAt = type.updatedAt?.toTimestamp(),
             conception = ConceptionApiToEntityMapper.map(type.conception),
-            cartData = CartListApiToEntityMapper.map(type.cartData)
+            cartData = CartListApiToEntityMapper.map(type.cartData?.cartItems)
         )
     }
 
@@ -62,12 +60,61 @@ object CartListApiToEntityMapper : BaseMapperSafe<List<CartApi>, List<CartEntity
 object CartApiToEntityMapper : BaseMapperNullable<CartApi, CartEntity> {
 
     override fun map(type: CartApi?): CartEntity? {
-        type?.title ?: return null
-        type.id ?: return null
+        val item = CatalogItemApiToEntityMapper.map(type?.catalogItem)
+        item ?: return null
         return CartEntity(
+            item = item,
+            modifiers = ModifierListApiToEntityMapper.map(type?.modifiers),
+            count = type?.count ?: 0
+        )
+    }
+
+}
+
+object ModifierListApiToEntityMapper : BaseMapperSafe<List<ModifierApi>, List<ModifierEntity>> {
+
+    override fun map(type: List<ModifierApi>?): List<ModifierEntity> {
+        return type?.mapNotNull { ModifierApiToEntityMapper.map(it) } ?: listOf()
+    }
+
+}
+
+object CatalogItemApiToEntityMapper : BaseMapperNullable<CatalogItemApi, CatalogItemEntity> {
+
+    override fun map(type: CatalogItemApi?): CatalogItemEntity? {
+        type?.id ?: return null
+        type.title ?: return null
+        return CatalogItemEntity(
             title = type.title,
             id = type.id,
-            count = type.count ?: 0
+            price = type.basePrice ?: 0f
+        )
+    }
+
+}
+
+object ModifierApiToEntityMapper : BaseMapperNullable<ModifierApi, ModifierEntity> {
+
+    override fun map(type: ModifierApi?): ModifierEntity? {
+        val modificator = ModificatorApiToEntityMapper.map(type?.modificator)
+        modificator ?: return null
+        return ModifierEntity(
+            count = type?.count ?: 0,
+            modificator = modificator
+        )
+    }
+
+}
+
+object ModificatorApiToEntityMapper : BaseMapperNullable<ModificatorApi, ModificatorEntity> {
+
+    override fun map(type: ModificatorApi?): ModificatorEntity? {
+        type?.id ?: return null
+        type.title ?: return null
+        return ModificatorEntity(
+            title = type.title,
+            id = type.id,
+            price = type.price ?: 0f
         )
     }
 
