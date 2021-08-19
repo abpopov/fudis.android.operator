@@ -13,12 +13,14 @@ import thapl.com.fudis.R
 import thapl.com.fudis.databinding.FragmentOrdersBinding
 import thapl.com.fudis.domain.model.ResultEntity
 import thapl.com.fudis.ui.base.BaseFragment
+import thapl.com.fudis.ui.categories.CategoriesViewModel
 import thapl.com.fudis.ui.dialogs.PauseViewModel
 
 class OrdersFragment : BaseFragment() {
 
     private val viewModel: OrdersViewModel by sharedViewModel()
     private val pauseViewModel: PauseViewModel by sharedViewModel()
+    private val catsViewModel: CategoriesViewModel by sharedViewModel()
 
     private var _binding: FragmentOrdersBinding? = null
     private val binding get() = _binding
@@ -72,6 +74,7 @@ class OrdersFragment : BaseFragment() {
         binding?.tvOrders?.setOnClickListener {
             viewModel.selectMenu(0)
             navController?.navigate(R.id.orderListFragment)
+            catsViewModel.search.postValue("")
         }
         binding?.tvCats?.setOnClickListener {
             viewModel.selectMenu(2)
@@ -80,6 +83,7 @@ class OrdersFragment : BaseFragment() {
         binding?.tvStops?.setOnClickListener {
             viewModel.selectMenu(3)
             navController?.navigate(R.id.stopsFragment)
+            catsViewModel.search.postValue("")
         }
         binding?.tvHelp?.setOnClickListener {
             val source = viewModel.menuPos.value ?: 0

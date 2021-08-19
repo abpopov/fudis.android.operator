@@ -16,6 +16,19 @@ import java.net.UnknownHostException
 
 abstract class BaseViewModel : ViewModel() {
 
+    inline fun <T : Any> doPostActionRequest(
+        liveData: MutableLiveData<ResultEntity<T>>,
+        needLoading: Boolean = true,
+        crossinline block: suspend () -> T,
+        crossinline action: suspend () -> Unit
+    ): Job {
+        return viewModelScope.launch {
+            if (needLoading) liveData.postValue(ResultEntity.Loading)
+            liveData.postValue(safeExecute(block))
+            action.invoke()
+        }
+    }
+
     inline fun <T : Any> doRequest(
         liveData: MutableLiveData<ResultEntity<T>>,
         needLoading: Boolean = true,

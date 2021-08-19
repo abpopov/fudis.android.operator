@@ -32,6 +32,11 @@ class StopsFragment : BaseFragment() {
         }
     }
 
+    override fun onStop() {
+        viewModel.search.postValue("")
+        super.onStop()
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
