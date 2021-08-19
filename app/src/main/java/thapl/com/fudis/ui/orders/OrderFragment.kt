@@ -5,6 +5,7 @@ import android.text.format.DateUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
@@ -131,22 +132,22 @@ class OrderFragment : BaseFragment() {
             navigate(OrderFragmentDirections.actionBack())
         }
         binding?.tvOrderAction?.setOnClickListener {
-
+            val order = viewModel.currentOrder.value
+            order ?: return@setOnClickListener
+            binding?.tvOrderAction?.isEnabled = false
+            viewModel.changeStatus(order.id, order.getNextStatus())
         }
     }
 
     private fun initObservers() {
-        viewModel.order.observe(viewLifecycleOwner, { result ->
-            when (result) {
-                is ResultEntity.Loading -> {
-
-                }
-                is ResultEntity.Error -> {
-
-                }
-                is ResultEntity.Success -> {
-
-                }
+        viewModel.currentOrder.observe(viewLifecycleOwner, { result ->
+            if (result?.id == args.order.id) {
+                setChangeableData(result)
+            }
+        })
+        viewModel.status.observe(viewLifecycleOwner, { result ->
+            if (result is ResultEntity.Error) {
+                Toast.makeText(requireContext(), result.error.message, Toast.LENGTH_SHORT).show()
             }
         })
     }
@@ -156,6 +157,7 @@ class OrderFragment : BaseFragment() {
         binding?.tvStatusValue?.text = getString(status)
         val action = item.status.toOrderAction()
         if (action != 0) {
+            binding?.tvOrderAction?.isEnabled = true
             binding?.tvOrderAction?.visibility = View.VISIBLE
             binding?.tvOrderAction?.text = getString(action)
         } else {

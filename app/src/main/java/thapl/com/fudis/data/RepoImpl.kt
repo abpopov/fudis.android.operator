@@ -40,6 +40,8 @@ class RepoImpl(
 
     override suspend fun orders() = api.orders()
 
+    override suspend fun changeStatus(order: Long?, status: Int?) = api.changeStatus(order, status)
+
     override suspend fun categories() = api.categories()
 
     override suspend fun catalog(id: Long?) = api.catalog(id)

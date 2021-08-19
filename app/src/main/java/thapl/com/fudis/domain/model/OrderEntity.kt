@@ -23,7 +23,7 @@ data class OrderEntity(
     val cartData: List<CartEntity>,
     val orderSource: Int,
     val organizationId: Int,
-    val status: Int,
+    var status: Int,
     val paymentType: Int,
     val paymentStatus: Int,
     val pointsNumber: Int,
@@ -47,6 +47,15 @@ data class OrderEntity(
     val updatedAt: Long?,
     var header: Int? = null
 ) : Parcelable, ListItem {
+
+    fun getNextStatus(): Int {
+        return when (status) {
+            ORDER_STATUS_NEW -> ORDER_STATUS_IN_PROGRESS
+            ORDER_STATUS_IN_PROGRESS -> ORDER_STATUS_READY
+            ORDER_STATUS_READY -> ORDER_STATUS_IN_DELIVERY
+            else -> -1
+        }
+    }
 
     override fun unique() = id
 

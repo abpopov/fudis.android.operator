@@ -10,6 +10,7 @@ import thapl.com.fudis.domain.model.ReceiptEntity
 import thapl.com.fudis.domain.model.ResultEntity
 import thapl.com.fudis.ui.base.BaseViewModel
 import thapl.com.fudis.utils.SingleLiveEvent
+import thapl.com.fudis.utils.addHeaders
 
 class OrdersViewModel(private val useCase: OrdersUseCase) : BaseViewModel() {
 
@@ -23,8 +24,9 @@ class OrdersViewModel(private val useCase: OrdersUseCase) : BaseViewModel() {
 
     val menuPos = Transformations.distinctUntilChanged(_menuPos)
     val orders = MutableLiveData<ResultEntity<List<OrderEntity>>>()
-    val order = MutableLiveData<ResultEntity<OrderEntity>>()
+    val currentOrder = SingleLiveEvent<OrderEntity>()
     val receipt = MutableLiveData<ResultEntity<ReceiptEntity>>()
+    val status = SingleLiveEvent<ResultEntity<Pair<Long, Int>>>()
 
     init {
         getOrders()
@@ -39,7 +41,7 @@ class OrdersViewModel(private val useCase: OrdersUseCase) : BaseViewModel() {
     }
 
     fun initOrder(order: OrderEntity) {
-
+        currentOrder.postValue(order)
     }
 
     fun initReceipt(id: Long) {
@@ -60,5 +62,39 @@ class OrdersViewModel(private val useCase: OrdersUseCase) : BaseViewModel() {
             }
         )
 
+    }
+
+    fun changeStatus(id: Long, nextStatus: Int) {
+        if (nextStatus == -1) {
+            return
+        }
+        doPostActionRequest(
+            status,
+            block = {
+                useCase.changeStatus(id, nextStatus)
+            }, action = { pair ->
+                if (pair is ResultEntity.Success) {
+                    val order = orders.value
+                    if (order is ResultEntity.Success) {
+                        val list = order.data.onEach {
+                            if (it.id == pair.data.first) {
+                                it.status = pair.data.second
+                            }
+                        }.addHeaders()
+                        orders.postValue(ResultEntity.Success(list))
+                    }
+                    val current = currentOrder.value
+                    current?.let {
+                        if (it.id == pair.data.first) {
+                            it.status = pair.data.second
+                            currentOrder.postValue(it)
+                        }
+                    }
+                } else if (pair is ResultEntity.Error) {
+                    orders.postValue(orders.value)
+                    currentOrder.postValue(currentOrder.value)
+                }
+            }
+        )
     }
 }

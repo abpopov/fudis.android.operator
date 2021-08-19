@@ -116,6 +116,7 @@ class OrderHolder(view: View) : BaseHolder<OrdersViewModel, OrderEntity>(view) {
             click(item, MORE)
         }
         btnOrderAction.setOnClickListener {
+            btnOrderAction.isEnabled = false
             click(item, ACTION)
         }
         setChangeableData(item)
@@ -135,6 +136,7 @@ class OrderHolder(view: View) : BaseHolder<OrdersViewModel, OrderEntity>(view) {
         bgRoot.setBackgroundResource(if (status == R.string.order_status_new) R.drawable.ic_bg_stroke_gr_32 else 0)
         val action = item.status.toOrderAction()
         if (action != 0) {
+            btnOrderAction.isEnabled = true
             btnOrderAction.visibility = View.VISIBLE
             btnOrderAction.text = itemView.context.getString(action)
         } else {

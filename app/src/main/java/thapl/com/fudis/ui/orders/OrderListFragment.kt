@@ -58,7 +58,7 @@ class OrderListFragment : BaseFragment() {
                         navigate(OrderListFragmentDirections.actionOrder(item))
                     }
                     ACTION -> {
-
+                        viewModel.changeStatus(item.id, item.getNextStatus())
                     }
                 }
             }
@@ -71,6 +71,11 @@ class OrderListFragment : BaseFragment() {
     }
 
     private fun initObservers() {
+        viewModel.status.observe(viewLifecycleOwner, { result ->
+            if (result is ResultEntity.Error) {
+                Toast.makeText(requireContext(), result.error.message, Toast.LENGTH_SHORT).show()
+            }
+        })
         viewModel.orders.observe(viewLifecycleOwner, { result ->
             when (result) {
                 is ResultEntity.Loading -> {

@@ -60,6 +60,12 @@ class ApiImpl(
         100
     )
 
+    override suspend fun changeStatus(order: Long?, status: Int?) = service.changeStatus(
+        "Bearer ${prefs.getUserToken()}",
+        order,
+        status
+    )
+
     override suspend fun categories() = service.categories(
         "Bearer ${prefs.getUserToken()}"
     )

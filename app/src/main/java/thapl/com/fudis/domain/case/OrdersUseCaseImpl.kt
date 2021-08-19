@@ -27,4 +27,8 @@ class OrdersUseCaseImpl(private val repo: Repo) : OrdersUseCase {
         )
     }
 
+    override suspend fun changeStatus(id: Long, status: Int): Pair<Long, Int> {
+        return Pair(id, checkNotNull(repo.changeStatus(id, status).status))
+    }
+
 }

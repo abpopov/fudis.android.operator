@@ -20,12 +20,13 @@ abstract class BaseViewModel : ViewModel() {
         liveData: MutableLiveData<ResultEntity<T>>,
         needLoading: Boolean = true,
         crossinline block: suspend () -> T,
-        crossinline action: suspend () -> Unit
+        crossinline action: suspend (ResultEntity<T>) -> Unit
     ): Job {
         return viewModelScope.launch {
             if (needLoading) liveData.postValue(ResultEntity.Loading)
-            liveData.postValue(safeExecute(block))
-            action.invoke()
+            val result = safeExecute(block)
+            liveData.postValue(result)
+            action.invoke(result)
         }
     }
 

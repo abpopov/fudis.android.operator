@@ -60,7 +60,9 @@ fun Int?.toCausePause(): Int {
 }
 
 fun List<OrderEntity>.addHeaders(): List<OrderEntity> {
-    val result = this.sortedBy { it.createdAt }
+    val result = this.sortedBy { it.createdAt }.onEach {
+        it.header = null
+    }
 
     return mutableListOf<OrderEntity>().apply {
         addAll(result.filter { it.status < ORDER_STATUS_IN_DELIVERY }.also {

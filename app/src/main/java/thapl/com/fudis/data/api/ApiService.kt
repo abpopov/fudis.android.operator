@@ -19,6 +19,14 @@ interface ApiService {
         @Query("per-page") limit: Int?
     ): List<OrderApi>
 
+    @FormUrlEncoded
+    @POST("order/change-status")
+    suspend fun changeStatus(
+        @Header("Authorization") token: String?,
+        @Field("id") order: Long?,
+        @Field("status") status: Int?
+    ): StatusApi
+
     @GET("catalog/get-tech-card")
     suspend fun receipt(
         @Header("Authorization") token: String?,
