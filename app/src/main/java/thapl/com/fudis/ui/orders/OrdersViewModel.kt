@@ -5,11 +5,13 @@ import androidx.lifecycle.Transformations
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import thapl.com.fudis.domain.case.OrdersUseCase
+import thapl.com.fudis.domain.model.ORDER_STATUS_NEW
 import thapl.com.fudis.domain.model.OrderEntity
 import thapl.com.fudis.domain.model.ReceiptEntity
 import thapl.com.fudis.domain.model.ResultEntity
 import thapl.com.fudis.ui.base.BaseViewModel
 import thapl.com.fudis.utils.SingleLiveEvent
+import thapl.com.fudis.utils.SoundPlayer
 import thapl.com.fudis.utils.addHeaders
 
 class OrdersViewModel(private val useCase: OrdersUseCase) : BaseViewModel() {
@@ -27,6 +29,7 @@ class OrdersViewModel(private val useCase: OrdersUseCase) : BaseViewModel() {
     val currentOrder = SingleLiveEvent<OrderEntity>()
     val receipt = MutableLiveData<ResultEntity<ReceiptEntity>>()
     val status = SingleLiveEvent<ResultEntity<Pair<Long, Int>>>()
+    val needScroll = SingleLiveEvent<Boolean>()
 
     init {
         getOrders()
@@ -37,7 +40,7 @@ class OrdersViewModel(private val useCase: OrdersUseCase) : BaseViewModel() {
     }
 
     fun refresh() {
-        getOrders()
+        getOrders(swipe = true)
     }
 
     fun initOrder(order: OrderEntity) {
@@ -50,15 +53,27 @@ class OrdersViewModel(private val useCase: OrdersUseCase) : BaseViewModel() {
         }
     }
 
-    private fun getOrders() {
+    private fun getOrders(repeat: Boolean = false, swipe: Boolean = false) {
         ticker = doPostActionRequest(
             orders,
             block = {
                 useCase.getOrders()
             },
-            action = {
+            action = { result ->
                 delay(REFRESH_ORDER_DELAY)
-                getOrders()
+                getOrders(repeat = true)
+                if (
+                    result is ResultEntity.Success && result.data.any {
+                        it.status == ORDER_STATUS_NEW
+                    }
+                ) {
+                    if (repeat) {
+                        SoundPlayer(useCase.getContext()).start()
+                    }
+                    if (swipe) {
+                        needScroll.postValue(true)
+                    }
+                }
             }
         )
 
@@ -87,6 +102,7 @@ class OrdersViewModel(private val useCase: OrdersUseCase) : BaseViewModel() {
                     current?.let {
                         if (it.id == pair.data.first) {
                             it.status = pair.data.second
+                            it.updatedAt = System.currentTimeMillis()
                             currentOrder.postValue(it)
                         }
                     }

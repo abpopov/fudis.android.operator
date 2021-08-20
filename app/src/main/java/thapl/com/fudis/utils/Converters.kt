@@ -6,13 +6,20 @@ import thapl.com.fudis.domain.model.*
 import java.text.SimpleDateFormat
 import java.util.*
 
+const val DATE_PATTERN = "yyyy-MM-dd HH:mm:ss"
+
 fun String?.toTimestamp(): Long? {
     this ?: return null
     return try {
-        SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).parse(this)?.time
+        SimpleDateFormat(DATE_PATTERN, Locale.getDefault()).parse(this)?.time
     } catch (e: Exception) {
         null
     }
+}
+
+fun Long?.toDateString(): String? {
+    this ?: return null
+    return SimpleDateFormat(DATE_PATTERN, Locale.getDefault()).format(Date(this))
 }
 
 fun Long?.toDate(): Date? {
@@ -60,7 +67,7 @@ fun Int?.toCausePause(): Int {
 }
 
 fun List<OrderEntity>.addHeaders(): List<OrderEntity> {
-    val result = this.sortedBy { it.createdAt }.onEach {
+    val result = this.sortedByDescending { it.updatedAt ?: it.createdAt }.onEach {
         it.header = null
     }
 

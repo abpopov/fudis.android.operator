@@ -44,7 +44,7 @@ data class OrderEntity(
     val lng: Double?,
     val createdAt: Long?,
     val deliveryAt: Long?,
-    val updatedAt: Long?,
+    var updatedAt: Long?,
     var header: Int? = null
 ) : Parcelable, ListItem {
 

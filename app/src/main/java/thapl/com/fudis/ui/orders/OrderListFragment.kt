@@ -71,6 +71,13 @@ class OrderListFragment : BaseFragment() {
     }
 
     private fun initObservers() {
+        viewModel.needScroll.observe(viewLifecycleOwner, { result ->
+            if (result == true) {
+                binding?.rvOrders?.postDelayed({
+                          binding?.rvOrders?.smoothScrollToPosition(0)
+                }, 300)
+            }
+        })
         viewModel.status.observe(viewLifecycleOwner, { result ->
             if (result is ResultEntity.Error) {
                 Toast.makeText(requireContext(), result.error.message, Toast.LENGTH_SHORT).show()
