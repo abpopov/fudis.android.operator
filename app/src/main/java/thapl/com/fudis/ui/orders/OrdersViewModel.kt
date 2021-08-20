@@ -1,6 +1,5 @@
 package thapl.com.fudis.ui.orders
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import kotlinx.coroutines.Job
@@ -54,7 +53,7 @@ class OrdersViewModel(private val useCase: OrdersUseCase) : BaseViewModel() {
         }
     }
 
-    private fun getOrders(repeat: Boolean = false, swipe: Boolean = false) {
+    private fun getOrders(swipe: Boolean = false) {
         ticker = doPostActionRequest(
             orders,
             block = {
@@ -64,17 +63,8 @@ class OrdersViewModel(private val useCase: OrdersUseCase) : BaseViewModel() {
                 if (swipe) {
                     needScroll.postValue(true)
                 }
-                if (
-                    result is ResultEntity.Success && result.data.any {
-                        it.status == ORDER_STATUS_NEW
-                    }
-                ) {
-                    if (repeat) {
-                        SoundPlayer(useCase.getContext()).start()
-                    }
-                }
                 delay(REFRESH_ORDER_DELAY)
-                getOrders(repeat = true)
+                getOrders()
             }
         )
 

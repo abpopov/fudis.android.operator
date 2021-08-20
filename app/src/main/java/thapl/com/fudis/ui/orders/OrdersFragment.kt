@@ -4,6 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AccelerateInterpolator
+import android.view.animation.Animation
+import android.view.animation.ScaleAnimation
 import android.widget.Toast
 import androidx.fragment.app.setFragmentResultListener
 import androidx.navigation.NavController
@@ -11,16 +14,21 @@ import androidx.navigation.Navigation
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import thapl.com.fudis.R
 import thapl.com.fudis.databinding.FragmentOrdersBinding
+import thapl.com.fudis.domain.model.ORDER_STATUS_NEW
 import thapl.com.fudis.domain.model.ResultEntity
 import thapl.com.fudis.ui.base.BaseFragment
 import thapl.com.fudis.ui.categories.CategoriesViewModel
 import thapl.com.fudis.ui.dialogs.PauseViewModel
+import thapl.com.fudis.utils.SoundPlayer
 
 class OrdersFragment : BaseFragment() {
 
     private val viewModel: OrdersViewModel by sharedViewModel()
     private val pauseViewModel: PauseViewModel by sharedViewModel()
     private val catsViewModel: CategoriesViewModel by sharedViewModel()
+
+    private var soundPlayer: SoundPlayer? = null
+    private var anim: Animation? = null
 
     private var _binding: FragmentOrdersBinding? = null
     private val binding get() = _binding
@@ -67,7 +75,7 @@ class OrdersFragment : BaseFragment() {
     }
 
     private fun initViews() {
-
+        soundPlayer = SoundPlayer(requireContext())
     }
 
     private fun initListeners() {
@@ -133,6 +141,48 @@ class OrdersFragment : BaseFragment() {
                 }
             }
         })
+        viewModel.orders.observe(viewLifecycleOwner, { result ->
+            when (result) {
+                is ResultEntity.Success -> {
+                    if (result.data.any {
+                            it.status == ORDER_STATUS_NEW
+                        }) {
+                        if (soundPlayer?.isPlaying == false) {
+                            soundPlayer?.start(true)
+                        }
+                        setAlert(true)
+                    } else {
+                        soundPlayer?.stop()
+                        setAlert(false)
+                    }
+                }
+                else -> {
+                    soundPlayer?.stop()
+                    setAlert(false)
+                }
+            }
+        })
+    }
+
+    private fun setAlert(start: Boolean) {
+        if (start) {
+            binding?.vAlert?.visibility = View.VISIBLE
+            anim = ScaleAnimation(
+                0.4f, 1.6f,
+                0.4f, 1.6f,
+                Animation.RELATIVE_TO_SELF, 0.5f,
+                Animation.RELATIVE_TO_SELF, 0.5f
+            )
+            anim?.interpolator = AccelerateInterpolator()
+            anim?.fillAfter = false
+            anim?.duration = 600
+            anim?.repeatCount = Animation.INFINITE
+            anim?.repeatMode = Animation.REVERSE
+            binding?.vAlert?.startAnimation(anim)
+        } else {
+            anim?.cancel()
+            binding?.vAlert?.visibility = View.GONE
+        }
     }
 
     companion object {

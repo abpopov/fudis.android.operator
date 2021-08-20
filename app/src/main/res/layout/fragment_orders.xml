@@ -5,6 +5,15 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true">
 
+    <View
+        android:id="@+id/vAlert"
+        android:layout_width="@dimen/dp12"
+        android:layout_height="@dimen/dp12"
+        android:layout_marginTop="@dimen/dp64"
+        android:background="@drawable/ic_bg_circle_red"
+        app:layout_constraintStart_toEndOf="@+id/tvOrders"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <thapl.com.fudis.ui.components.CheckableTextView
         android:id="@+id/tvOrders"
         style="@style/ButtonStyleMenu"

@@ -12,7 +12,10 @@ class SoundPlayer(private val context: Context) {
 
     private var mediaPlayer: MediaPlayer? = null
 
-    fun start() {
+    var isPlaying = false
+        private set
+
+    fun start(loop: Boolean = false) {
         val soundId: Int = R.raw.order
         mediaPlayer?.release()
         mediaPlayer = MediaPlayer()
@@ -22,22 +25,31 @@ class SoundPlayer(private val context: Context) {
                 .setUsage(AudioAttributes.USAGE_VOICE_COMMUNICATION)
                 .build()
         )
-        mediaPlayer?.isLooping = false
-        mediaPlayer?.setOnCompletionListener { stop() }
+        mediaPlayer?.isLooping = loop
+        mediaPlayer?.setOnCompletionListener {
+            if (loop.not()) {
+                stop()
+            }
+        }
         val packageName = context.packageName
         val dataUri = Uri.parse("android.resource://$packageName/$soundId")
         try {
             mediaPlayer?.setDataSource(context, dataUri)
             mediaPlayer?.prepare()
             mediaPlayer?.start()
+            isPlaying = true
         } catch (e: IllegalArgumentException) {
             Log.w(TAG, e)
+            isPlaying = false
         } catch (e: SecurityException) {
             Log.w(TAG, e)
+            isPlaying = false
         } catch (e: IllegalStateException) {
             Log.w(TAG, e)
+            isPlaying = false
         } catch (e: IOException) {
             Log.w(TAG, e)
+            isPlaying = false
         }
     }
 
@@ -45,6 +57,7 @@ class SoundPlayer(private val context: Context) {
         if (mediaPlayer == null) return
         mediaPlayer?.release()
         mediaPlayer = null
+        isPlaying = false
     }
 
     companion object {

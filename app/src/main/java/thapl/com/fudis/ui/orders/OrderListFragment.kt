@@ -10,11 +10,13 @@ import androidx.recyclerview.widget.RecyclerView
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import thapl.com.fudis.GlideApp
 import thapl.com.fudis.databinding.FragmentOrderListBinding
+import thapl.com.fudis.domain.model.ORDER_STATUS_NEW
 import thapl.com.fudis.domain.model.ResultEntity
 import thapl.com.fudis.ui.adapters.ACTION
 import thapl.com.fudis.ui.adapters.MORE
 import thapl.com.fudis.ui.adapters.OrdersAdapter
 import thapl.com.fudis.ui.base.BaseFragment
+import thapl.com.fudis.utils.SoundPlayer
 
 class OrderListFragment : BaseFragment() {
 
