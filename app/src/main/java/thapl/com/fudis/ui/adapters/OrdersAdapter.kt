@@ -71,7 +71,17 @@ class OrderHolder(view: View) : BaseHolder<OrdersViewModel, OrderEntity>(view) {
             else -> imgLogoService.setImageResource(0)
         }
         textOrderContent.text = item.cartData.filter { it.count > 0 }
-            .joinToString(separator = "  •  ") { "${it.count} × ${it.item.title}" }
+            .joinToString(separator = "  •  ") {
+                "${it.count} × ${it.item.title}${
+                    if (it.modifiers.isNotEmpty())
+                        "(${it.modifiers.filter { m -> m.count > 0 }
+                            .joinToString(separator = ", ") {
+                                it.modificator.title
+                            }})"
+                else 
+                    ""
+                }"
+            }
         item.createdAt?.let { date ->
             textOrderTime.text = SimpleDateFormat(
                 "dd.MM.yy ${itemView.context.getString(R.string.order_time_at)} HH:mm",

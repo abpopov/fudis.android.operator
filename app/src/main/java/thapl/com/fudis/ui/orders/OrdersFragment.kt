@@ -75,7 +75,7 @@ class OrdersFragment : BaseFragment() {
     }
 
     private fun initViews() {
-        soundPlayer = SoundPlayer(requireContext())
+
     }
 
     private fun initListeners() {
@@ -147,9 +147,9 @@ class OrdersFragment : BaseFragment() {
                     if (result.data.any {
                             it.status == ORDER_STATUS_NEW
                         }) {
-                        if (soundPlayer?.isPlaying == false) {
-                            soundPlayer?.start(true)
-                        }
+                        soundPlayer?.stop()
+                        soundPlayer = SoundPlayer(requireContext())
+                        soundPlayer?.start(true)
                         setAlert(true)
                     } else {
                         soundPlayer?.stop()
