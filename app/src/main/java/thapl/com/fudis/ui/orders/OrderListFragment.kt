@@ -1,6 +1,7 @@
 package thapl.com.fudis.ui.orders
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -73,6 +74,7 @@ class OrderListFragment : BaseFragment() {
     private fun initObservers() {
         viewModel.needScroll.observe(viewLifecycleOwner, { result ->
             if (result == true) {
+                Log.d("raggg", "scroll")
                 binding?.rvOrders?.postDelayed({
                           binding?.rvOrders?.smoothScrollToPosition(0)
                 }, 300)
