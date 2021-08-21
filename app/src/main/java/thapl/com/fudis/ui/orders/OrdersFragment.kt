@@ -1,6 +1,7 @@
 package thapl.com.fudis.ui.orders
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -165,6 +166,7 @@ class OrdersFragment : BaseFragment() {
     }
 
     private fun setAlert(start: Boolean) {
+        Log.d("okh", "setAlert $start")
         if (start) {
             binding?.vAlert?.visibility = View.VISIBLE
             anim = ScaleAnimation(

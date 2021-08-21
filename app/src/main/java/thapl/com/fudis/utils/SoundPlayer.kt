@@ -2,54 +2,55 @@ package thapl.com.fudis.utils
 
 import android.content.Context
 import android.media.AudioAttributes
+import android.media.AudioManager
 import android.media.MediaPlayer
 import android.net.Uri
 import android.util.Log
+import android.widget.Toast
 import thapl.com.fudis.R
-import java.io.IOException
 
 class SoundPlayer(private val context: Context) {
 
     private var mediaPlayer: MediaPlayer? = null
+    private var audioManager: AudioManager =
+        context.getSystemService(Context.AUDIO_SERVICE) as AudioManager
 
     var isPlaying = false
         private set
 
     fun start(loop: Boolean = false) {
-        val soundId: Int = R.raw.order
         mediaPlayer?.release()
-        mediaPlayer = MediaPlayer()
-        mediaPlayer?.setAudioAttributes(
-            AudioAttributes.Builder()
-                .setContentType(AudioAttributes.CONTENT_TYPE_SPEECH)
-                .setUsage(AudioAttributes.USAGE_VOICE_COMMUNICATION)
-                .build()
-        )
-        mediaPlayer?.isLooping = loop
-        mediaPlayer?.setOnCompletionListener {
-            if (loop.not()) {
-                stop()
-            }
-        }
+        val soundId: Int = R.raw.order
         val packageName = context.packageName
         val dataUri = Uri.parse("android.resource://$packageName/$soundId")
-        try {
-            mediaPlayer?.setDataSource(context, dataUri)
-            mediaPlayer?.prepare()
-            mediaPlayer?.start()
-            isPlaying = true
-        } catch (e: IllegalArgumentException) {
+        isPlaying = try {
+            mediaPlayer = MediaPlayer().apply {
+                setAudioAttributes(
+                    AudioAttributes.Builder()
+                        .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+                        .setUsage(AudioAttributes.USAGE_MEDIA)
+                        .build()
+                )
+                isLooping = loop
+                setOnCompletionListener {
+                    if (loop.not()) {
+                        stop()
+                    }
+                }
+                setOnErrorListener { _, i, i2 ->
+                    Toast.makeText(context, "Код ошибки $i, $i2", Toast.LENGTH_SHORT).show()
+                    true
+                }
+                setDataSource(context, dataUri)
+                setScreenOnWhilePlaying(true)
+                prepare()
+                start()
+            }
+            true
+        } catch (e: Exception) {
             Log.w(TAG, e)
-            isPlaying = false
-        } catch (e: SecurityException) {
-            Log.w(TAG, e)
-            isPlaying = false
-        } catch (e: IllegalStateException) {
-            Log.w(TAG, e)
-            isPlaying = false
-        } catch (e: IOException) {
-            Log.w(TAG, e)
-            isPlaying = false
+            Toast.makeText(context, e.toString(), Toast.LENGTH_SHORT).show()
+            false
         }
     }
 

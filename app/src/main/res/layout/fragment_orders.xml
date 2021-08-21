@@ -9,6 +9,7 @@
         android:id="@+id/vAlert"
         android:layout_width="@dimen/dp12"
         android:layout_height="@dimen/dp12"
+        android:visibility="gone"
         android:layout_marginTop="@dimen/dp64"
         android:background="@drawable/ic_bg_circle_red"
         app:layout_constraintStart_toEndOf="@+id/tvOrders"

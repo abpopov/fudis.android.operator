@@ -1,7 +1,6 @@
 package thapl.com.fudis.ui.orders
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,7 +15,6 @@ import thapl.com.fudis.ui.adapters.ACTION
 import thapl.com.fudis.ui.adapters.MORE
 import thapl.com.fudis.ui.adapters.OrdersAdapter
 import thapl.com.fudis.ui.base.BaseFragment
-import thapl.com.fudis.utils.SoundPlayer
 
 class OrderListFragment : BaseFragment() {
 
@@ -74,14 +72,6 @@ class OrderListFragment : BaseFragment() {
     }
 
     private fun initObservers() {
-        viewModel.needScroll.observe(viewLifecycleOwner, { result ->
-            if (result == true) {
-                Log.d("raggg", "scroll")
-                binding?.rvOrders?.postDelayed({
-                          binding?.rvOrders?.smoothScrollToPosition(0)
-                }, 300)
-            }
-        })
         viewModel.status.observe(viewLifecycleOwner, { result ->
             if (result is ResultEntity.Error) {
                 Toast.makeText(requireContext(), result.error.message, Toast.LENGTH_SHORT).show()
@@ -99,6 +89,11 @@ class OrderListFragment : BaseFragment() {
                 is ResultEntity.Success -> {
                     binding?.vSwipeRefresh?.isRefreshing = false
                     (binding?.rvOrders?.adapter as? OrdersAdapter)?.submitList(result.data)
+                    if (result.data.any { it.status == ORDER_STATUS_NEW }) {
+                        binding?.rvOrders?.postDelayed({
+                            binding?.rvOrders?.smoothScrollToPosition(0)
+                        }, 400)
+                    }
                 }
             }
         })

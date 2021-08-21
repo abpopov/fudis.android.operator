@@ -5,13 +5,11 @@ import androidx.lifecycle.Transformations
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import thapl.com.fudis.domain.case.OrdersUseCase
-import thapl.com.fudis.domain.model.ORDER_STATUS_NEW
 import thapl.com.fudis.domain.model.OrderEntity
 import thapl.com.fudis.domain.model.ReceiptEntity
 import thapl.com.fudis.domain.model.ResultEntity
 import thapl.com.fudis.ui.base.BaseViewModel
 import thapl.com.fudis.utils.SingleLiveEvent
-import thapl.com.fudis.utils.SoundPlayer
 import thapl.com.fudis.utils.addHeaders
 
 class OrdersViewModel(private val useCase: OrdersUseCase) : BaseViewModel() {
@@ -29,7 +27,6 @@ class OrdersViewModel(private val useCase: OrdersUseCase) : BaseViewModel() {
     val currentOrder = SingleLiveEvent<OrderEntity>()
     val receipt = MutableLiveData<ResultEntity<ReceiptEntity>>()
     val status = SingleLiveEvent<ResultEntity<Pair<Long, Int>>>()
-    val needScroll = SingleLiveEvent<Boolean>()
 
     init {
         getOrders()
@@ -40,7 +37,7 @@ class OrdersViewModel(private val useCase: OrdersUseCase) : BaseViewModel() {
     }
 
     fun refresh() {
-        getOrders(swipe = true)
+        getOrders()
     }
 
     fun initOrder(order: OrderEntity) {
@@ -53,16 +50,13 @@ class OrdersViewModel(private val useCase: OrdersUseCase) : BaseViewModel() {
         }
     }
 
-    private fun getOrders(swipe: Boolean = false) {
+    private fun getOrders() {
         ticker = doPostActionRequest(
             orders,
             block = {
                 useCase.getOrders()
             },
-            action = { result ->
-                if (swipe) {
-                    needScroll.postValue(true)
-                }
+            action = {
                 delay(REFRESH_ORDER_DELAY)
                 getOrders()
             }
