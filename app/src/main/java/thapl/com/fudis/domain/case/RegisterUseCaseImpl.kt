@@ -24,6 +24,7 @@ class RegisterUseCaseImpl(private val repo: Repo) : RegisterUseCase {
             )
         } else {
             repo.setUserToken(result.token)
+            repo.setOrganizationId(result.user?.organizations?.getOrNull(0))
             return result.token ?: Any()
         }
     }

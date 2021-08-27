@@ -11,5 +11,7 @@ data class UserApi(
     @SerializedName("email")
     val email: String?,
     @SerializedName("roles")
-    val roles: Map<String, RoleApi>?
+    val roles: Map<String, RoleApi>?,
+    @SerializedName("organizations")
+    val organizations: List<Int>?
 ) : Serializable
