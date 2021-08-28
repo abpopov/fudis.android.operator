@@ -5,6 +5,7 @@ import androidx.lifecycle.Transformations
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import thapl.com.fudis.domain.case.OrdersUseCase
+import thapl.com.fudis.domain.model.ORDER_STATUS_IN_DELIVERY
 import thapl.com.fudis.domain.model.OrderEntity
 import thapl.com.fudis.domain.model.ReceiptEntity
 import thapl.com.fudis.domain.model.ResultEntity
@@ -27,6 +28,7 @@ class OrdersViewModel(private val useCase: OrdersUseCase) : BaseViewModel() {
     val currentOrder = SingleLiveEvent<OrderEntity>()
     val receipt = MutableLiveData<ResultEntity<ReceiptEntity>>()
     val status = SingleLiveEvent<ResultEntity<Pair<Long, Int>>>()
+    val scrollUp = SingleLiveEvent<Boolean>()
 
     init {
         getOrders()
@@ -82,6 +84,11 @@ class OrdersViewModel(private val useCase: OrdersUseCase) : BaseViewModel() {
                             }
                         }.addHeaders()
                         orders.postValue(ResultEntity.Success(list))
+                        if (pair.data.second >= ORDER_STATUS_IN_DELIVERY && list.any {
+                                it.status < ORDER_STATUS_IN_DELIVERY
+                            }) {
+                            scrollUp.postValue(true)
+                        }
                     }
                     val current = currentOrder.value
                     current?.let {

@@ -1,4 +1,4 @@
-package thapl.com.fudis.domain.model
+ package thapl.com.fudis.domain.model
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
