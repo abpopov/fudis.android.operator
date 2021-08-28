@@ -67,14 +67,14 @@ class RegisterFragment : BaseFragment() {
         binding?.tvNext?.setOnClickListener {
             if (validator?.completeValidate() == true) {
                 context?.hideKeyboard(binding?.etLogin, binding?.etPwd)
-                /*viewModel.auth(
+                viewModel.auth(
                     binding?.etLogin?.text?.toString()?.trim(),
                     binding?.etPwd?.text?.toString()?.trim()
-                )*/
-                viewModel.auth(
+                )
+                /*viewModel.auth(
                     "ContentM",
                     "dsfdsskenerJDD825MdskjdsdNdfk-34#@jsdlKkdasMljsd"
-                )
+                )*/
             }
         }
     }
