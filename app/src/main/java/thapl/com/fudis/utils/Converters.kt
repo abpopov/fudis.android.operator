@@ -45,7 +45,7 @@ fun Int.toOrderAction(): Int {
         ORDER_STATUS_READY -> R.string.order_status_delivery
         ORDER_STATUS_IN_DELIVERY -> 0
         ORDER_STATUS_DELIVERED -> 0
-        else -> R.string.order_status_queue
+        else -> R.string.order_status_queue_2
     }
 }
 

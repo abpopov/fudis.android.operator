@@ -7,7 +7,7 @@
     <string name="auth_error">Возможно, вы ошиблись при вводе логина или пароля. Попробуйте еще раз.</string>
 
     <string name="menu_orders">Заказы</string>
-    <string name="menu_pause">Пауза</string>
+    <string name="menu_pause">Нагрузка</string>
     <string name="menu_cats">Меню</string>
     <string name="menu_stops">Стоп-лист</string>
     <string name="menu_help">Нужна помощь</string>
@@ -46,6 +46,7 @@
     <string name="order_status_label">Текущий статус</string>
     <string name="order_status_new">Новый</string>
     <string name="order_status_queue">Принят</string>
+    <string name="order_status_queue_2">Принять</string>
     <string name="order_status_ready">Готов</string>
     <string name="order_status_delivery">Передан курьеру</string>
     <string name="order_status_delivered">Доставлен</string>
