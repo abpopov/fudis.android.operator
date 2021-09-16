@@ -28,6 +28,150 @@ class CategoriesAdapter(
         }
     )
 
+class CategoriesFlatAdapter(
+    glide: GlideRequests?,
+    viewModel: CategoriesViewModel,
+    click: (FlatCategoryEntity, Any?) -> Unit
+) :
+    BaseListAdapter<CategoriesViewModel, FlatCategoryEntity, CategoryFlatHolder>(
+        glide,
+        viewModel,
+        click,
+        getHolder = { parent, type ->
+            when (type) {
+                0 -> CategoryRootFlatHolder.from(parent)
+                1 -> CategorySubFlatHolder.from(parent)
+                2 -> CatalogFlatHolder.from(parent)
+                else -> CategoryRootFlatHolder.from(parent)
+            }
+
+        }
+    ) {
+
+    override fun getItemViewType(position: Int): Int {
+        return when(getItem(position)) {
+            is FlatCategoryEntity.FlatCategoryRootEntity -> 0
+            is FlatCategoryEntity.FlatCategorySubEntity -> 1
+            is FlatCategoryEntity.FlatCatalogEntity -> 2
+            else -> 0
+        }
+    }
+}
+
+abstract class CategoryFlatHolder(view: View) : BaseHolder<CategoriesViewModel, FlatCategoryEntity>(view)
+
+class CategoryRootFlatHolder(view: View) : CategoryFlatHolder(view) {
+
+    private val textName = view.findViewById<TextView>(R.id.tvItemName)
+    private val viewArrow = view.findViewById<View>(R.id.ivArrow)
+
+    override fun bind(
+        item: FlatCategoryEntity,
+        position: Int,
+        glide: GlideRequests?,
+        viewModel: CategoriesViewModel,
+        isLast: Boolean,
+        click: (FlatCategoryEntity, Any?) -> Unit
+    ) {
+        if (item is FlatCategoryEntity.FlatCategoryRootEntity) {
+            textName.text = item.title
+            textName.setOnClickListener {
+                item.expanded = !item.expanded
+                viewArrow.rotation = if (item.expanded) 0f else 180f
+                viewModel.handleCategoryClick(position, item)
+            }
+            viewArrow.rotation = if (item.expanded) 0f else 180f
+        } else {
+            textName.text = ""
+        }
+
+    }
+
+    companion object {
+        fun from(parent: ViewGroup): CategoryRootFlatHolder {
+            val layoutInflater = LayoutInflater.from(parent.context)
+            val view = layoutInflater.inflate(R.layout.list_item_flat_root_category, parent, false)
+            return CategoryRootFlatHolder(view)
+        }
+    }
+
+}
+
+class CategorySubFlatHolder(view: View) : CategoryFlatHolder(view) {
+
+    private val textName = view.findViewById<TextView>(R.id.tvItemName)
+    private val textCount = view.findViewById<TextView>(R.id.tvItemCount)
+    private val viewArrow = view.findViewById<View>(R.id.ivArrow)
+
+    override fun bind(
+        item: FlatCategoryEntity,
+        position: Int,
+        glide: GlideRequests?,
+        viewModel: CategoriesViewModel,
+        isLast: Boolean,
+        click: (FlatCategoryEntity, Any?) -> Unit
+    ) {
+        if (item is FlatCategoryEntity.FlatCategorySubEntity) {
+            textName.text = item.title
+            textCount.text = item.counter
+            viewArrow.rotation = if (item.expanded) 0f else 180f
+            textName.setOnClickListener {
+                item.expanded = !item.expanded
+                viewArrow.rotation = if (item.expanded) 0f else 180f
+                viewModel.handleCategorySubClick(position, item)
+            }
+        } else {
+            textName.text = ""
+        }
+
+    }
+
+    companion object {
+        fun from(parent: ViewGroup): CategorySubFlatHolder {
+            val layoutInflater = LayoutInflater.from(parent.context)
+            val view = layoutInflater.inflate(R.layout.list_item_flat_sub_category, parent, false)
+            return CategorySubFlatHolder(view)
+        }
+    }
+
+}
+
+class CatalogFlatHolder(view: View) : CategoryFlatHolder(view) {
+
+    private val textName = view.findViewById<TextView>(R.id.tvItemName)
+    private val textCount = view.findViewById<TextView>(R.id.tvItemCount)
+
+    override fun bind(
+        item: FlatCategoryEntity,
+        position: Int,
+        glide: GlideRequests?,
+        viewModel: CategoriesViewModel,
+        isLast: Boolean,
+        click: (FlatCategoryEntity, Any?) -> Unit
+    ) {
+        if (item is FlatCategoryEntity.FlatCatalogEntity) {
+            textName.text = item.title
+            textCount.text = item.counter
+            textName.setOnClickListener {
+                click.invoke(item, null)
+            }
+        } else {
+            textName.text = ""
+        }
+
+    }
+
+    companion object {
+        fun from(parent: ViewGroup): CatalogFlatHolder {
+            val layoutInflater = LayoutInflater.from(parent.context)
+            val view = layoutInflater.inflate(R.layout.list_item_catalog, parent, false)
+            return CatalogFlatHolder(view)
+        }
+    }
+
+}
+
+
 class CategoryHolder(view: View) : BaseHolder<CategoriesViewModel, CategoryEntity>(view) {
 
     private val textName = view.findViewById<TextView>(R.id.tvItemName)
@@ -51,9 +195,10 @@ class CategoryHolder(view: View) : BaseHolder<CategoriesViewModel, CategoryEntit
             }
         }
         fun initAdapter() {
-            val subCategoryAdapter = SubCategoriesAdapter(glide, viewModel, click = { _, deepChild ->
-                click(item, deepChild)
-            })
+            val subCategoryAdapter =
+                SubCategoriesAdapter(glide, viewModel, click = { _, deepChild ->
+                    click(item, deepChild)
+                })
             val catalogAdapter = CatalogAdapter(glide, viewModel, click = { child, _ ->
                 click(item, child)
             })

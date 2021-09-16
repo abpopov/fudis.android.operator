@@ -4,9 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.core.content.ContextCompat
-import com.google.android.material.snackbar.Snackbar
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import thapl.com.fudis.R
 import thapl.com.fudis.data.api.model.BAD_LOGIN
@@ -67,14 +64,17 @@ class RegisterFragment : BaseFragment() {
         binding?.tvNext?.setOnClickListener {
             if (validator?.completeValidate() == true) {
                 context?.hideKeyboard(binding?.etLogin, binding?.etPwd)
-                viewModel.auth(
-                    binding?.etLogin?.text?.toString()?.trim(),
-                    binding?.etPwd?.text?.toString()?.trim()
-                )
-                /*viewModel.auth(
-                    "ContentM",
-                    "dsfdsskenerJDD825MdskjdsdNdfk-34#@jsdlKkdasMljsd"
-                )*/
+                if (debug()) {
+                    viewModel.auth(
+                        "ContentM",
+                        "dsfdsskenerJDD825MdskjdsdNdfk-34#@jsdlKkdasMljsd"
+                    )
+                } else {
+                    viewModel.auth(
+                        binding?.etLogin?.text?.toString()?.trim(),
+                        binding?.etPwd?.text?.toString()?.trim()
+                    )
+                }
             }
         }
     }
@@ -121,4 +121,6 @@ class RegisterFragment : BaseFragment() {
             }
         })
     }
+
+    private fun debug() = false
 }

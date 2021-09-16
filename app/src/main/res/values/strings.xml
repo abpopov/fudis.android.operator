@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">Fudis</string>
 
+    <string name="logout">Вы успешно разлогинились</string>
+
     <string name="auth_login_hint">Логин</string>
     <string name="auth_pwd_hint">Пароль</string>
     <string name="auth_next">Войти в систему</string>
@@ -13,7 +15,7 @@
     <string name="menu_help">Нужна помощь</string>
 
     <string name="help_text">Если у вас возник срочный вопрос, позвоните в нашу службу поддержки:</string>
-    <string name="help_phone">+7 495 111 22 33</string>
+    <string name="help_phone">+7 499 460 56 95</string>
 
     <string name="pause_period_title">На какой период?</string>
     <string name="pause_period_15">15 мин</string>

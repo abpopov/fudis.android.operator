@@ -11,7 +11,7 @@ abstract class BaseFragment : Fragment() {
 
     protected fun navigate(directions: NavDirections) {
         lifecycleScope.launch {
-            delay(350)
+            delay(150)
             try {
                 findNavController().navigate(directions)
             } catch (e: Exception) {

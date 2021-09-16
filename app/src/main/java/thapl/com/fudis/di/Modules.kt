@@ -16,6 +16,7 @@ import thapl.com.fudis.data.prefs.Prefs
 import thapl.com.fudis.data.prefs.PrefsImpl
 import thapl.com.fudis.domain.case.*
 import thapl.com.fudis.ui.categories.CategoriesViewModel
+import thapl.com.fudis.ui.dialogs.HelpViewModel
 import thapl.com.fudis.ui.dialogs.PauseViewModel
 import thapl.com.fudis.ui.orders.OrdersViewModel
 import thapl.com.fudis.ui.register.RegisterViewModel
@@ -29,6 +30,7 @@ val appModule = module {
     single<OrdersUseCase> { OrdersUseCaseImpl(get()) }
     single<StopsUseCase> { StopsUseCaseImpl(get()) }
     single<PauseUseCase> { PauseUseCaseImpl(get()) }
+    single<HelpUseCase> { HelpUseCaseImpl(get()) }
     single<CategoriesUseCase> { CategoriesUseCaseImpl(get()) }
     single<Api> { ApiImpl(androidContext(), get(), get()) }
     single<Local> { LocalImpl(get()) }
@@ -47,4 +49,5 @@ val appModule = module {
     viewModel { StopsViewModel(get()) }
     viewModel { PauseViewModel(get()) }
     viewModel { CategoriesViewModel(get()) }
+    viewModel { HelpViewModel(get()) }
 }

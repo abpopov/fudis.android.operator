@@ -7,5 +7,6 @@ import kotlinx.parcelize.Parcelize
 data class CatalogItemEntity(
     val id: Long,
     val title: String,
+    val baseTitle: String?,
     val price: Float,
 ) : Parcelable

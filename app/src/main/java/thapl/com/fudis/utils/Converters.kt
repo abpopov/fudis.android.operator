@@ -1,5 +1,6 @@
 package thapl.com.fudis.utils
 
+import android.util.Log
 import androidx.annotation.StringRes
 import thapl.com.fudis.R
 import thapl.com.fudis.domain.model.*
@@ -7,12 +8,18 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 const val DATE_PATTERN = "yyyy-MM-dd HH:mm:ss"
+const val DATE_Z_PATTERN = "yyyy-MM-dd'T'HH:mm:ssZ"
 
-fun String?.toTimestamp(): Long? {
+fun String?.toTimestamp(withZone: Boolean = false): Long? {
     this ?: return null
     return try {
-        SimpleDateFormat(DATE_PATTERN, Locale.getDefault()).parse(this)?.time
+        if (withZone) {
+            SimpleDateFormat(DATE_Z_PATTERN, Locale.getDefault()).parse(this)?.time
+        } else {
+            SimpleDateFormat(DATE_PATTERN, Locale.getDefault()).parse(this)?.time
+        }
     } catch (e: Exception) {
+        Log.e("okh", "parse $e")
         null
     }
 }

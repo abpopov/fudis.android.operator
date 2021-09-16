@@ -72,11 +72,11 @@ class OrderHolder(view: View) : BaseHolder<OrdersViewModel, OrderEntity>(view) {
         }
         textOrderContent.text = item.cartData.filter { it.count > 0 }
             .joinToString(separator = "  •  ") {
-                "${it.count} × ${it.item.title}${
+                "${it.count} × ${it.item.baseTitle ?: it.item.title}${
                     if (it.modifiers.isNotEmpty())
                         "(${it.modifiers.filter { m -> m.count > 0 }
-                            .joinToString(separator = ", ") {
-                                it.modificator.title
+                            .joinToString(separator = ", ") { me ->
+                                me.modificator.title
                             }})"
                 else 
                     ""

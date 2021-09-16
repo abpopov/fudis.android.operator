@@ -86,6 +86,7 @@ object CatalogItemApiToEntityMapper : BaseMapperNullable<CatalogItemApi, Catalog
         type.title ?: return null
         return CatalogItemEntity(
             title = type.title,
+            baseTitle = type.baseTitle.takeIf { it.isNullOrEmpty().not() },
             id = type.id,
             price = type.basePrice ?: 0f
         )

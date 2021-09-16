@@ -15,7 +15,7 @@ class StopsViewModel(private val useCase: StopsUseCase) : BaseViewModel() {
     val search = MutableLiveData("")
     val filteredProducts: LiveData<List<ProductEntity>> = Transformations.map(search) { s ->
         val productList = (products.value as? ResultEntity.Success)?.data
-        productList?.filter { s.isNullOrEmpty() || it.title.containsWord(s) } ?: listOf()
+        productList?.filter { s.isNullOrEmpty() || it.title.containsWord(s) || it.title.replace("_", "").containsWord(s) } ?: listOf()
     }
 
     init {

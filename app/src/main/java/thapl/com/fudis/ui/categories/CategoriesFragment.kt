@@ -1,6 +1,7 @@
 package thapl.com.fudis.ui.categories
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,8 +15,10 @@ import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import thapl.com.fudis.R
 import thapl.com.fudis.databinding.FragmentCategoriesBinding
 import thapl.com.fudis.domain.model.CatalogEntity
+import thapl.com.fudis.domain.model.FlatCategoryEntity
 import thapl.com.fudis.domain.model.ResultEntity
 import thapl.com.fudis.ui.adapters.CategoriesAdapter
+import thapl.com.fudis.ui.adapters.CategoriesFlatAdapter
 import thapl.com.fudis.ui.adapters.SearchCatalogAdapter
 import thapl.com.fudis.ui.base.BaseFragment
 
@@ -28,6 +31,7 @@ class CategoriesFragment : BaseFragment() {
 
     private var catAdapter: CategoriesAdapter? = null
     private var productAdapter: SearchCatalogAdapter? = null
+    private var flatCatAdapter: CategoriesFlatAdapter? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -77,6 +81,15 @@ class CategoriesFragment : BaseFragment() {
                 }
             }
         )
+        flatCatAdapter = CategoriesFlatAdapter(
+            glide = null,
+            viewModel = viewModel,
+            click = { item, _ ->
+                if (item is FlatCategoryEntity.FlatCatalogEntity) {
+                    navigate(CategoriesFragmentDirections.actionReceipt(item.id, -1L))
+                }
+            }
+        )
         productAdapter = SearchCatalogAdapter(
             glide = null,
             viewModel = viewModel,
@@ -84,9 +97,10 @@ class CategoriesFragment : BaseFragment() {
                 navigate(CategoriesFragmentDirections.actionReceipt(item.id, -1L))
             }
         )
-        binding?.rvCategoriesList?.adapter = ConcatAdapter(productAdapter, catAdapter)
+        binding?.rvCategoriesList?.adapter = ConcatAdapter(productAdapter, flatCatAdapter)
         productAdapter?.stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
         catAdapter?.stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
+        flatCatAdapter?.stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
     }
 
     private fun initListeners() {
@@ -99,7 +113,7 @@ class CategoriesFragment : BaseFragment() {
     }
 
     private fun initObservers() {
-        viewModel.categories.observe(viewLifecycleOwner, { result ->
+        viewModel.categoriesResult.observe(viewLifecycleOwner, { result ->
             when (result) {
                 is ResultEntity.Loading -> {
                     binding?.tvReload?.visibility = View.GONE
@@ -113,13 +127,17 @@ class CategoriesFragment : BaseFragment() {
                     binding?.tvReload?.visibility = View.GONE
                     binding?.rvCategoriesList?.visibility = View.VISIBLE
                     viewModel.search.postValue(viewModel.search.value)
+                    viewModel.handleCategoryLoad(result.data)
                 }
             }
         })
         viewModel.filteredCategories.observe(viewLifecycleOwner, { result ->
             if (result != null) {
                 productAdapter?.submitList(result.first)
-                catAdapter?.submitList(result.second)
+                val cats = result.second
+                Log.d("fkdjshsgkj", "cats $cats")
+                flatCatAdapter?.submitList(cats.toMutableList())
+
             }
         })
     }

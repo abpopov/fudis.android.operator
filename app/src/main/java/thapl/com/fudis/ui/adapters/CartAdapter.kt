@@ -49,7 +49,7 @@ class CartHolder(view: View) : BaseHolder<OrdersViewModel, CartEntity>(view) {
         isLast: Boolean,
         click: (CartEntity, Any?) -> Unit
     ) {
-        textName.text = String.format("%d × %s", item.count, item.item.title)
+        textName.text = String.format("%d × %s", item.count, item.item.baseTitle ?: item.item.title)
         textPrice.text = String.format("%s ₽", formatter.format((item.item.price.toDouble() + item.modifiers.sumOf {
             (it.count * it.modificator.price).toDouble()
         }) * item.count))

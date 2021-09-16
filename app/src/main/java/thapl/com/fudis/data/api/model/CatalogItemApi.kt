@@ -8,6 +8,8 @@ data class CatalogItemApi(
     val id: Long?,
     @SerializedName("title")
     val title: String?,
+    @SerializedName("base_title")
+    val baseTitle: String?,
     @SerializedName("base_price")
     val basePrice: Float?
 ) : Serializable
