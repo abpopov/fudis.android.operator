@@ -144,6 +144,7 @@
             android:id="@+id/tvOrderContent"
             style="@style/TextStyle.Black.20"
             android:layout_width="0dp"
+            android:lineSpacingExtra="5dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/dp60"
             android:layout_marginTop="@dimen/dp40"

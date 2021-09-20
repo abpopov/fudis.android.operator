@@ -119,7 +119,7 @@ class StopsFragment : BaseFragment() {
                 }
             }
         })
-        viewModel.filteredProducts.observe(viewLifecycleOwner, { result ->
+        viewModel.filteredProducts2.observe(viewLifecycleOwner, { result ->
             if (result != null) {
                 (binding?.rvStopList?.adapter as? ProductsAdapter)?.submitList(result)
             }
