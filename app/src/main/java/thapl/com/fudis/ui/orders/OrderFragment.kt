@@ -12,10 +12,7 @@ import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import thapl.com.fudis.GlideApp
 import thapl.com.fudis.R
 import thapl.com.fudis.databinding.FragmentOrderBinding
-import thapl.com.fudis.domain.model.OrderEntity
-import thapl.com.fudis.domain.model.ResultEntity
-import thapl.com.fudis.domain.model.SOURCE_TYPE_DC
-import thapl.com.fudis.domain.model.SOURCE_TYPE_YA
+import thapl.com.fudis.domain.model.*
 import thapl.com.fudis.ui.adapters.CartAdapter
 import thapl.com.fudis.ui.base.BaseFragment
 import thapl.com.fudis.utils.toOrderAction
@@ -75,6 +72,24 @@ class OrderFragment : BaseFragment() {
             SOURCE_TYPE_DC -> binding?.ivLogoService?.setImageResource(R.drawable.ic_logo_delivery_club)
             else -> binding?.ivLogoService?.setImageResource(0)
         }
+        if (item.clientComment.isNullOrEmpty()) {
+            binding?.tvClientComment?.visibility = View.GONE
+        } else {
+            binding?.tvClientComment?.visibility = View.VISIBLE
+            binding?.tvClientComment?.text = getString(R.string.order_client_comment, item.clientComment)
+        }
+        if (item.personsCount ?: 0 > 0) {
+            binding?.tvForksValue?.visibility = View.VISIBLE
+            binding?.tvForksLabel?.visibility = View.VISIBLE
+            binding?.tvForksValue?.text = resources.getQuantityString(
+                R.plurals.order_forks_value,
+                item.personsCount ?: 0,
+                item.personsCount ?: 0
+            )
+        } else {
+            binding?.tvForksValue?.visibility = View.GONE
+            binding?.tvForksLabel?.visibility = View.GONE
+        }
         item.createdAt?.let { date ->
             binding?.tvTimeValue?.text = SimpleDateFormat(
                 "dd.MM.yy ${getString(R.string.order_time_at)} HH:mm",
@@ -123,7 +138,18 @@ class OrderFragment : BaseFragment() {
         ) { receipt, _ ->
             navigate(OrderFragmentDirections.actionReceipt(receipt.item.id, item.id))
         }
-        (binding?.rvCartList?.adapter as? CartAdapter)?.submitList(item.cartData)
+        (binding?.rvCartList?.adapter as? CartAdapter)?.submitList(mutableListOf<CartEntity>().apply {
+            addAll(item.cartData)
+            item.gift?.let { g ->
+                add(
+                    CartEntity(
+                        item = g.copy(price = 0f),
+                        count = 1,
+                        modifiers = listOf()
+                    )
+                )
+            }
+        })
         setChangeableData(item)
     }
 

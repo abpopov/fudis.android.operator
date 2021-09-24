@@ -57,7 +57,9 @@ data class OrderApi(
     @SerializedName("updated_at")
     val updatedAt: String?,
     @SerializedName("cart_data")
-    val cartData: CartDataApi?
+    val cartData: CartDataApi?,
+    @SerializedName("gift")
+    val gift: CatalogItemApi?
 ) : Serializable
 
 //{"discount":null,"promo_id":null,"external_uuid":null]}

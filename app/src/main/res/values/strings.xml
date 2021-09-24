@@ -46,12 +46,23 @@
     <string name="order_time_label">Время создания</string>
     <string name="order_due_label">Приготовить к</string>
     <string name="order_status_label">Текущий статус</string>
+    <string name="order_forks_label">Приборы</string>
     <string name="order_status_new">Новый</string>
     <string name="order_status_queue">Принят</string>
     <string name="order_status_queue_2">Принять</string>
     <string name="order_status_ready">Готов</string>
     <string name="order_status_delivery">Передан курьеру</string>
     <string name="order_status_delivered">Доставлен</string>
+    <string name="order_client_comment">🔥 %s</string>
+
+    <plurals name="order_forks_value">
+        <item quantity="zero">Не надо</item>
+        <item quantity="one">%1$d комплект</item>
+        <item quantity="two">%1$d комплекта</item>
+        <item quantity="few">%1$d комплекта</item>
+        <item quantity="many">%1$d комплектов</item>
+        <item quantity="other">%1$d комплектов</item>
+    </plurals>
 
     <string name="order_single_back">Все заказы</string>
     <string name="order_single_total">Итого к оплате</string>

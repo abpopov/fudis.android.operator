@@ -1,6 +1,7 @@
 package thapl.com.fudis.ui.orders
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -91,6 +92,7 @@ class OrderListFragment : BaseFragment() {
                 }
                 is ResultEntity.Error -> {
                     binding?.vSwipeRefresh?.isRefreshing = false
+                    Log.d("okh", result.error.message)
                     Toast.makeText(requireContext(), result.error.message, Toast.LENGTH_SHORT).show()
                 }
                 is ResultEntity.Success -> {

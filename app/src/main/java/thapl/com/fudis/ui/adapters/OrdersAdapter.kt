@@ -1,6 +1,7 @@
 package thapl.com.fudis.ui.adapters
 
 import android.text.format.DateUtils
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -45,8 +46,11 @@ class OrderHolder(view: View) : BaseHolder<OrdersViewModel, OrderEntity>(view) {
     private val textOrderTime = view.findViewById<TextView>(R.id.tvTimeValue)
     private val textOrderDue = view.findViewById<TextView>(R.id.tvDueValue)
     private val textOrderStatus = view.findViewById<TextView>(R.id.tvStatusValue)
+    private val textOrderForks = view.findViewById<TextView>(R.id.tvForksValue)
+    private val textOrderForksLabel = view.findViewById<TextView>(R.id.tvForksLabel)
     private val btnOrderMore = view.findViewById<TextView>(R.id.tvOrderMore)
     private val btnOrderAction = view.findViewById<TextView>(R.id.tvOrderAction)
+    private val textOrderComment = view.findViewById<TextView>(R.id.tvClientComment)
     private val imgLogoVendor = view.findViewById<ImageView>(R.id.ivLogoVendor)
     private val imgLogoService = view.findViewById<ImageView>(R.id.ivLogoService)
     private val bgRoot = view.findViewById<View>(R.id.vRoot)
@@ -69,6 +73,24 @@ class OrderHolder(view: View) : BaseHolder<OrdersViewModel, OrderEntity>(view) {
             SOURCE_TYPE_YA -> imgLogoService.setImageResource(R.drawable.ic_logo_yandex_eda)
             SOURCE_TYPE_DC -> imgLogoService.setImageResource(R.drawable.ic_logo_delivery_club)
             else -> imgLogoService.setImageResource(0)
+        }
+        if (item.clientComment.isNullOrEmpty()) {
+            textOrderComment.visibility = View.GONE
+        } else {
+            textOrderComment.visibility = View.VISIBLE
+            textOrderComment.text = itemView.context.getString(R.string.order_client_comment, item.clientComment)
+        }
+        if (item.personsCount ?: 0 > 0) {
+            textOrderForks.visibility = View.VISIBLE
+            textOrderForksLabel.visibility = View.VISIBLE
+            textOrderForks.text = itemView.context.resources.getQuantityString(
+                R.plurals.order_forks_value,
+                item.personsCount ?: 0,
+                item.personsCount ?: 0
+            )
+        } else {
+            textOrderForks.visibility = View.GONE
+            textOrderForksLabel.visibility = View.GONE
         }
         textOrderContent.text = item.cartData.filter { it.count > 0 }
             .joinToString(separator = "  •  ") {

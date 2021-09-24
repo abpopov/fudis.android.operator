@@ -34,7 +34,11 @@ object OrderApiToEntityMapper : BaseMapperNullable<OrderApi, OrderEntity> {
             flat = type.flat,
             doorCode = type.doorCode,
             phone = type.phone,
-            personsCount = type.personsCount,
+            personsCount = try {
+                type.personsCount?.toIntOrNull()
+            } catch (e: Exception) {
+                null
+            },
             clientComment = type.clientComment,
             operatorComment = type.operatorComment,
             lat = type.lat,
@@ -43,7 +47,8 @@ object OrderApiToEntityMapper : BaseMapperNullable<OrderApi, OrderEntity> {
             deliveryAt = type.deliveryAt?.toTimestamp(),
             updatedAt = type.updatedAt?.toTimestamp(),
             conception = ConceptionApiToEntityMapper.map(type.conception),
-            cartData = CartListApiToEntityMapper.map(type.cartData?.cartItems)
+            cartData = CartListApiToEntityMapper.map(type.cartData?.cartItems),
+            gift = CatalogItemApiToEntityMapper.map(type.gift)
         )
     }
 
