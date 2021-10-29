@@ -42,6 +42,11 @@ class OrderListFragment : BaseFragment() {
         initObservers()
     }
 
+    override fun onResume() {
+        super.onResume()
+        viewModel.reInit()
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

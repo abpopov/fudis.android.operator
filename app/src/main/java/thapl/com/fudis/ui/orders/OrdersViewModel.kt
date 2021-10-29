@@ -34,6 +34,12 @@ class OrdersViewModel(private val useCase: OrdersUseCase) : BaseViewModel() {
         getOrders()
     }
 
+    fun reInit() {
+        if (ticker?.isActive == false) {
+            getOrders()
+        }
+    }
+
     fun selectMenu(value: Int) {
         _menuPos.postValue(value)
     }
@@ -53,6 +59,7 @@ class OrdersViewModel(private val useCase: OrdersUseCase) : BaseViewModel() {
     }
 
     private fun getOrders() {
+        ticker?.cancel()
         ticker = doPostActionRequest(
             orders,
             block = {
