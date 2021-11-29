@@ -96,6 +96,7 @@ class OrderListFragment : BaseFragment() {
             when (result) {
                 is ResultEntity.Loading -> {
                     binding?.vSwipeRefresh?.isRefreshing = true
+                    binding?.tvError?.isVisible = false
                 }
                 is ResultEntity.Error -> {
                     binding?.vSwipeRefresh?.isRefreshing = false
@@ -108,6 +109,7 @@ class OrderListFragment : BaseFragment() {
                 }
                 is ResultEntity.Success -> {
                     binding?.vSwipeRefresh?.isRefreshing = false
+                    binding?.tvError?.isVisible = false
                     (binding?.rvOrders?.adapter as? OrdersAdapter)?.submitList(result.data)
                     if (result.data.any { it.status == ORDER_STATUS_NEW }) {
                         binding?.rvOrders?.postDelayed({
