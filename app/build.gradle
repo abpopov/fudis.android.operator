@@ -16,7 +16,7 @@ android {
         applicationId "thapl.com.fudis"
         minSdkVersion 22
         targetSdkVersion 30
-        versionCode 13
+        versionCode 14
         versionName "1.0"
         multiDexEnabled true
         vectorDrawables.useSupportLibrary = true

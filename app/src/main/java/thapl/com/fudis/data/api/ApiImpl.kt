@@ -18,15 +18,16 @@ class ApiImpl(
 
     companion object {
         private const val BASE_URL = "https://account.fudis.thapl.com/"
+        private const val TIMEOUT = 45L
     }
 
     private var service: ApiService
 
     init {
         val builder = OkHttpClient().newBuilder()
-        builder.writeTimeout(30, TimeUnit.SECONDS)
-        builder.readTimeout(30, TimeUnit.SECONDS)
-        builder.connectTimeout(30, TimeUnit.SECONDS)
+        builder.writeTimeout(TIMEOUT, TimeUnit.SECONDS)
+        builder.readTimeout(TIMEOUT, TimeUnit.SECONDS)
+        builder.connectTimeout(TIMEOUT, TimeUnit.SECONDS)
 
         builder.addInterceptor { chain ->
             val request = chain.request().newBuilder()

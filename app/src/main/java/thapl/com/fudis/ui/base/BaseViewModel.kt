@@ -12,6 +12,7 @@ import thapl.com.fudis.domain.model.ErrorEntity
 import thapl.com.fudis.domain.model.ResultEntity
 import thapl.com.fudis.utils.FudisException
 import java.io.IOException
+import java.net.SocketTimeoutException
 import java.net.UnknownHostException
 
 abstract class BaseViewModel : ViewModel() {
@@ -59,6 +60,8 @@ abstract class BaseViewModel : ViewModel() {
             ResultEntity.Success(r)
         } catch (ex: FudisException) {
             ResultEntity.Error(ex.error, 999)
+        } catch (ex: SocketTimeoutException) {
+            ResultEntity.Error(ErrorEntity(0, "timeout", "SocketTimeoutException", "SocketTimeoutException: " + (ex.message ?: "")), 996)
         } catch (ex: IOException) {
             ResultEntity.Error(ErrorEntity(0, "io", "IOException", ex.message ?: ""), 998)
         } catch (ex: UnknownHostException) {

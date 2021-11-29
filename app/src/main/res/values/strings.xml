@@ -38,6 +38,7 @@
     <string name="stops_dialog_no">Нет</string>
     <string name="stops_reload">Загрузить товары</string>
 
+    <string name="orders_error">Ошибка обновления списка - %s</string>
     <string name="order_active">Активные</string>
     <string name="order_inactive">Отправленные</string>
     <string name="order_more">Подробнее о заказе</string>

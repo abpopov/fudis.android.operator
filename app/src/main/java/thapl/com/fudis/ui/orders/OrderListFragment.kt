@@ -6,9 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import thapl.com.fudis.GlideApp
+import thapl.com.fudis.R
 import thapl.com.fudis.databinding.FragmentOrderListBinding
 import thapl.com.fudis.domain.model.ORDER_STATUS_NEW
 import thapl.com.fudis.domain.model.ResultEntity
@@ -97,8 +99,12 @@ class OrderListFragment : BaseFragment() {
                 }
                 is ResultEntity.Error -> {
                     binding?.vSwipeRefresh?.isRefreshing = false
-                    Log.d("okh", result.error.message)
-                    Toast.makeText(requireContext(), result.error.message, Toast.LENGTH_SHORT).show()
+                    binding?.tvError?.text = getString(R.string.orders_error, result.error.message)
+                    binding?.tvError?.isVisible = result.error.message.isNotEmpty()
+                    if (result.error.message.isNotEmpty()) {
+                        Toast.makeText(requireContext(), result.error.message, Toast.LENGTH_SHORT)
+                            .show()
+                    }
                 }
                 is ResultEntity.Success -> {
                     binding?.vSwipeRefresh?.isRefreshing = false
