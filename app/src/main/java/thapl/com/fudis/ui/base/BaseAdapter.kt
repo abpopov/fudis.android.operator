@@ -50,7 +50,8 @@ abstract class BaseHolder<VM : BaseViewModel, T : ListItem>(view: View) : Recycl
         lifecycleRegistry.handleLifecycleEvent(Lifecycle.Event.ON_STOP)
     }
 
-    override fun getLifecycle() = lifecycleRegistry
+    override val lifecycle: Lifecycle
+        get() = lifecycleRegistry
 }
 
 class DiffCallback<T : ListItem> : DiffUtil.ItemCallback<T>() {

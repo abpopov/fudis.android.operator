@@ -1,7 +1,7 @@
 package thapl.com.fudis.ui.dialogs
 
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
+import androidx.lifecycle.distinctUntilChanged
 import thapl.com.fudis.domain.case.PauseUseCase
 import thapl.com.fudis.domain.model.ResultEntity
 import thapl.com.fudis.ui.base.BaseViewModel
@@ -12,7 +12,7 @@ class PauseViewModel(private val useCase: PauseUseCase) : BaseViewModel() {
 
     private val _pauseState = MutableLiveData(Pair<Int?, Int?>(null, null))
 
-    val pauseState = Transformations.distinctUntilChanged(_pauseState)
+    val pauseState = _pauseState.distinctUntilChanged()
     val working = MutableLiveData<Boolean>()
     val pauseRequest = MutableLiveData<ResultEntity<Boolean>>()
 

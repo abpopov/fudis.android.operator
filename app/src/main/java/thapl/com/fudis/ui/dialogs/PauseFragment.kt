@@ -66,8 +66,8 @@ class PauseFragment : BaseDialogFragment() {
     }
 
     private fun initObservers() {
-        viewModel.pauseState.observe(this, { state ->
+        viewModel.pauseState.observe(this) { state ->
             binding?.tvActionPause?.isEnabled = state?.first != null && state.second != null
-        })
+        }
     }
 }

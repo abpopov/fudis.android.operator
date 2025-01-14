@@ -1,7 +1,7 @@
 package thapl.com.fudis.ui.register
 
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
+import androidx.lifecycle.distinctUntilChanged
 import thapl.com.fudis.domain.case.RegisterUseCase
 import thapl.com.fudis.domain.model.ResultEntity
 import thapl.com.fudis.ui.base.BaseViewModel
@@ -12,7 +12,7 @@ class RegisterViewModel(private val useCase: RegisterUseCase) : BaseViewModel() 
     private val _authValidate = MutableLiveData(false)
 
     val authResult = SingleLiveEvent<ResultEntity<Any>>()
-    val authValidate = Transformations.distinctUntilChanged(_authValidate)
+    val authValidate = _authValidate.distinctUntilChanged()
 
     fun auth(login: String?, pwd: String?) {
         if (login.isNullOrEmpty()) return

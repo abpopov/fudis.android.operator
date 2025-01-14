@@ -80,10 +80,10 @@ class RegisterFragment : BaseFragment() {
     }
 
     private fun initObservers() {
-        viewModel.authValidate.observe(viewLifecycleOwner, { enable ->
+        viewModel.authValidate.observe(viewLifecycleOwner) { enable ->
             binding?.tvNext?.isEnabled = enable
-        })
-        viewModel.authResult.observe(viewLifecycleOwner, { result ->
+        }
+        viewModel.authResult.observe(viewLifecycleOwner) { result ->
             when (result) {
                 is ResultEntity.Loading -> {
                     binding?.vRoot?.transitionToStart()
@@ -91,6 +91,7 @@ class RegisterFragment : BaseFragment() {
                     binding?.etPwd?.isEnabled = false
                     binding?.tvNext?.isEnabled = false
                 }
+
                 is ResultEntity.Success -> {
                     binding?.vRoot?.transitionToStart()
                     binding?.etLogin?.isEnabled = false
@@ -98,6 +99,7 @@ class RegisterFragment : BaseFragment() {
                     binding?.tvNext?.isEnabled = false
                     navigate(RegisterFragmentDirections.actionOrders())
                 }
+
                 is ResultEntity.Error -> {
                     if (result.error.code == BAD_LOGIN) {
                         binding?.tvError?.text = getString(R.string.auth_error)
@@ -112,6 +114,7 @@ class RegisterFragment : BaseFragment() {
                     binding?.etPwd?.isEnabled = true
                     binding?.tvNext?.isEnabled = true
                 }
+
                 null -> {
                     binding?.vRoot?.transitionToStart()
                     binding?.etLogin?.isEnabled = true
@@ -119,7 +122,7 @@ class RegisterFragment : BaseFragment() {
                     binding?.tvNext?.isEnabled = true
                 }
             }
-        })
+        }
     }
 
     private fun debug() = false

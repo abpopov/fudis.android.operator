@@ -102,7 +102,7 @@ class OrdersFragment : BaseFragment() {
     }
 
     private fun initObservers() {
-        viewModel.menuPos.observe(viewLifecycleOwner, { pos ->
+        viewModel.menuPos.observe(viewLifecycleOwner) { pos ->
             binding?.tvOrders?.isChecked = pos == 0
             binding?.tvPause?.isChecked = pos == 1
             binding?.tvCats?.isChecked = pos == 2
@@ -113,12 +113,13 @@ class OrdersFragment : BaseFragment() {
             binding?.tvCats?.isEnabled = pos != 2
             binding?.tvStops?.isEnabled = pos != 3
             binding?.tvHelp?.isEnabled = pos != 4
-        })
-        pauseViewModel.pauseRequest.observe(viewLifecycleOwner, { result ->
+        }
+        pauseViewModel.pauseRequest.observe(viewLifecycleOwner) { result ->
             when (result) {
                 is ResultEntity.Loading -> {
 
                 }
+
                 is ResultEntity.Error -> {
                     result.error.message.let {
                         if (it.isEmpty().not()) {
@@ -126,12 +127,13 @@ class OrdersFragment : BaseFragment() {
                         }
                     }
                 }
+
                 is ResultEntity.Success -> {
                     pauseViewModel.working.postValue(result.data)
                 }
             }
-        })
-        pauseViewModel.working.observe(viewLifecycleOwner, { working ->
+        }
+        pauseViewModel.working.observe(viewLifecycleOwner) { working ->
             binding?.tvPause?.setOnClickListener {
                 val source = viewModel.menuPos.value ?: 0
                 viewModel.selectMenu(1)
@@ -141,8 +143,8 @@ class OrdersFragment : BaseFragment() {
                     navigate(OrdersFragmentDirections.actionStart(source))
                 }
             }
-        })
-        viewModel.orders.observe(viewLifecycleOwner, { result ->
+        }
+        viewModel.orders.observe(viewLifecycleOwner) { result ->
             when (result) {
                 is ResultEntity.Success -> {
                     if (result.data.any {
@@ -157,12 +159,13 @@ class OrdersFragment : BaseFragment() {
                         setAlert(false)
                     }
                 }
+
                 else -> {
                     soundPlayer?.stop()
                     setAlert(false)
                 }
             }
-        })
+        }
     }
 
     private fun setAlert(start: Boolean) {

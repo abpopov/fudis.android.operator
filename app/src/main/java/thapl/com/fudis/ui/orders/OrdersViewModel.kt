@@ -1,7 +1,7 @@
 package thapl.com.fudis.ui.orders
 
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
+import androidx.lifecycle.distinctUntilChanged
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import thapl.com.fudis.domain.case.OrdersUseCase
@@ -23,7 +23,7 @@ class OrdersViewModel(private val useCase: OrdersUseCase) : BaseViewModel() {
 
     private var ticker: Job? = null
 
-    val menuPos = Transformations.distinctUntilChanged(_menuPos)
+    val menuPos = _menuPos.distinctUntilChanged()
     val orders = MutableLiveData<ResultEntity<List<OrderEntity>>>()
     val currentOrder = SingleLiveEvent<OrderEntity>()
     val receipt = MutableLiveData<ResultEntity<ReceiptEntity>>()
