@@ -4,7 +4,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.lifecycle.Lifecycle
 import androidx.recyclerview.widget.RecyclerView
 import thapl.com.fudis.GlideRequests
 import thapl.com.fudis.R
