@@ -6,7 +6,7 @@ import thapl.com.fudis.data.api.model.*
 interface ApiService {
 
     @FormUrlEncoded
-    @POST("user/login")
+    @POST("user/token")
     suspend fun auth(
         @Field("username") username: String?,
         @Field("password") password: String?

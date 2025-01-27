@@ -17,7 +17,7 @@ class ApiImpl(
 ) : Api {
 
     companion object {
-        private const val BASE_URL = "https://account.fudis.thapl.com/"
+        private const val BASE_URL = "https://project481.serv.thapl.com/operator/"
         private const val TIMEOUT = 45L
     }
 
