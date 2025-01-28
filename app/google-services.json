@@ -1,36 +1,26 @@
 {
   "project_info": {
-    "project_number": "951749877452",
-    "project_id": "fudisoperator",
-    "storage_bucket": "fudisoperator.appspot.com"
+    "project_number": "475575111010",
+    "project_id": "mb-delivery-operator",
+    "storage_bucket": "mb-delivery-operator.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:951749877452:android:b7e00498e6e87f344d2c69",
+        "mobilesdk_app_id": "1:475575111010:android:c00cb1a388ce463072703b",
         "android_client_info": {
-          "package_name": "thapl.com.fudis"
+          "package_name": "mb.delivery.operator"
         }
       },
-      "oauth_client": [
-        {
-          "client_id": "951749877452-210isus4brvo5glae5mmb5u2k7p5i0j0.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
+      "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyAi8-5VlrlPz0Ci9Qix1dg2kaVyf8NfkyU"
+          "current_key": "AIzaSyBVvVe9vA9V6B9HgsDlmtd-RrxVxbxDqX4"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "951749877452-210isus4brvo5glae5mmb5u2k7p5i0j0.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
+          "other_platform_oauth_client": []
         }
       }
     }
