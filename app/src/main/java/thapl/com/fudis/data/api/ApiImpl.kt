@@ -53,36 +53,42 @@ class ApiImpl(
     override suspend fun auth(
         username: String?,
         password: String?
-    ) = service.auth(username, password)
+    ) = service.auth("${BASE_URL}${prefs.getProjectId()}/user/token", username, password)
 
     override suspend fun orders() = service.orders(
         "Bearer ${prefs.getUserToken()}",
+        "${BASE_URL}${prefs.getProjectId()}/order/get-list",
         1,
         100
     )
 
     override suspend fun changeStatus(order: Long?, status: Int?) = service.changeStatus(
         "Bearer ${prefs.getUserToken()}",
+        "${BASE_URL}${prefs.getProjectId()}/order/change-status",
         order,
         status
     )
 
     override suspend fun categories() = service.categories(
-        "Bearer ${prefs.getUserToken()}"
+        "Bearer ${prefs.getUserToken()}",
+        "${BASE_URL}${prefs.getProjectId()}/catalog/get-menu"
     )
 
     override suspend fun catalog(id: Long?) = service.catalog(
         "Bearer ${prefs.getUserToken()}",
+        "${BASE_URL}${prefs.getProjectId()}/catalog/get-catalog-items",
         id
     )
 
     override suspend fun products(id: Int?) = service.products(
         "Bearer ${prefs.getUserToken()}",
+        "${BASE_URL}${prefs.getProjectId()}/catalog/get-products",
         id
     )
 
     override suspend fun stopProduct(id: Int?, product: Long?, stop: Boolean?) = service.stopProduct(
         "Bearer ${prefs.getUserToken()}",
+        "${BASE_URL}${prefs.getProjectId()}/catalog/set-product-stop",
         id,
         product,
         if (stop == true) 1 else 0
@@ -90,11 +96,13 @@ class ApiImpl(
 
     override suspend fun receipt(id: Long?) = service.receipt(
         "Bearer ${prefs.getUserToken()}",
+        "${BASE_URL}${prefs.getProjectId()}/catalog/get-tech-card",
         id
     )
 
     override suspend fun stopOrganization(id: Int?, time: Int?, cause: Int?) = service.stopOrganization(
         "Bearer ${prefs.getUserToken()}",
+        "${BASE_URL}${prefs.getProjectId()}/organizations/add-stop",
         id,
         time,
         cause
@@ -102,6 +110,7 @@ class ApiImpl(
 
     override suspend fun startOrganization(id: Int?) = service.startOrganization(
         "Bearer ${prefs.getUserToken()}",
+        "${BASE_URL}${prefs.getProjectId()}/organizations/drop-stop",
         id
     )
 }

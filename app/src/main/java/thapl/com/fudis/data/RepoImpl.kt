@@ -28,6 +28,12 @@ class RepoImpl(
         prefs.setOrganizationId(value)
     }
 
+    override fun getProjectId() = prefs.getProjectId()
+
+    override fun setProjectId(value: Int?) {
+        prefs.setProjectId(value)
+    }
+
     override fun getOrganizationState() = prefs.getOrganizationState()
 
     override fun setOrganizationState(value: Boolean?) {

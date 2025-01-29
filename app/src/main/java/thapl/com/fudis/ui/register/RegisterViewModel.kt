@@ -25,4 +25,10 @@ class RegisterViewModel(private val useCase: RegisterUseCase) : BaseViewModel() 
     fun setValidate(value: Boolean) {
         _authValidate.postValue(value)
     }
+
+    fun setProject(project: String?) {
+        useCase.setProjectId(project?.toIntOrNull())
+    }
+
+    fun getProject() = useCase.getProjectId().toString()
 }

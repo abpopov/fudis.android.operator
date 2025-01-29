@@ -6,72 +6,82 @@ import thapl.com.fudis.data.api.model.*
 interface ApiService {
 
     @FormUrlEncoded
-    @POST("user/token")
+    @POST
     suspend fun auth(
+        @Url url: String,
         @Field("username") username: String?,
         @Field("password") password: String?
     ): AuthResultApi
 
-    @GET("order/get-list")
+    @GET
     suspend fun orders(
         @Header("Authorization") token: String?,
+        @Url url: String,
         @Query("page") page: Int?,
         @Query("per-page") limit: Int?
     ): List<OrderApi>
 
     @FormUrlEncoded
-    @POST("order/change-status")
+    @POST
     suspend fun changeStatus(
         @Header("Authorization") token: String?,
+        @Url url: String,
         @Field("id") order: Long?,
         @Field("status") status: Int?
     ): StatusApi
 
-    @GET("catalog/get-tech-card")
+    @GET
     suspend fun receipt(
         @Header("Authorization") token: String?,
+        @Url url: String,
         @Query("id") id: Long?
     ): ReceiptApi
 
-    @GET("catalog/get-menu")
+    @GET
     suspend fun categories(
-        @Header("Authorization") token: String?
+        @Header("Authorization") token: String?,
+        @Url url: String
     ): List<CategoryApi>
 
-    @GET("catalog/get-catalog-items")
+    @GET
     suspend fun catalog(
         @Header("Authorization") token: String?,
+        @Url url: String,
         @Query("category_id") id: Long?
     ): List<CatalogApi>
 
-    @GET("catalog/get-products")
+    @GET
     suspend fun products(
         @Header("Authorization") token: String?,
+        @Url url: String,
         @Query("organization_id") id: Int?
     ): List<ProductApi>
 
     @FormUrlEncoded
-    @POST("catalog/set-product-stop")
+    @POST
     suspend fun stopProduct(
         @Header("Authorization") token: String?,
+        @Url url: String,
         @Field("organization_id") id: Int?,
         @Field("product_id") product: Long?,
         @Field("action") action: Int?
     ): SuccessApi
 
     @FormUrlEncoded
-    @POST("organizations/add-stop")
+    @POST
     suspend fun stopOrganization(
         @Header("Authorization") token: String?,
+        @Url url: String,
         @Field("organization_id") id: Int?,
         @Field("drop_time") time: Int?,
         @Field("cause") cause: Int?
     ): SuccessApi
 
     @FormUrlEncoded
-    @POST("organizations/drop-stop")
+    @POST
     suspend fun startOrganization(
         @Header("Authorization") token: String?,
+        @Url url: String,
         @Field("organization_id") id: Int?
     ): SuccessApi
 

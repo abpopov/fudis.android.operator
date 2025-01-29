@@ -11,12 +11,12 @@
         android:id="@+id/ivLogo"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintWidth_percent="0.5"
         app:layout_constraintBottom_toTopOf="@+id/etLogin"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_chainStyle="packed"
+        app:layout_constraintWidth_percent="0.5"
         app:srcCompat="@drawable/ic_mb_logo" />
 
     <androidx.appcompat.widget.AppCompatEditText
@@ -33,7 +33,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ivLogo"
-        app:layout_constraintWidth_percent="0.33" />
+        app:layout_constraintWidth_percent="0.43" />
 
     <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/etPwd"
@@ -49,7 +49,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etLogin"
-        app:layout_constraintWidth_percent="0.33" />
+        app:layout_constraintWidth_percent="0.43" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tvNext"
@@ -58,19 +58,64 @@
         android:layout_marginTop="@dimen/dp36"
         android:elevation="2dp"
         android:text="@string/auth_next"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/vProject"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etPwd"
-        app:layout_constraintWidth_percent="0.33" />
+        app:layout_constraintWidth_percent="0.43" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/vProject"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/dp64"
+        android:layout_marginTop="@dimen/dp36"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvNext"
+        app:layout_constraintWidth_percent="0.43">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvProjectLabel"
+            style="@style/TextStyle.Grey.20"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/auth_project_label"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed"
+            app:layout_constraintBottom_toTopOf="@+id/tvProjectValue"
+            app:layout_constraintEnd_toStartOf="@+id/tvProjectNext"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvProjectValue"
+            style="@style/TextStyle.Black.20"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/tvProjectLabel"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/tvProjectNext"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvProjectNext"
+            style="@style/ButtonStyleBlack"
+            android:layout_width="0dp"
+            android:elevation="2dp"
+            android:text="@string/auth_project_change"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tvError"
         style="@style/TextStyle.White.24"
         android:layout_width="0dp"
         android:layout_height="@dimen/dp80"
-        android:elevation="2dp"
         android:background="@color/red"
+        android:elevation="2dp"
         android:gravity="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

@@ -6,7 +6,12 @@
     <string name="auth_login_hint">Логин</string>
     <string name="auth_pwd_hint">Пароль</string>
     <string name="auth_next">Войти в систему</string>
+    <string name="auth_project_change">Сменить</string>
+    <string name="auth_project_label">Номер проекта</string>
     <string name="auth_error">Возможно, вы ошиблись при вводе логина или пароля. Попробуйте еще раз.</string>
+
+    <string name="auth_project_hint">Номер проекта</string>
+    <string name="auth_project_next">Ввести номер проекта</string>
 
     <string name="menu_orders">Заказы</string>
     <string name="menu_pause">Нагрузка</string>

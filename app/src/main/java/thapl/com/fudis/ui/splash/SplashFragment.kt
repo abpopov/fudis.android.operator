@@ -38,7 +38,11 @@ class SplashFragment : BaseFragment() {
         if (viewModel.isLoggedIn()) {
             navigate(SplashFragmentDirections.actionOrders())
         } else {
-            navigate(SplashFragmentDirections.actionAuth())
+            if (viewModel.hasProject()) {
+                navigate(SplashFragmentDirections.actionAuth())
+            } else {
+                navigate(SplashFragmentDirections.actionProject())
+            }
         }
     }
 }

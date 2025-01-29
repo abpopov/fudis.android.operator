@@ -8,6 +8,12 @@ class RegisterUseCaseImpl(private val repo: Repo) : RegisterUseCase {
 
     override fun getContext() = repo.getContext()
 
+    override fun getProjectId() = repo.getProjectId()
+
+    override fun setProjectId(value: Int?) {
+        repo.setProjectId(value)
+    }
+
     override suspend fun login(login: String, pwd: String): Any {
         val result = repo.auth(
             username = login,

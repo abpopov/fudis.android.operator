@@ -11,6 +11,7 @@ class PrefsImpl(
 
     companion object {
         private const val USER_TOKEN = "USER_TOKEN"
+        private const val PROJECT_ID = "PROJECT_ID"
         private const val ORGANIZATION_ID = "ORGANIZATION_ID"
         private const val ORGANIZATION_STATE = "ORGANIZATION_STATE"
     }
@@ -41,6 +42,20 @@ class PrefsImpl(
                 it.remove(ORGANIZATION_ID)
             } else {
                 it.putInt(ORGANIZATION_ID, value)
+            }
+        }.apply()
+    }
+
+    override fun getProjectId(): Int {
+        return prefs.getInt(PROJECT_ID, -1)
+    }
+
+    override fun setProjectId(value: Int?) {
+        prefs.edit().also {
+            if (value == null) {
+                it.remove(PROJECT_ID)
+            } else {
+                it.putInt(PROJECT_ID, value)
             }
         }.apply()
     }

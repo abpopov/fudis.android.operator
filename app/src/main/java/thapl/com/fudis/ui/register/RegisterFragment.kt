@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import org.koin.androidx.viewmodel.ext.android.sharedViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import thapl.com.fudis.R
 import thapl.com.fudis.data.api.model.BAD_LOGIN
 import thapl.com.fudis.databinding.FragmentAuthBinding
@@ -14,7 +14,7 @@ import thapl.com.fudis.utils.*
 
 class RegisterFragment : BaseFragment() {
 
-    private val viewModel: RegisterViewModel by sharedViewModel()
+    private val model: RegisterViewModel by viewModel()
 
     private var _binding: FragmentAuthBinding? = null
     private val binding get() = _binding
@@ -53,24 +53,29 @@ class RegisterFragment : BaseFragment() {
                 )
             )
         ) {
-            viewModel.setValidate(it)
+            model.setValidate(it)
         }
+        binding?.tvProjectValue?.text = model.getProject()
     }
 
     private fun initListeners() {
         binding?.vRoot?.setOnClickListener {
             binding?.vRoot?.transitionToStart()
         }
+        binding?.tvProjectNext?.setOnClickListener {
+            model.setProject(null)
+            navigate(RegisterFragmentDirections.actionProject())
+        }
         binding?.tvNext?.setOnClickListener {
             if (validator?.completeValidate() == true) {
                 context?.hideKeyboard(binding?.etLogin, binding?.etPwd)
                 if (debug()) {
-                    viewModel.auth(
+                    model.auth(
                         "ContentM",
                         "dsfdsskenerJDD825MdskjdsdNdfk-34#@jsdlKkdasMljsd"
                     )
                 } else {
-                    viewModel.auth(
+                    model.auth(
                         binding?.etLogin?.text?.toString()?.trim(),
                         binding?.etPwd?.text?.toString()?.trim()
                     )
@@ -80,10 +85,10 @@ class RegisterFragment : BaseFragment() {
     }
 
     private fun initObservers() {
-        viewModel.authValidate.observe(viewLifecycleOwner) { enable ->
+        model.authValidate.observe(viewLifecycleOwner) { enable ->
             binding?.tvNext?.isEnabled = enable
         }
-        viewModel.authResult.observe(viewLifecycleOwner) { result ->
+        model.authResult.observe(viewLifecycleOwner) { result ->
             when (result) {
                 is ResultEntity.Loading -> {
                     binding?.vRoot?.transitionToStart()
@@ -115,7 +120,7 @@ class RegisterFragment : BaseFragment() {
                     binding?.tvNext?.isEnabled = true
                 }
 
-                null -> {
+                else -> {
                     binding?.vRoot?.transitionToStart()
                     binding?.etLogin?.isEnabled = true
                     binding?.etPwd?.isEnabled = true

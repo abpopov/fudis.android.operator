@@ -6,4 +6,6 @@ import thapl.com.fudis.ui.base.BaseViewModel
 class SplashViewModel(private val useCase: SplashUseCase) : BaseViewModel() {
 
     fun isLoggedIn() = useCase.isLoggedIn()
+
+    fun hasProject() = useCase.getProjectId() > 0
 }
