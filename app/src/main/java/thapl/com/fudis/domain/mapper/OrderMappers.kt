@@ -46,7 +46,6 @@ object OrderApiToEntityMapper : BaseMapperNullable<OrderApi, OrderEntity> {
             createdAt = type.createdAt?.toTimestamp(),
             deliveryAt = type.deliveryAt?.toTimestamp(),
             updatedAt = type.updatedAt?.toTimestamp(),
-            conception = ConceptionApiToEntityMapper.map(type.conception),
             cartData = CartListApiToEntityMapper.map(type.cartData?.cartItems),
             gift = CatalogItemApiToEntityMapper.map(type.gift)
         )

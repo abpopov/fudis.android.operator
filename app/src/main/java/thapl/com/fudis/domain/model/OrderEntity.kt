@@ -19,7 +19,6 @@ const val ORDER_STATUS_DELIVERED = 30
 @Parcelize
 data class OrderEntity(
     val id: Long,
-    val conception: ConceptionEntity?,
     val cartData: List<CartEntity>,
     val gift: CatalogItemEntity?,
     val orderSource: Int,

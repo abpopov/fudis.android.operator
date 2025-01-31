@@ -40,7 +40,6 @@ class OrderHolder(view: View) : BaseHolder<OrdersViewModel, OrderEntity>(view) {
 
     private val textHeader = view.findViewById<TextView>(R.id.tvHeader)
     private val textNumberOrder = view.findViewById<TextView>(R.id.tvNumberOrder)
-    private val textVendorName = view.findViewById<TextView>(R.id.tvVendorName)
     private val textServiceName = view.findViewById<TextView>(R.id.tvServiceName)
     private val textOrderContent = view.findViewById<TextView>(R.id.tvOrderContent)
     private val textOrderTime = view.findViewById<TextView>(R.id.tvTimeValue)
@@ -51,7 +50,6 @@ class OrderHolder(view: View) : BaseHolder<OrdersViewModel, OrderEntity>(view) {
     private val btnOrderMore = view.findViewById<TextView>(R.id.tvOrderMore)
     private val btnOrderAction = view.findViewById<TextView>(R.id.tvOrderAction)
     private val textOrderComment = view.findViewById<TextView>(R.id.tvClientComment)
-    private val imgLogoVendor = view.findViewById<ImageView>(R.id.ivLogoVendor)
     private val imgLogoService = view.findViewById<ImageView>(R.id.ivLogoService)
     private val bgRoot = view.findViewById<View>(R.id.vRoot)
 
@@ -80,7 +78,7 @@ class OrderHolder(view: View) : BaseHolder<OrdersViewModel, OrderEntity>(view) {
             textOrderComment.visibility = View.VISIBLE
             textOrderComment.text = itemView.context.getString(R.string.order_client_comment, item.clientComment)
         }
-        if (item.personsCount ?: 0 > 0) {
+        if ((item.personsCount ?: 0) > 0) {
             textOrderForks.visibility = View.VISIBLE
             textOrderForksLabel.visibility = View.VISIBLE
             textOrderForks.text = itemView.context.resources.getQuantityString(
@@ -125,25 +123,6 @@ class OrderHolder(view: View) : BaseHolder<OrdersViewModel, OrderEntity>(view) {
         } ?: run {
             textOrderDue.text = ""
         }
-
-        item.conception?.let { c ->
-            textVendorName.visibility = View.VISIBLE
-            imgLogoVendor.visibility = View.VISIBLE
-            textVendorName.text = c.title
-            c.logo?.let {
-                glide
-                    ?.load(it)
-                    ?.diskCacheStrategy(DiskCacheStrategy.ALL)
-                    ?.circleCrop()
-                    ?.fallback(0)
-                    ?.into(imgLogoVendor)
-            } ?: run {
-                imgLogoVendor.setImageResource(0)
-            }
-        } ?: run {
-            textVendorName.visibility = View.GONE
-            imgLogoVendor.visibility = View.GONE
-        }
         btnOrderMore.setOnClickListener {
             click(item, MORE)
         }
@@ -152,14 +131,14 @@ class OrderHolder(view: View) : BaseHolder<OrdersViewModel, OrderEntity>(view) {
             click(item, ACTION)
         }
         setChangeableData(item)
-        viewModel.orders.observe(this, { orders ->
+        viewModel.orders.observe(this) { orders ->
             if (orders is ResultEntity.Success) {
                 val itemInList = orders.data.firstOrNull { it.id == item.id }
                 itemInList?.let {
                     setChangeableData(it)
                 }
             }
-        })
+        }
     }
 
     private fun setChangeableData(item: OrderEntity) {

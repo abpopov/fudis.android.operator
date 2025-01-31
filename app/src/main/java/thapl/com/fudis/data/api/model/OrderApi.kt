@@ -24,8 +24,6 @@ data class OrderApi(
     val orderSum: Float?,
     @SerializedName("discount_sum")
     val discountSum: Float?,
-    @SerializedName("conception")
-    val conception: ConceptionApi?,
     @SerializedName("dc_order_id")
     val dcOrderId: String?,
     @SerializedName("persons_count")

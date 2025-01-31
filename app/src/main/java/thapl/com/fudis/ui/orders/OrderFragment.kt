@@ -112,26 +112,6 @@ class OrderFragment : BaseFragment() {
             binding?.tvDueValue?.text = ""
         }
         binding?.tvOrderTotalValue?.text = String.format("%s ₽", formatter.format(item.orderSum))
-        item.conception?.let { c ->
-            binding?.tvVendorName?.visibility = View.VISIBLE
-            binding?.ivLogoVendor?.visibility = View.VISIBLE
-            binding?.tvVendorName?.text = c.title
-            binding?.ivLogoVendor?.let { iv ->
-                c.logo?.let {
-                    GlideApp.with(this)
-                        .load(it)
-                        .diskCacheStrategy(DiskCacheStrategy.ALL)
-                        .circleCrop()
-                        .fallback(0)
-                        .into(iv)
-                } ?: run {
-                    iv.setImageResource(0)
-                }
-            }
-        } ?: run {
-            binding?.tvVendorName?.visibility = View.GONE
-            binding?.ivLogoVendor?.visibility = View.GONE
-        }
         binding?.rvCartList?.adapter = CartAdapter(
             null,
             viewModel

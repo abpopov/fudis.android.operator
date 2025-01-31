@@ -93,35 +93,13 @@
             tools:text="№ 10987" />
 
         <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/ivLogoVendor"
+            android:id="@+id/ivLogoService"
             android:layout_width="@dimen/dp48"
             android:layout_height="@dimen/dp48"
             android:layout_marginStart="@dimen/dp32"
             app:layout_constraintBottom_toBottomOf="@+id/tvNumberOrder"
             app:layout_constraintStart_toEndOf="@+id/tvNumberOrder"
             app:layout_constraintTop_toTopOf="@+id/tvNumberOrder"
-            tools:background="@tools:sample/avatars" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvVendorName"
-            style="@style/TextStyle.Black.24"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/dp24"
-            android:layout_marginTop="@dimen/dp48"
-            android:gravity="center_vertical"
-            app:layout_constraintStart_toEndOf="@+id/ivLogoVendor"
-            app:layout_constraintTop_toTopOf="@+id/vTopBg"
-            tools:text="Юго-Восток" />
-
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/ivLogoService"
-            android:layout_width="@dimen/dp48"
-            android:layout_height="@dimen/dp48"
-            android:layout_marginStart="@dimen/dp32"
-            app:layout_constraintBottom_toBottomOf="@+id/tvVendorName"
-            app:layout_constraintStart_toEndOf="@+id/tvVendorName"
-            app:layout_constraintTop_toTopOf="@+id/tvVendorName"
             tools:background="@tools:sample/avatars" />
 
         <androidx.appcompat.widget.AppCompatTextView
