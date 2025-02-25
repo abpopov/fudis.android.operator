@@ -74,6 +74,11 @@ class ApiImpl(
         "${BASE_URL}${prefs.getProjectId()}/catalog/get-menu"
     )
 
+    override suspend fun menu() = service.menu(
+        "Bearer ${prefs.getUserToken()}",
+        "${BASE_URL}${prefs.getProjectId()}/user/get-top-menu"
+    )
+
     override suspend fun catalog(id: Long?) = service.catalog(
         "Bearer ${prefs.getUserToken()}",
         "${BASE_URL}${prefs.getProjectId()}/catalog/get-catalog-items",

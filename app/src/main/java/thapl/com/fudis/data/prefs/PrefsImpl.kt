@@ -14,6 +14,10 @@ class PrefsImpl(
         private const val PROJECT_ID = "PROJECT_ID"
         private const val ORGANIZATION_ID = "ORGANIZATION_ID"
         private const val ORGANIZATION_STATE = "ORGANIZATION_STATE"
+        private const val SHOW_MENU = "SHOW_MENU"
+        private const val SHOW_ORDERS = "SHOW_ORDERS"
+        private const val SHOW_STOP_LIST = "SHOW_STOP_LIST"
+        private const val SHOW_HIGHLOAD = "SHOW_HIGHLOAD"
     }
 
     private var prefs: SharedPreferences = ctx.getSharedPreferences("naukoteka.prefs", Context.MODE_PRIVATE)
@@ -70,6 +74,62 @@ class PrefsImpl(
                 it.remove(ORGANIZATION_STATE)
             } else {
                 it.putBoolean(ORGANIZATION_STATE, value)
+            }
+        }.apply()
+    }
+
+    override fun getShowMenu(): Boolean {
+        return prefs.getBoolean(SHOW_MENU, true)
+    }
+
+    override fun setShowMenu(value: Boolean?) {
+        prefs.edit().also {
+            if (value == null) {
+                it.remove(SHOW_MENU)
+            } else {
+                it.putBoolean(SHOW_MENU, value)
+            }
+        }.apply()
+    }
+
+    override fun getShowOrders(): Boolean {
+        return prefs.getBoolean(SHOW_ORDERS, true)
+    }
+
+    override fun setShowOrders(value: Boolean?) {
+        prefs.edit().also {
+            if (value == null) {
+                it.remove(SHOW_ORDERS)
+            } else {
+                it.putBoolean(SHOW_ORDERS, value)
+            }
+        }.apply()
+    }
+
+    override fun getShowStopList(): Boolean {
+        return prefs.getBoolean(SHOW_STOP_LIST, true)
+    }
+
+    override fun setShowStopList(value: Boolean?) {
+        prefs.edit().also {
+            if (value == null) {
+                it.remove(SHOW_STOP_LIST)
+            } else {
+                it.putBoolean(SHOW_STOP_LIST, value)
+            }
+        }.apply()
+    }
+
+    override fun getShowHighload(): Boolean {
+        return prefs.getBoolean(SHOW_HIGHLOAD, true)
+    }
+
+    override fun setShowHighload(value: Boolean?) {
+        prefs.edit().also {
+            if (value == null) {
+                it.remove(SHOW_HIGHLOAD)
+            } else {
+                it.putBoolean(SHOW_HIGHLOAD, value)
             }
         }.apply()
     }

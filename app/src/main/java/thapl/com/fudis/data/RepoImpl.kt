@@ -40,6 +40,30 @@ class RepoImpl(
         prefs.setOrganizationState(value)
     }
 
+    override fun getShowMenu() = prefs.getShowMenu()
+
+    override fun setShowMenu(value: Boolean?) {
+        prefs.setShowMenu(value)
+    }
+
+    override fun getShowOrders() = prefs.getShowOrders()
+
+    override fun setShowOrders(value: Boolean?) {
+        prefs.setShowOrders(value)
+    }
+
+    override fun getShowStopList() = prefs.getShowStopList()
+
+    override fun setShowStopList(value: Boolean?) {
+        prefs.setShowStopList(value)
+    }
+
+    override fun getShowHighload() = prefs.getShowHighload()
+
+    override fun setShowHighload(value: Boolean?) {
+        prefs.setShowHighload(value)
+    }
+
     // api
 
     override suspend fun auth(username: String?, password: String?) = api.auth(username, password)
@@ -49,6 +73,8 @@ class RepoImpl(
     override suspend fun changeStatus(order: Long?, status: Int?) = api.changeStatus(order, status)
 
     override suspend fun categories() = api.categories()
+
+    override suspend fun menu() = api.menu()
 
     override suspend fun catalog(id: Long?) = api.catalog(id)
 

@@ -9,16 +9,31 @@
         android:id="@+id/vAlert"
         android:layout_width="@dimen/dp12"
         android:layout_height="@dimen/dp12"
-        android:visibility="gone"
         android:layout_marginTop="@dimen/dp64"
         android:background="@drawable/ic_bg_circle_red"
+        android:visibility="gone"
         app:layout_constraintStart_toEndOf="@+id/tvOrders"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <thapl.com.fudis.ui.components.CheckableTextView
+        android:id="@+id/tvCats"
+        style="@style/ButtonStyleMenu"
+        android:layout_marginTop="@dimen/dp24"
+        android:layout_marginEnd="@dimen/dp10"
+        android:layout_marginStart="@dimen/dp60"
+        android:drawableStart="@drawable/sl_menu"
+        android:paddingTop="@dimen/dp40"
+        android:paddingBottom="@dimen/dp40"
+        android:text="@string/menu_cats"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintEnd_toStartOf="@+id/tvOrders"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <thapl.com.fudis.ui.components.CheckableTextView
         android:id="@+id/tvOrders"
         style="@style/ButtonStyleMenu"
-        android:layout_marginStart="@dimen/dp60"
         android:layout_marginTop="@dimen/dp24"
         android:layout_marginEnd="@dimen/dp10"
         android:drawableStart="@drawable/sl_orders"
@@ -26,8 +41,7 @@
         android:paddingBottom="@dimen/dp40"
         android:text="@string/menu_orders"
         app:layout_constraintEnd_toStartOf="@+id/tvPause"
-        app:layout_constraintHorizontal_chainStyle="spread_inside"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/tvCats"
         app:layout_constraintTop_toTopOf="parent" />
 
     <thapl.com.fudis.ui.components.CheckableTextView
@@ -39,21 +53,8 @@
         android:paddingTop="@dimen/dp40"
         android:paddingBottom="@dimen/dp40"
         android:text="@string/menu_pause"
-        app:layout_constraintEnd_toStartOf="@+id/tvCats"
-        app:layout_constraintStart_toEndOf="@+id/tvOrders"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <thapl.com.fudis.ui.components.CheckableTextView
-        android:id="@+id/tvCats"
-        style="@style/ButtonStyleMenu"
-        android:layout_marginTop="@dimen/dp24"
-        android:layout_marginEnd="@dimen/dp10"
-        android:drawableStart="@drawable/sl_menu"
-        android:paddingTop="@dimen/dp40"
-        android:paddingBottom="@dimen/dp40"
-        android:text="@string/menu_cats"
         app:layout_constraintEnd_toStartOf="@+id/tvStops"
-        app:layout_constraintStart_toEndOf="@+id/tvPause"
+        app:layout_constraintStart_toEndOf="@+id/tvOrders"
         app:layout_constraintTop_toTopOf="parent" />
 
     <thapl.com.fudis.ui.components.CheckableTextView
@@ -66,7 +67,7 @@
         android:paddingBottom="@dimen/dp40"
         android:text="@string/menu_stops"
         app:layout_constraintEnd_toStartOf="@+id/tvHelp"
-        app:layout_constraintStart_toEndOf="@+id/tvCats"
+        app:layout_constraintStart_toEndOf="@+id/tvPause"
         app:layout_constraintTop_toTopOf="parent" />
 
     <thapl.com.fudis.ui.components.CheckableTextView
@@ -78,9 +79,17 @@
         android:paddingTop="@dimen/dp40"
         android:paddingBottom="@dimen/dp40"
         android:text="@string/menu_help"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/tvStops"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/vBarrier"
+        app:barrierDirection="bottom"
+        app:constraint_referenced_ids="tvHelp,tvCats,tvOrders,tvPause,tvStops"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/orders_fragment"
@@ -90,7 +99,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvHelp"
+        app:layout_constraintTop_toBottomOf="@+id/vBarrier"
         app:navGraph="@navigation/orders" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

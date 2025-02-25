@@ -44,6 +44,12 @@ interface ApiService {
     ): List<CategoryApi>
 
     @GET
+    suspend fun menu(
+        @Header("Authorization") token: String?,
+        @Url url: String
+    ): MenuApi
+
+    @GET
     suspend fun catalog(
         @Header("Authorization") token: String?,
         @Url url: String,

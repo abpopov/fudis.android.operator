@@ -9,6 +9,7 @@ import android.view.animation.AccelerateInterpolator
 import android.view.animation.Animation
 import android.view.animation.ScaleAnimation
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.fragment.app.setFragmentResultListener
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
@@ -76,7 +77,7 @@ class OrdersFragment : BaseFragment() {
     }
 
     private fun initViews() {
-
+        viewModel.getMenu()
     }
 
     private fun initListeners() {
@@ -102,6 +103,23 @@ class OrdersFragment : BaseFragment() {
     }
 
     private fun initObservers() {
+        viewModel.showMenu.observe(viewLifecycleOwner) {
+            binding?.tvCats?.isVisible = it == true
+        }
+        viewModel.showOrders.observe(viewLifecycleOwner) {
+            binding?.tvOrders?.isVisible = it == true
+        }
+        viewModel.showStopList.observe(viewLifecycleOwner) {
+            binding?.tvStops?.isVisible = it == true
+        }
+        viewModel.showHighload.observe(viewLifecycleOwner) {
+            binding?.tvPause?.isVisible = it == true
+        }
+        viewModel.menu.observe(viewLifecycleOwner) {
+            if (it is ResultEntity.Success) {
+                viewModel.updateMenu(it.data)
+            }
+        }
         viewModel.menuPos.observe(viewLifecycleOwner) { pos ->
             binding?.tvOrders?.isChecked = pos == 0
             binding?.tvPause?.isChecked = pos == 1

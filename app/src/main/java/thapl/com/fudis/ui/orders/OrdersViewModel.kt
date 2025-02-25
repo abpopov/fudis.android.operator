@@ -5,6 +5,7 @@ import androidx.lifecycle.distinctUntilChanged
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import thapl.com.fudis.domain.case.OrdersUseCase
+import thapl.com.fudis.domain.model.MenuEntity
 import thapl.com.fudis.domain.model.ORDER_STATUS_IN_DELIVERY
 import thapl.com.fudis.domain.model.OrderEntity
 import thapl.com.fudis.domain.model.ReceiptEntity
@@ -28,7 +29,12 @@ class OrdersViewModel(private val useCase: OrdersUseCase) : BaseViewModel() {
     val currentOrder = SingleLiveEvent<OrderEntity>()
     val receipt = MutableLiveData<ResultEntity<ReceiptEntity>>()
     val status = SingleLiveEvent<ResultEntity<Pair<Long, Int>>>()
+    val menu = SingleLiveEvent<ResultEntity<MenuEntity>>()
     val scrollUp = SingleLiveEvent<Boolean>()
+    val showMenu = MutableLiveData(useCase.getShowMenu())
+    val showOrders = MutableLiveData(useCase.getShowOrders())
+    val showStopList = MutableLiveData(useCase.getShowStopList())
+    val showHighload = MutableLiveData(useCase.getShowHighload())
 
     init {
         getOrders()
@@ -111,5 +117,18 @@ class OrdersViewModel(private val useCase: OrdersUseCase) : BaseViewModel() {
                 }
             }
         )
+    }
+
+    fun getMenu() {
+        doRequest(menu) {
+            useCase.getMenu()
+        }
+    }
+
+    fun updateMenu(data: MenuEntity) {
+        showMenu.postValue(data.showMenu)
+        showOrders.postValue(data.showOrders)
+        showStopList.postValue(data.showStopList)
+        showHighload.postValue(data.showHighload)
     }
 }
