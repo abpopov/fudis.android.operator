@@ -7,6 +7,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import thapl.com.fudis.BuildConfig
+import thapl.com.fudis.data.api.model.StatusRequestApi
 import thapl.com.fudis.data.prefs.Prefs
 import java.util.concurrent.TimeUnit
 
@@ -67,6 +68,12 @@ class ApiImpl(
         "${BASE_URL}${prefs.getProjectId()}/order/change-status",
         order,
         status
+    )
+
+    override suspend fun changeItemStatus(item: Int?, status: Int?) = service.changeItemStatus(
+        "Bearer ${prefs.getUserToken()}",
+        "${BASE_URL}${prefs.getProjectId()}/order/change-cart-item-status",
+        StatusRequestApi(id = item, status = status)
     )
 
     override suspend fun categories() = service.categories(

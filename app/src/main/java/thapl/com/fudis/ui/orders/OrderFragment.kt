@@ -78,7 +78,7 @@ class OrderFragment : BaseFragment() {
             binding?.tvClientComment?.visibility = View.VISIBLE
             binding?.tvClientComment?.text = getString(R.string.order_client_comment, item.clientComment)
         }
-        if (item.personsCount ?: 0 > 0) {
+        if ((item.personsCount ?: 0) > 0) {
             binding?.tvForksValue?.visibility = View.VISIBLE
             binding?.tvForksLabel?.visibility = View.VISIBLE
             binding?.tvForksValue?.text = resources.getQuantityString(
@@ -118,18 +118,6 @@ class OrderFragment : BaseFragment() {
         ) { receipt, _ ->
             navigate(OrderFragmentDirections.actionReceipt(receipt.item.id, item.id))
         }
-        (binding?.rvCartList?.adapter as? CartAdapter)?.submitList(mutableListOf<CartEntity>().apply {
-            addAll(item.cartData)
-            item.gift?.let { g ->
-                add(
-                    CartEntity(
-                        item = g.copy(price = 0f),
-                        count = 1,
-                        modifiers = listOf()
-                    )
-                )
-            }
-        })
         setChangeableData(item)
     }
 
@@ -146,16 +134,21 @@ class OrderFragment : BaseFragment() {
     }
 
     private fun initObservers() {
-        viewModel.currentOrder.observe(viewLifecycleOwner, { result ->
+        viewModel.currentOrder.observe(viewLifecycleOwner) { result ->
             if (result?.id == args.order.id) {
                 setChangeableData(result)
             }
-        })
-        viewModel.status.observe(viewLifecycleOwner, { result ->
+        }
+        viewModel.status.observe(viewLifecycleOwner) { result ->
             if (result is ResultEntity.Error) {
                 Toast.makeText(requireContext(), result.error.message, Toast.LENGTH_SHORT).show()
             }
-        })
+        }
+        viewModel.itemStatus.observe(viewLifecycleOwner) { result ->
+            if (result is ResultEntity.Error) {
+                Toast.makeText(requireContext(), result.error.message, Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
     private fun setChangeableData(item: OrderEntity) {
@@ -169,5 +162,20 @@ class OrderFragment : BaseFragment() {
         } else {
             binding?.tvOrderAction?.visibility = View.INVISIBLE
         }
+        (binding?.rvCartList?.adapter as? CartAdapter)?.submitList(mutableListOf<CartEntity>().apply {
+            addAll(item.cartData)
+            item.gift?.let { g ->
+                add(
+                    CartEntity(
+                        item = g.copy(price = 0f),
+                        count = 1,
+                        modifiers = listOf(),
+                        status = -1,
+                        hasTechCard = false,
+                        id = -1
+                    )
+                )
+            }
+        })
     }
 }

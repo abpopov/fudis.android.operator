@@ -2,6 +2,7 @@
 <resources>
     <dimen name="dp264">264dp</dimen>
     <dimen name="dp226">226dp</dimen>
+    <dimen name="dp140">140dp</dimen>
     <dimen name="dp80">80dp</dimen>
     <dimen name="dp72">72dp</dimen>
     <dimen name="dp64">64dp</dimen>

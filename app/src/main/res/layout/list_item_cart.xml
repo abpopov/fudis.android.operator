@@ -31,12 +31,38 @@
         style="@style/TextStyle.Black.20"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/dp48"
         android:gravity="end"
         android:nestedScrollingEnabled="false"
         app:layout_constraintBottom_toBottomOf="@+id/tvItemMore"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/tvItemStatus"
         app:layout_constraintTop_toTopOf="@+id/tvItemMore"
         tools:text="450 ₽" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvItemStatus"
+        style="@style/TextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/dp36"
+        android:layout_marginEnd="@dimen/dp24"
+        android:background="@drawable/ic_bg_rounded_red_8"
+        android:gravity="center"
+        android:minWidth="@dimen/dp140"
+        android:text="@string/order_single_status_ready"
+        android:textColor="@color/white"
+        android:textSize="@dimen/dp14"
+        app:layout_constraintEnd_toStartOf="@+id/tvItemAction"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="SpUsage" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvItemAction"
+        style="@style/ButtonStyleBlack"
+        android:layout_width="wrap_content"
+        android:text="@string/order_single_action_start"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:textAllCaps="true" />
 
     <View
         android:layout_width="0dp"
@@ -50,11 +76,12 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dp20"
+        android:layout_marginEnd="@dimen/dp48"
         android:layout_marginBottom="@dimen/dp2"
         android:nestedScrollingEnabled="false"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/tvItemStatus"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvItemTitle"
         tools:itemCount="2"

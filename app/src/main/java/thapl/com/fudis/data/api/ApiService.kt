@@ -30,6 +30,13 @@ interface ApiService {
         @Field("status") status: Int?
     ): StatusApi
 
+    @POST
+    suspend fun changeItemStatus(
+        @Header("Authorization") token: String?,
+        @Url url: String,
+        @Body body: StatusRequestApi
+    ): StatusApi
+
     @GET
     suspend fun receipt(
         @Header("Authorization") token: String?,

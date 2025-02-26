@@ -69,7 +69,10 @@ object CartApiToEntityMapper : BaseMapperNullable<CartApi, CartEntity> {
         return CartEntity(
             item = item,
             modifiers = ModifierListApiToEntityMapper.map(type?.modifiers),
-            count = type?.count ?: 0
+            id = type?.id ?: type?.id2 ?: 0,
+            count = type?.count ?: 0,
+            status = type?.status ?: 0,
+            hasTechCard = type?.hasTechCard ?: false
         )
     }
 

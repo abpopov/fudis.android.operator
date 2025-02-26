@@ -8,6 +8,14 @@ data class CartApi(
     val catalogItem: CatalogItemApi?,
     @SerializedName("modifiers")
     val modifiers: List<ModifierApi>?,
+    @SerializedName("id")
+    val id: Int?,
+    @SerializedName("cart_item_id")
+    val id2: Int?,
     @SerializedName("count")
-    val count: Int?
+    val count: Int?,
+    @SerializedName("status")
+    val status: Int?,
+    @SerializedName("has_tech_card")
+    val hasTechCard: Boolean?
 ) : Serializable

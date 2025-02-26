@@ -6,6 +6,7 @@ interface Api {
     suspend fun auth(username: String?, password: String?): AuthResultApi
     suspend fun orders(): List<OrderApi>
     suspend fun changeStatus(order: Long?, status: Int?): StatusApi
+    suspend fun changeItemStatus(item: Int?, status: Int?): StatusApi
     suspend fun menu(): MenuApi
     suspend fun categories(): List<CategoryApi>
     suspend fun catalog(id: Long?): List<CatalogApi>

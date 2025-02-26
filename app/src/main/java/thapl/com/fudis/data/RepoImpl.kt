@@ -72,6 +72,8 @@ class RepoImpl(
 
     override suspend fun changeStatus(order: Long?, status: Int?) = api.changeStatus(order, status)
 
+    override suspend fun changeItemStatus(item: Int?, status: Int?) = api.changeItemStatus(item, status)
+
     override suspend fun categories() = api.categories()
 
     override suspend fun menu() = api.menu()

@@ -41,6 +41,10 @@ class OrdersUseCaseImpl(private val repo: Repo) : OrdersUseCase {
         return Pair(id, checkNotNull(repo.changeStatus(id, status).status))
     }
 
+    override suspend fun changeItemStatus(item: Int, status: Int): Pair<Int, Int> {
+        return Pair(item, checkNotNull(repo.changeItemStatus(item, status).status))
+    }
+
     override suspend fun getMenu(): MenuEntity {
         val result = repo.menu()
         repo.setShowMenu(result.showMenu)

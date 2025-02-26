@@ -73,6 +73,14 @@
     <string name="order_single_back">Все заказы</string>
     <string name="order_single_total">Итого к оплате</string>
     <string name="order_single_more">Техкарта</string>
+    <string name="order_single_action_start">Начать</string>
+    <string name="order_single_action_ready">Готово</string>
+    <string name="order_single_action_done">Отдать</string>
+    <string name="order_single_status_new">Новый</string>
+    <string name="order_single_status_ready">Можно готовить</string>
+    <string name="order_single_status_cooking">Готовится</string>
+    <string name="order_single_status_cooked">Приготовлено</string>
+    <string name="order_single_status_done">Отдан</string>
 
     <string name="receipt_back">Заказ № %s</string>
     <string name="receipt_back_menu">Меню</string>

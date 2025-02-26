@@ -26,9 +26,10 @@ class OrdersViewModel(private val useCase: OrdersUseCase) : BaseViewModel() {
 
     val menuPos = _menuPos.distinctUntilChanged()
     val orders = MutableLiveData<ResultEntity<List<OrderEntity>>>()
-    val currentOrder = SingleLiveEvent<OrderEntity>()
+    val currentOrder = SingleLiveEvent<OrderEntity?>()
     val receipt = MutableLiveData<ResultEntity<ReceiptEntity>>()
     val status = SingleLiveEvent<ResultEntity<Pair<Long, Int>>>()
+    val itemStatus = SingleLiveEvent<ResultEntity<Pair<Int, Int>>>()
     val menu = SingleLiveEvent<ResultEntity<MenuEntity>>()
     val scrollUp = SingleLiveEvent<Boolean>()
     val showMenu = MutableLiveData(useCase.getShowMenu())
@@ -77,6 +78,32 @@ class OrdersViewModel(private val useCase: OrdersUseCase) : BaseViewModel() {
             }
         )
 
+    }
+
+    fun changeItemStatus(item: Int, nextStatus: Int) {
+        doPostActionRequest(
+            itemStatus,
+            block = {
+                useCase.changeItemStatus(item, nextStatus)
+            }, action = { pair ->
+                if (pair is ResultEntity.Success) {
+                    val current = currentOrder.value
+                    currentOrder.postValue(
+                        current?.copy(
+                            cartData = current.cartData.map { i ->
+                                if (i.id == pair.data.first) {
+                                    i.copy(status = pair.data.second)
+                                } else {
+                                    i
+                                }
+                            }
+                        )
+                    )
+                } else if (pair is ResultEntity.Error) {
+                    currentOrder.postValue(currentOrder.value)
+                }
+            }
+        )
     }
 
     fun changeStatus(id: Long, nextStatus: Int) {

@@ -7,6 +7,8 @@
       <color name="black_40">#66000000</color>
       <color name="white">#FFFFFFFF</color>
       <color name="red">#E42E2E</color>
+      <color name="red_status">#DF3D3D</color>
+      <color name="gold_status">#DF993D</color>
       <color name="green">#37CE52</color>
       <color name="grey_switch">#8B8B89</color>
       <color name="grey_bg">#F4F3F0</color>
