@@ -19,6 +19,8 @@ class ApiImpl(
 
     companion object {
         private const val BASE_URL = "https://project481.serv.thapl.com/operator/"
+        private const val BASE_URL_1 = "https://project"
+        private const val BASE_URL_2 = ".serv.thapl.com/operator"
         private const val TIMEOUT = 45L
     }
 
@@ -51,56 +53,60 @@ class ApiImpl(
         service = retrofit.create(ApiService::class.java)
     }
 
+    private fun getUrl(): String {
+        return BASE_URL_1 + prefs.getProjectId() + BASE_URL_2
+    }
+
     override suspend fun auth(
         username: String?,
         password: String?
-    ) = service.auth("${BASE_URL}${prefs.getProjectId()}/user/token", username, password)
+    ) = service.auth("${getUrl()}/user/token", username, password)
 
     override suspend fun orders() = service.orders(
         "Bearer ${prefs.getUserToken()}",
-        "${BASE_URL}${prefs.getProjectId()}/order/get-list",
+        "${getUrl()}/order/get-list",
         1,
         100
     )
 
     override suspend fun changeStatus(order: Long?, status: Int?) = service.changeStatus(
         "Bearer ${prefs.getUserToken()}",
-        "${BASE_URL}${prefs.getProjectId()}/order/change-status",
+        "${getUrl()}/order/change-status",
         order,
         status
     )
 
     override suspend fun changeItemStatus(item: Int?, status: Int?) = service.changeItemStatus(
         "Bearer ${prefs.getUserToken()}",
-        "${BASE_URL}${prefs.getProjectId()}/order/change-cart-item-status",
+        "${getUrl()}/order/change-cart-item-status",
         StatusRequestApi(id = item, status = status)
     )
 
     override suspend fun categories() = service.categories(
         "Bearer ${prefs.getUserToken()}",
-        "${BASE_URL}${prefs.getProjectId()}/catalog/get-menu"
+        "${getUrl()}/catalog/get-menu"
     )
 
     override suspend fun menu() = service.menu(
         "Bearer ${prefs.getUserToken()}",
-        "${BASE_URL}${prefs.getProjectId()}/user/get-top-menu"
+        "${getUrl()}/user/get-top-menu"
     )
 
     override suspend fun catalog(id: Long?) = service.catalog(
         "Bearer ${prefs.getUserToken()}",
-        "${BASE_URL}${prefs.getProjectId()}/catalog/get-catalog-items",
+        "${getUrl()}/catalog/get-catalog-items",
         id
     )
 
     override suspend fun products(id: Int?) = service.products(
         "Bearer ${prefs.getUserToken()}",
-        "${BASE_URL}${prefs.getProjectId()}/catalog/get-products",
+        "${getUrl()}/catalog/get-products",
         id
     )
 
     override suspend fun stopProduct(id: Int?, product: Long?, stop: Boolean?) = service.stopProduct(
         "Bearer ${prefs.getUserToken()}",
-        "${BASE_URL}${prefs.getProjectId()}/catalog/set-product-stop",
+        "${getUrl()}/catalog/set-product-stop",
         id,
         product,
         if (stop == true) 1 else 0
@@ -108,13 +114,13 @@ class ApiImpl(
 
     override suspend fun receipt(id: Long?) = service.receipt(
         "Bearer ${prefs.getUserToken()}",
-        "${BASE_URL}${prefs.getProjectId()}/catalog/get-tech-card",
+        "${getUrl()}/catalog/get-tech-card",
         id
     )
 
     override suspend fun stopOrganization(id: Int?, time: Int?, cause: Int?) = service.stopOrganization(
         "Bearer ${prefs.getUserToken()}",
-        "${BASE_URL}${prefs.getProjectId()}/organizations/add-stop",
+        "${getUrl()}/organizations/add-stop",
         id,
         time,
         cause
@@ -122,7 +128,7 @@ class ApiImpl(
 
     override suspend fun startOrganization(id: Int?) = service.startOrganization(
         "Bearer ${prefs.getUserToken()}",
-        "${BASE_URL}${prefs.getProjectId()}/organizations/drop-stop",
+        "${getUrl()}/organizations/drop-stop",
         id
     )
 }
