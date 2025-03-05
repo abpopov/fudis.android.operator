@@ -128,7 +128,7 @@ class CartHolder(view: View) : BaseHolder<OrdersViewModel, CartEntity>(view) {
                 btnAction.setOnClickListener(null)
             }
         }
-        btnMore.isVisible = item.hasTechCard
+        btnMore.isInvisible = !item.hasTechCard
         btnMore.setOnClickListener {
             click(item, null)
         }
