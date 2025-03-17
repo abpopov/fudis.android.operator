@@ -129,7 +129,12 @@ class OrderFragment : BaseFragment() {
             val order = viewModel.currentOrder.value
             order ?: return@setOnClickListener
             binding?.tvOrderAction?.isEnabled = false
-            viewModel.changeStatus(order.id, order.getNextStatus())
+            val next = order.getNextStatus()
+            if (next == ORDER_STATUS_READY && !order.itemsAreReady()) {
+                Toast.makeText(it.context, R.string.order_status_error, Toast.LENGTH_LONG).show()
+            } else {
+                viewModel.changeStatus(order.id, next)
+            }
         }
     }
 

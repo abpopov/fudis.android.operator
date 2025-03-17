@@ -11,6 +11,7 @@ const val SOURCE_TYPE_APP = 6
 
 const val ORDER_STATUS_CANCELED = 5
 const val ORDER_STATUS_NEW = 0
+const val ORDER_STATUS_ACCEPTED = 7
 const val ORDER_STATUS_IN_PROGRESS = 10
 const val ORDER_STATUS_READY = 15
 const val ORDER_STATUS_IN_DELIVERY = 20
@@ -50,7 +51,8 @@ data class OrderEntity(
 
     fun getNextStatus(): Int {
         return when (status) {
-            ORDER_STATUS_NEW -> ORDER_STATUS_IN_PROGRESS
+            ORDER_STATUS_NEW -> ORDER_STATUS_ACCEPTED
+            ORDER_STATUS_ACCEPTED -> ORDER_STATUS_IN_PROGRESS
             ORDER_STATUS_IN_PROGRESS -> ORDER_STATUS_READY
             ORDER_STATUS_READY -> ORDER_STATUS_IN_DELIVERY
             else -> -1
@@ -60,4 +62,10 @@ data class OrderEntity(
     override fun unique() = id
 
     override fun sameContent(other: ListItem) = this == other
+
+    fun itemsAreReady(): Boolean {
+        return cartData.all {
+            it.status >= CartEntity.STATUS_COOKED
+        }
+    }
 }

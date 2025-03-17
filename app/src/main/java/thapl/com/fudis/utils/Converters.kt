@@ -37,7 +37,8 @@ fun Long?.toDate(): Date? {
 @StringRes
 fun Int.toOrderStatus(): Int {
     return when (this) {
-        ORDER_STATUS_IN_PROGRESS -> R.string.order_status_queue
+        ORDER_STATUS_ACCEPTED -> R.string.order_status_queue
+        ORDER_STATUS_IN_PROGRESS -> R.string.order_status_cooking
         ORDER_STATUS_READY -> R.string.order_status_ready
         ORDER_STATUS_IN_DELIVERY -> R.string.order_status_delivery
         ORDER_STATUS_DELIVERED -> R.string.order_status_delivered
@@ -48,6 +49,7 @@ fun Int.toOrderStatus(): Int {
 @StringRes
 fun Int.toOrderAction(): Int {
     return when (this) {
+        ORDER_STATUS_ACCEPTED -> R.string.order_status_start
         ORDER_STATUS_IN_PROGRESS -> R.string.order_status_ready
         ORDER_STATUS_READY -> R.string.order_status_delivery
         ORDER_STATUS_IN_DELIVERY -> 0

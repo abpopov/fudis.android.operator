@@ -13,6 +13,7 @@ import thapl.com.fudis.GlideApp
 import thapl.com.fudis.R
 import thapl.com.fudis.databinding.FragmentOrderListBinding
 import thapl.com.fudis.domain.model.ORDER_STATUS_NEW
+import thapl.com.fudis.domain.model.ORDER_STATUS_READY
 import thapl.com.fudis.domain.model.ResultEntity
 import thapl.com.fudis.ui.adapters.ACTION
 import thapl.com.fudis.ui.adapters.MORE
@@ -39,7 +40,7 @@ class OrderListFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initViews()
+        initViews(view)
         initListeners()
         initObservers()
     }
@@ -54,7 +55,7 @@ class OrderListFragment : BaseFragment() {
         _binding = null
     }
 
-    private fun initViews() {
+    private fun initViews(view: View) {
         binding?.vSwipeRefresh?.setOnRefreshListener {
             viewModel.refresh()
         }
@@ -67,7 +68,13 @@ class OrderListFragment : BaseFragment() {
                         navigate(OrderListFragmentDirections.actionOrder(item))
                     }
                     ACTION -> {
-                        viewModel.changeStatus(item.id, item.getNextStatus())
+                        val next = item.getNextStatus()
+                        if (next == ORDER_STATUS_READY && !item.itemsAreReady()) {
+                            Toast.makeText(view.context, R.string.order_status_error, Toast.LENGTH_LONG).show()
+                        } else {
+                            viewModel.changeStatus(item.id, next)
+                        }
+                        viewModel.changeStatus(item.id, next)
                     }
                 }
             }
@@ -80,24 +87,25 @@ class OrderListFragment : BaseFragment() {
     }
 
     private fun initObservers() {
-        viewModel.status.observe(viewLifecycleOwner, { result ->
+        viewModel.status.observe(viewLifecycleOwner) { result ->
             if (result is ResultEntity.Error) {
                 Toast.makeText(requireContext(), result.error.message, Toast.LENGTH_SHORT).show()
             }
-        })
-        viewModel.scrollUp.observe(viewLifecycleOwner, { result ->
+        }
+        viewModel.scrollUp.observe(viewLifecycleOwner) { result ->
             if (result == true) {
                 binding?.rvOrders?.postDelayed({
                     binding?.rvOrders?.smoothScrollToPosition(0)
                 }, 300)
             }
-        })
-        viewModel.orders.observe(viewLifecycleOwner, { result ->
+        }
+        viewModel.orders.observe(viewLifecycleOwner) { result ->
             when (result) {
                 is ResultEntity.Loading -> {
                     binding?.vSwipeRefresh?.isRefreshing = true
                     binding?.tvError?.isVisible = false
                 }
+
                 is ResultEntity.Error -> {
                     binding?.vSwipeRefresh?.isRefreshing = false
                     binding?.tvError?.text = getString(R.string.orders_error, result.error.message)
@@ -107,6 +115,7 @@ class OrderListFragment : BaseFragment() {
                             .show()
                     }
                 }
+
                 is ResultEntity.Success -> {
                     binding?.vSwipeRefresh?.isRefreshing = false
                     binding?.tvError?.isVisible = false
@@ -118,6 +127,6 @@ class OrderListFragment : BaseFragment() {
                     }
                 }
             }
-        })
+        }
     }
 }
