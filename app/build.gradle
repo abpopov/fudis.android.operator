@@ -9,13 +9,13 @@ plugins {
 }
 
 android {
-    compileSdkVersion 34
-    buildToolsVersion "30.0.3"
+    namespace "mb.delivery.operator"
+    compileSdk 34
 
     defaultConfig {
         applicationId "mb.delivery.operator"
-        minSdkVersion 24
-        targetSdkVersion 34
+        minSdk 24
+        targetSdk 34
         versionCode 14
         versionName "1.0"
         multiDexEnabled true
@@ -39,6 +39,7 @@ android {
     }
     buildFeatures {
         viewBinding true
+        buildConfig true
     }
 }
 

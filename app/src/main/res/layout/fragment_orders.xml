@@ -15,7 +15,7 @@
         app:layout_constraintStart_toEndOf="@+id/tvOrders"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <thapl.com.fudis.ui.components.CheckableTextView
+    <mb.delivery.operator.ui.components.CheckableTextView
         android:id="@+id/tvCats"
         style="@style/ButtonStyleMenu"
         android:layout_marginTop="@dimen/dp24"
@@ -31,7 +31,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <thapl.com.fudis.ui.components.CheckableTextView
+    <mb.delivery.operator.ui.components.CheckableTextView
         android:id="@+id/tvOrders"
         style="@style/ButtonStyleMenu"
         android:layout_marginTop="@dimen/dp24"
@@ -44,7 +44,7 @@
         app:layout_constraintStart_toEndOf="@+id/tvCats"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <thapl.com.fudis.ui.components.CheckableTextView
+    <mb.delivery.operator.ui.components.CheckableTextView
         android:id="@+id/tvPause"
         style="@style/ButtonStyleMenu"
         android:layout_marginTop="@dimen/dp24"
@@ -57,7 +57,7 @@
         app:layout_constraintStart_toEndOf="@+id/tvOrders"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <thapl.com.fudis.ui.components.CheckableTextView
+    <mb.delivery.operator.ui.components.CheckableTextView
         android:id="@+id/tvStops"
         style="@style/ButtonStyleMenu"
         android:layout_marginTop="@dimen/dp24"
@@ -70,7 +70,7 @@
         app:layout_constraintStart_toEndOf="@+id/tvPause"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <thapl.com.fudis.ui.components.CheckableTextView
+    <mb.delivery.operator.ui.components.CheckableTextView
         android:id="@+id/tvHelp"
         style="@style/ButtonStyleMenu"
         android:layout_marginTop="@dimen/dp24"

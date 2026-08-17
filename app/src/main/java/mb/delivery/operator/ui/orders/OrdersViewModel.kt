@@ -1,0 +1,161 @@
+package mb.delivery.operator.ui.orders
+
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.distinctUntilChanged
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
+import mb.delivery.operator.domain.case.OrdersUseCase
+import mb.delivery.operator.domain.model.MenuEntity
+import mb.delivery.operator.domain.model.ORDER_STATUS_IN_DELIVERY
+import mb.delivery.operator.domain.model.OrderEntity
+import mb.delivery.operator.domain.model.ReceiptEntity
+import mb.delivery.operator.domain.model.ResultEntity
+import mb.delivery.operator.ui.base.BaseViewModel
+import mb.delivery.operator.utils.SingleLiveEvent
+import mb.delivery.operator.utils.addHeaders
+
+class OrdersViewModel(private val useCase: OrdersUseCase) : BaseViewModel() {
+
+    companion object {
+        private const val REFRESH_ORDER_DELAY = 1000L * 60L * 1L
+    }
+
+    private val _menuPos = MutableLiveData(0)
+
+    private var ticker: Job? = null
+
+    val menuPos = _menuPos.distinctUntilChanged()
+    val orders = MutableLiveData<ResultEntity<List<OrderEntity>>>()
+    val currentOrder = SingleLiveEvent<OrderEntity?>()
+    val receipt = MutableLiveData<ResultEntity<ReceiptEntity>>()
+    val status = SingleLiveEvent<ResultEntity<Pair<Long, Int>>>()
+    val itemStatus = SingleLiveEvent<ResultEntity<Pair<Int, Int>>>()
+    val menu = SingleLiveEvent<ResultEntity<MenuEntity>>()
+    val scrollUp = SingleLiveEvent<Boolean>()
+    val showMenu = MutableLiveData(useCase.getShowMenu())
+    val showOrders = MutableLiveData(useCase.getShowOrders())
+    val showStopList = MutableLiveData(useCase.getShowStopList())
+    val showHighload = MutableLiveData(useCase.getShowHighload())
+
+    init {
+        getOrders()
+    }
+
+    fun reInit() {
+        if (ticker?.isActive == false) {
+            getOrders()
+        }
+    }
+
+    fun selectMenu(value: Int) {
+        _menuPos.postValue(value)
+    }
+
+    fun refresh() {
+        getOrders()
+    }
+
+    fun initOrder(order: OrderEntity) {
+        currentOrder.postValue(order)
+    }
+
+    fun initReceipt(id: Long) {
+        doRequest(receipt) {
+            useCase.getReceipt(id)
+        }
+    }
+
+    private fun getOrders() {
+        ticker?.cancel()
+        ticker = doPostActionRequest(
+            orders,
+            block = {
+                useCase.getOrders()
+            },
+            action = {
+                delay(REFRESH_ORDER_DELAY)
+                getOrders()
+            }
+        )
+
+    }
+
+    fun changeItemStatus(item: Int, nextStatus: Int) {
+        doPostActionRequest(
+            itemStatus,
+            block = {
+                useCase.changeItemStatus(item, nextStatus)
+            }, action = { pair ->
+                if (pair is ResultEntity.Success) {
+                    val current = currentOrder.value
+                    currentOrder.postValue(
+                        current?.copy(
+                            cartData = current.cartData.map { i ->
+                                if (i.id == pair.data.first) {
+                                    i.copy(status = pair.data.second)
+                                } else {
+                                    i
+                                }
+                            }
+                        )
+                    )
+                } else if (pair is ResultEntity.Error) {
+                    currentOrder.postValue(currentOrder.value)
+                }
+            }
+        )
+    }
+
+    fun changeStatus(id: Long, nextStatus: Int) {
+        if (nextStatus == -1) {
+            return
+        }
+        doPostActionRequest(
+            status,
+            block = {
+                useCase.changeStatus(id, nextStatus)
+            }, action = { pair ->
+                if (pair is ResultEntity.Success) {
+                    val order = orders.value
+                    if (order is ResultEntity.Success) {
+                        val list = order.data.onEach {
+                            if (it.id == pair.data.first) {
+                                it.status = pair.data.second
+                            }
+                        }.addHeaders()
+                        orders.postValue(ResultEntity.Success(list))
+                        if (pair.data.second >= ORDER_STATUS_IN_DELIVERY && list.any {
+                                it.status < ORDER_STATUS_IN_DELIVERY
+                            }) {
+                            scrollUp.postValue(true)
+                        }
+                    }
+                    val current = currentOrder.value
+                    current?.let {
+                        if (it.id == pair.data.first) {
+                            it.status = pair.data.second
+                            it.updatedAt = System.currentTimeMillis()
+                            currentOrder.postValue(it)
+                        }
+                    }
+                } else if (pair is ResultEntity.Error) {
+                    orders.postValue(orders.value)
+                    currentOrder.postValue(currentOrder.value)
+                }
+            }
+        )
+    }
+
+    fun getMenu() {
+        doRequest(menu) {
+            useCase.getMenu()
+        }
+    }
+
+    fun updateMenu(data: MenuEntity) {
+        showMenu.postValue(data.showMenu)
+        showOrders.postValue(data.showOrders)
+        showStopList.postValue(data.showStopList)
+        showHighload.postValue(data.showHighload)
+    }
+}

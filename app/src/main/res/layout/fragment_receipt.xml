@@ -40,7 +40,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
-                <thapl.com.fudis.ui.components.FlarePlaceHolderView
+                <mb.delivery.operator.ui.components.FlarePlaceHolderView
                     android:id="@+id/vTitlePlaceholder"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
@@ -52,7 +52,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <thapl.com.fudis.ui.components.FlarePlaceHolderView
+                <mb.delivery.operator.ui.components.FlarePlaceHolderView
                     android:id="@+id/vImgPlaceholder"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
@@ -61,7 +61,7 @@
                     app:layout_constraintStart_toStartOf="@+id/ivFoodPicture"
                     app:layout_constraintTop_toTopOf="@+id/ivFoodPicture" />
 
-                <thapl.com.fudis.ui.components.FlarePlaceHolderView
+                <mb.delivery.operator.ui.components.FlarePlaceHolderView
                     android:id="@+id/vDescPlaceholder"
                     android:layout_width="0dp"
                     android:layout_height="0dp"

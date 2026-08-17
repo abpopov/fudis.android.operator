@@ -7,7 +7,7 @@
 
     <dialog
         android:id="@+id/confirmFragment"
-        android:name="thapl.com.fudis.ui.dialogs.StopConfirmFragment"
+        android:name="mb.delivery.operator.ui.dialogs.StopConfirmFragment"
         android:label="confirmFragment"
         tools:layout="@layout/fragment_stop_confirm">
         <argument
@@ -23,7 +23,7 @@
 
     <fragment
         android:id="@+id/orderListFragment"
-        android:name="thapl.com.fudis.ui.orders.OrderListFragment"
+        android:name="mb.delivery.operator.ui.orders.OrderListFragment"
         android:label="orderListFragment"
         tools:layout="@layout/fragment_order_list">
         <action
@@ -37,7 +37,7 @@
 
     <fragment
         android:id="@+id/orderFragment"
-        android:name="thapl.com.fudis.ui.orders.OrderFragment"
+        android:name="mb.delivery.operator.ui.orders.OrderFragment"
         android:label="orderFragment"
         tools:layout="@layout/fragment_order">
         <action
@@ -53,12 +53,12 @@
             app:popExitAnim="@anim/anim_exit_to_right" />
         <argument
             android:name="order"
-            app:argType="thapl.com.fudis.domain.model.OrderEntity" />
+            app:argType="mb.delivery.operator.domain.model.OrderEntity" />
     </fragment>
 
     <fragment
         android:id="@+id/receiptFragment"
-        android:name="thapl.com.fudis.ui.orders.ReceiptFragment"
+        android:name="mb.delivery.operator.ui.orders.ReceiptFragment"
         android:label="receiptFragment"
         tools:layout="@layout/fragment_receipt">
         <argument
@@ -75,7 +75,7 @@
 
     <fragment
         android:id="@+id/stopsFragment"
-        android:name="thapl.com.fudis.ui.stops.StopsFragment"
+        android:name="mb.delivery.operator.ui.stops.StopsFragment"
         android:label="stopsFragment"
         tools:layout="@layout/fragment_stops">
         <action
@@ -86,7 +86,7 @@
 
     <fragment
         android:id="@+id/categoriesFragment"
-        android:name="thapl.com.fudis.ui.categories.CategoriesFragment"
+        android:name="mb.delivery.operator.ui.categories.CategoriesFragment"
         android:label="categoriesFragment"
         tools:layout="@layout/fragment_categories">
         <action
