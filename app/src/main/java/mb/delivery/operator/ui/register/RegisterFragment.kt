@@ -55,7 +55,12 @@ class RegisterFragment : BaseFragment() {
         ) {
             model.setValidate(it)
         }
-        binding?.tvProjectValue?.text = model.getProject()
+        binding?.tvProjectValue?.text = model.getHostLabel()
+        binding?.tvProjectLabel?.text = if (model.getHostLabel().startsWith("http")) {
+            getString(R.string.auth_host_label)
+        } else {
+            getString(R.string.auth_project_label)
+        }
     }
 
     private fun initListeners() {
@@ -63,7 +68,7 @@ class RegisterFragment : BaseFragment() {
             binding?.vRoot?.transitionToStart()
         }
         binding?.tvProjectNext?.setOnClickListener {
-            model.setProject(null)
+            model.clearHost()
             navigate(RegisterFragmentDirections.actionProject())
         }
         binding?.tvNext?.setOnClickListener {

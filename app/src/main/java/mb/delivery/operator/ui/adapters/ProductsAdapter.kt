@@ -54,14 +54,6 @@ class ProductHolder(view: View) : BaseHolder<StopsViewModel, ProductEntity>(view
             }
         }
         setChangeableData(item)
-        viewModel.products.observe(this, { products ->
-            if (products is ResultEntity.Success) {
-                val itemInList = products.data.firstOrNull { it.id == item.id }
-                itemInList?.let {
-                    setChangeableData(it)
-                }
-            }
-        })
     }
 
     private fun setChangeableData(item: ProductEntity) {

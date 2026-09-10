@@ -69,15 +69,22 @@ abstract class BaseViewModel : ViewModel() {
         } catch (ex: HttpException) {
             val error = try {
                 val json = JSONObject(ex.response()?.errorBody()?.string() ?: "")
-                val e = json.getJSONObject("error")
-                ErrorApi(
-                    code = e.optInt("error_code"),
-                    textCode = e.optString("textCode"),
-                    type = e.optString("type"),
-                    message = e.optString("error_msg")
-                )
+                if (json.has("error")) {
+                    val e = json.getJSONObject("error")
+                    ErrorApi(
+                        code = e.optInt("error_code"),
+                        textCode = e.optString("textCode"),
+                        type = e.optString("type"),
+                        message = e.optString("error_msg").ifEmpty { e.optString("message") }
+                    )
+                } else {
+                    ErrorApi(
+                        code = json.optInt("status", ex.code()),
+                        message = json.optString("message").ifEmpty { ex.message() }
+                    )
+                }
             } catch (e: Exception) {
-                ErrorApi()
+                ErrorApi(message = ex.message())
             }
             ResultEntity.Error(ErrorApiToEntityMapper.map(error), ex.code())
         } catch (ex: Exception) {

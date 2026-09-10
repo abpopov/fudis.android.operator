@@ -14,3 +14,16 @@ data class ProductEntity(
 
     override fun sameContent(other: ListItem) = this == other
 }
+
+data class StopListItemEntity(
+    val catalogItemId: Long,
+    val title: String,
+    val organizationId: Int,
+    val organizationTitle: String,
+    val isStop: Boolean
+) : ListItem {
+
+    override fun unique() = "${organizationId}:${catalogItemId}"
+
+    override fun sameContent(other: ListItem) = this == other
+}

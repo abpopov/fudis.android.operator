@@ -10,7 +10,10 @@ object MenuApiToEntityMapper : BaseMapperSafe<MenuApi, MenuEntity> {
             showMenu = type?.showMenu ?: false,
             showOrders = type?.showOrders ?: false,
             showStopList = type?.showStopList ?: false,
-            showHighload = type?.showHighload ?: false
+            showHighload = type?.showHighload ?: false,
+            allowStatusWithoutDishesReady = type?.allowStatusWithoutDishesReady ?: false,
+            allowEditOrder = type?.allowEditOrder ?: false,
+            enableManualPosExport = type?.enableManualPosExport ?: false
         )
     }
 

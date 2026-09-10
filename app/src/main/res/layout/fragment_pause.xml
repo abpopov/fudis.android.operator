@@ -68,118 +68,175 @@
         app:layout_constraintStart_toEndOf="@+id/tvStops"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <LinearLayout
+    <androidx.core.widget.NestedScrollView
         android:id="@+id/vContentWrapper"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@drawable/ic_bg_rounded_wh_32"
         android:elevation="2dp"
-        android:orientation="vertical"
+        android:fillViewport="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintWidth_percent="0.51">
+        app:layout_constraintWidth_percent="0.62">
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvPeriodTitle"
-            style="@style/TextStyle.Black.24"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/dp48"
-            android:layout_marginTop="@dimen/dp48"
-            android:layout_marginEnd="@dimen/dp48"
-            android:text="@string/pause_period_title" />
+            android:orientation="vertical"
+            android:paddingStart="@dimen/dp48"
+            android:paddingTop="@dimen/dp36"
+            android:paddingEnd="@dimen/dp48"
+            android:paddingBottom="@dimen/dp36">
 
-        <RadioGroup
-            android:id="@+id/rgPeriod"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/dp48"
-            android:layout_marginTop="@dimen/dp20"
-            android:layout_marginEnd="@dimen/dp48"
-            android:orientation="horizontal">
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvOrgTitle"
+                style="@style/TextStyle.Black.24"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/pause_org_title" />
 
-            <androidx.appcompat.widget.AppCompatRadioButton
-                android:id="@+id/rb15"
-                style="@style/ButtonStyleRadio"
-                android:layout_marginEnd="@dimen/dp28"
-                android:text="@string/pause_period_15" />
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvOrganization"
+                style="@style/EditStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp12"
+                android:background="@drawable/ic_bg_rounded_grey_12"
+                android:drawableEnd="@drawable/ic_chevron_big_down"
+                android:gravity="center_vertical"
+                android:hint="@string/pause_org_hint"
+                android:minHeight="@dimen/dp64" />
 
-            <androidx.appcompat.widget.AppCompatRadioButton
-                android:id="@+id/rb30"
-                style="@style/ButtonStyleRadio"
-                android:layout_marginEnd="@dimen/dp28"
-                android:text="@string/pause_period_30" />
+            <RadioGroup
+                android:id="@+id/rgMode"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp24"
+                android:orientation="horizontal"
+                android:visibility="gone">
 
-            <androidx.appcompat.widget.AppCompatRadioButton
-                android:id="@+id/rb60"
-                style="@style/ButtonStyleRadio"
-                android:layout_marginEnd="@dimen/dp28"
-                android:text="@string/pause_period_60" />
+                <androidx.appcompat.widget.AppCompatRadioButton
+                    android:id="@+id/rbModeHighload"
+                    style="@style/ButtonStyleRadio"
+                    android:layout_marginEnd="@dimen/dp28"
+                    android:checked="true"
+                    android:text="@string/pause_mode_highload" />
 
-            <androidx.appcompat.widget.AppCompatRadioButton
-                android:id="@+id/rbDay"
-                style="@style/ButtonStyleRadio"
-                android:text="@string/pause_period_day" />
+                <androidx.appcompat.widget.AppCompatRadioButton
+                    android:id="@+id/rbModeStop"
+                    style="@style/ButtonStyleRadio"
+                    android:text="@string/pause_mode_stop" />
+            </RadioGroup>
 
-        </RadioGroup>
+            <LinearLayout
+                android:id="@+id/vForm"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvReasonTitle"
-            style="@style/TextStyle.Black.24"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/dp48"
-            android:layout_marginTop="@dimen/dp24"
-            android:layout_marginEnd="@dimen/dp48"
-            android:text="@string/pause_reason_title" />
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvPeriodTitle"
+                    style="@style/TextStyle.Black.24"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp24"
+                    android:text="@string/pause_period_title" />
 
-        <RadioGroup
-            android:id="@+id/rgReason"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/dp48"
-            android:layout_marginTop="@dimen/dp20"
-            android:layout_marginEnd="@dimen/dp48"
-            android:orientation="horizontal">
+                <HorizontalScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp12"
+                    android:scrollbars="none">
 
-            <androidx.appcompat.widget.AppCompatRadioButton
-                android:id="@+id/rbTime"
-                style="@style/ButtonStyleRadio"
-                android:layout_marginEnd="@dimen/dp28"
-                android:text="@string/pause_reason_time" />
+                    <RadioGroup
+                        android:id="@+id/rgPeriod"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal" />
+                </HorizontalScrollView>
 
-            <androidx.appcompat.widget.AppCompatRadioButton
-                android:id="@+id/rbFood"
-                style="@style/ButtonStyleRadio"
-                android:layout_marginEnd="@dimen/dp28"
-                android:text="@string/pause_reason_food" />
+                <LinearLayout
+                    android:id="@+id/vGap"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
 
-            <androidx.appcompat.widget.AppCompatRadioButton
-                android:id="@+id/rbOther"
-                style="@style/ButtonStyleRadio"
-                android:text="@string/pause_reason_other" />
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvGapTitle"
+                        style="@style/TextStyle.Black.24"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dp24"
+                        android:text="@string/pause_gap_title" />
 
-        </RadioGroup>
+                    <HorizontalScrollView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dp12"
+                        android:scrollbars="none">
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvActionPause"
-            style="@style/ButtonStyleGreen"
-            android:layout_width="match_parent"
-            android:layout_marginStart="@dimen/dp48"
-            android:layout_marginTop="@dimen/dp36"
-            android:layout_marginEnd="@dimen/dp48"
-            android:layout_marginBottom="@dimen/dp48"
-            android:elevation="2dp"
-            android:text="@string/pause_action"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/etPwd"
-            app:layout_constraintWidth_percent="0.33" />
+                        <RadioGroup
+                            android:id="@+id/rgGap"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal" />
+                    </HorizontalScrollView>
+                </LinearLayout>
 
-    </LinearLayout>
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvReasonTitle"
+                    style="@style/TextStyle.Black.24"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp24"
+                    android:text="@string/pause_reason_title" />
+
+                <RadioGroup
+                    android:id="@+id/rgReason"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp12"
+                    android:orientation="vertical" />
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/etComment"
+                    style="@style/EditStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp16"
+                    android:background="@drawable/ic_bg_rounded_grey_12"
+                    android:hint="@string/pause_comment_hint"
+                    android:visibility="gone" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/vActive"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp24"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvStatus"
+                    style="@style/TextStyle.Black.24"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvActionPause"
+                style="@style/ButtonStyleGreen"
+                android:layout_width="match_parent"
+                android:layout_marginTop="@dimen/dp36"
+                android:elevation="2dp"
+                android:enabled="false"
+                android:text="@string/pause_action" />
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/ivClose"

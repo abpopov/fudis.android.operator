@@ -1,41 +1,77 @@
 package mb.delivery.operator.data.api
 
+import retrofit2.Call
 import retrofit2.http.*
 import mb.delivery.operator.data.api.model.*
 
 interface ApiService {
 
-    @FormUrlEncoded
     @POST
     suspend fun auth(
         @Url url: String,
-        @Field("username") username: String?,
-        @Field("password") password: String?
+        @Body body: AuthRequestApi
     ): AuthResultApi
+
+    @POST
+    fun refreshToken(
+        @Url url: String,
+        @Body body: RefreshTokenRequestApi
+    ): Call<UserApi>
 
     @GET
     suspend fun orders(
         @Header("Authorization") token: String?,
-        @Url url: String,
-        @Query("page") page: Int?,
-        @Query("per-page") limit: Int?
-    ): List<OrderApi>
+        @Url url: String
+    ): OrdersListApi
 
-    @FormUrlEncoded
+    @GET
+    suspend fun order(
+        @Header("Authorization") token: String?,
+        @Url url: String,
+        @Query("id") id: Long?
+    ): OrderApi
+
     @POST
     suspend fun changeStatus(
         @Header("Authorization") token: String?,
         @Url url: String,
-        @Field("id") order: Long?,
-        @Field("status") status: Int?
-    ): StatusApi
+        @Body body: OrderStatusRequestApi
+    ): OrderApi
 
     @POST
     suspend fun changeItemStatus(
         @Header("Authorization") token: String?,
         @Url url: String,
         @Body body: StatusRequestApi
-    ): StatusApi
+    ): OrderApi
+
+    @POST
+    suspend fun updateOrder(
+        @Header("Authorization") token: String?,
+        @Url url: String,
+        @Body body: Map<String, @JvmSuppressWildcards Any?>
+    ): OrderApi
+
+    @POST
+    suspend fun updateCart(
+        @Header("Authorization") token: String?,
+        @Url url: String,
+        @Body body: OrderCartUpdateRequestApi
+    ): OrderApi
+
+    @POST
+    suspend fun exportToPos(
+        @Header("Authorization") token: String?,
+        @Url url: String,
+        @Body body: OrderExportToPosRequestApi
+    ): OrderExportToPosResponseApi
+
+    @GET
+    suspend fun editProducts(
+        @Header("Authorization") token: String?,
+        @Url url: String,
+        @Query("organization_id") id: Int?
+    ): EditProductsListApi
 
     @GET
     suspend fun receipt(
@@ -68,34 +104,39 @@ interface ApiService {
         @Header("Authorization") token: String?,
         @Url url: String,
         @Query("organization_id") id: Int?
-    ): List<ProductApi>
+    ): CatalogProductsListApi
 
-    @FormUrlEncoded
+    @GET
+    suspend fun stopList(
+        @Header("Authorization") token: String?,
+        @Url url: String
+    ): StopListResponseApi
+
     @POST
     suspend fun stopProduct(
         @Header("Authorization") token: String?,
         @Url url: String,
-        @Field("organization_id") id: Int?,
-        @Field("product_id") product: Long?,
-        @Field("action") action: Int?
-    ): SuccessApi
+        @Body body: SetProductStopRequestApi
+    ): StopListItemApi
 
-    @FormUrlEncoded
+    @GET
+    suspend fun organizations(
+        @Header("Authorization") token: String?,
+        @Url url: String
+    ): OrganizationKitchenListApi
+
     @POST
-    suspend fun stopOrganization(
+    suspend fun setOrganizationStatus(
         @Header("Authorization") token: String?,
         @Url url: String,
-        @Field("organization_id") id: Int?,
-        @Field("drop_time") time: Int?,
-        @Field("cause") cause: Int?
-    ): SuccessApi
+        @Body body: OrganizationSetStatusRequestApi
+    ): OrganizationKitchenApi
 
-    @FormUrlEncoded
     @POST
-    suspend fun startOrganization(
+    suspend fun dropOrganizationStatus(
         @Header("Authorization") token: String?,
         @Url url: String,
-        @Field("organization_id") id: Int?
-    ): SuccessApi
+        @Body body: OrganizationDropStatusRequestApi
+    ): OrganizationKitchenApi
 
 }

@@ -26,9 +26,17 @@ class RegisterViewModel(private val useCase: RegisterUseCase) : BaseViewModel() 
         _authValidate.postValue(value)
     }
 
-    fun setProject(project: String?) {
-        useCase.setProjectId(project?.toIntOrNull())
+    fun setProjectCode(project: String) {
+        useCase.setProjectCode(project)
     }
 
-    fun getProject() = useCase.getProjectId().toString()
+    fun setCustomHost(host: String) {
+        useCase.setCustomHost(host)
+    }
+
+    fun clearHost() {
+        useCase.clearHostConfig()
+    }
+
+    fun getHostLabel() = useCase.getHostDisplayLabel()
 }

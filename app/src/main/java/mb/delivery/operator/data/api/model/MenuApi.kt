@@ -11,5 +11,11 @@ data class MenuApi(
     @SerializedName("show_stop_list")
     val showStopList: Boolean?,
     @SerializedName("show_highload")
-    val showHighload: Boolean?
+    val showHighload: Boolean?,
+    @SerializedName("allow_status_without_dishes_ready")
+    val allowStatusWithoutDishesReady: Boolean?,
+    @SerializedName("allow_edit_order")
+    val allowEditOrder: Boolean?,
+    @SerializedName("enable_manual_pos_export")
+    val enableManualPosExport: Boolean?
 ) : Serializable

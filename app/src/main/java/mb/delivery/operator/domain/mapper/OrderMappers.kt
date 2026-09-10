@@ -21,32 +21,29 @@ object OrderApiToEntityMapper : BaseMapperNullable<OrderApi, OrderEntity> {
             orderSource = type.orderSource ?: SOURCE_TYPE_SITE,
             status = type.status ?: ORDER_STATUS_NEW,
             organizationId = type.organizationId ?: 0,
-            paymentType = type.paymentType ?: 0,
-            paymentStatus = type.paymentStatus ?: 0,
-            pointsNumber = type.pointsNumber ?: 0,
+            paymentType = 0,
+            paymentStatus = 0,
+            pointsNumber = 0,
             orderSum = type.orderSum ?: 0f,
-            paymentSum = type.paymentSum ?: 0f,
-            discountSum = type.discountSum ?: 0f,
+            paymentSum = 0f,
+            discountSum = 0f,
             dcOrderId = type.dcOrderId,
-            address = type.address,
-            entrance = type.entrance,
-            floor = type.floor,
-            flat = type.flat,
-            doorCode = type.doorCode,
-            phone = type.phone,
-            personsCount = try {
-                type.personsCount?.toIntOrNull()
-            } catch (e: Exception) {
-                null
-            },
+            address = null,
+            entrance = null,
+            floor = null,
+            flat = null,
+            doorCode = null,
+            phone = null,
+            personsCount = type.personsCount?.toIntOrNull(),
             clientComment = type.clientComment,
-            operatorComment = type.operatorComment,
-            lat = type.lat,
-            lng = type.lng,
+            operatorComment = null,
+            externalUuid = type.externalUuid,
+            lat = null,
+            lng = null,
             createdAt = type.createdAt?.toTimestamp(),
             deliveryAt = type.deliveryAt?.toTimestamp(),
             updatedAt = type.updatedAt?.toTimestamp(),
-            cartData = CartListApiToEntityMapper.map(type.cartData?.cartItems),
+            cartData = CartListApiToEntityMapper.map(type.cartItems),
             gift = CatalogItemApiToEntityMapper.map(type.gift)
         )
     }
@@ -69,7 +66,7 @@ object CartApiToEntityMapper : BaseMapperNullable<CartApi, CartEntity> {
         return CartEntity(
             item = item,
             modifiers = ModifierListApiToEntityMapper.map(type?.modifiers),
-            id = type?.id ?: type?.id2 ?: 0,
+            id = type?.id ?: 0,
             count = type?.count ?: 0,
             status = type?.status ?: 0,
             hasTechCard = type?.hasTechCard ?: false

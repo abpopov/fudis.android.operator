@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginStart="@dimen/dp60"
+    android:layout_marginTop="@dimen/dp20"
+    android:layout_marginEnd="@dimen/dp60"
+    android:layout_marginBottom="@dimen/dp60"
+    android:background="@drawable/ic_bg_rounded_bl05_32">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvHighload"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="@dimen/dp60"
+        android:layout_marginTop="@dimen/dp48"
+        android:layout_marginEnd="@dimen/dp60"
+        android:layout_marginBottom="@dimen/dp24"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintBottom_toTopOf="@+id/tvApply"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:listitem="@layout/list_item_highload" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvEmpty"
+        style="@style/TextStyle.Grey.24"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/highload_empty"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/tvApply"
+        app:layout_constraintEnd_toEndOf="@+id/rvHighload"
+        app:layout_constraintStart_toStartOf="@+id/rvHighload"
+        app:layout_constraintTop_toTopOf="@+id/rvHighload" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvReload"
+        style="@style/ButtonStyleBlackBig"
+        android:layout_width="wrap_content"
+        android:elevation="2dp"
+        android:text="@string/highload_reload"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/tvApply"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvApply"
+        style="@style/ButtonStyleGreen"
+        android:layout_width="0dp"
+        android:layout_marginStart="@dimen/dp60"
+        android:layout_marginEnd="@dimen/dp60"
+        android:layout_marginBottom="@dimen/dp48"
+        android:elevation="2dp"
+        android:text="@string/highload_apply"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

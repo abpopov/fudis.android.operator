@@ -158,6 +158,65 @@
                 app:layout_constraintTop_toBottomOf="@+id/rvCartList" />
 
             <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvOrderAction"
+                style="@style/ButtonStyleGreen"
+                android:layout_width="wrap_content"
+                android:layout_marginEnd="@dimen/dp60"
+                android:elevation="2dp"
+                android:minWidth="@dimen/dp264"
+                app:layout_constraintEnd_toEndOf="@+id/vTopBg"
+                app:layout_constraintTop_toTopOf="@+id/vBottomBg"
+                app:layout_constraintBottom_toBottomOf="@+id/vBottomBg"
+                tools:text="@string/order_status_delivery" />
+
+            <LinearLayout
+                android:id="@+id/llOperatorActions"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp60"
+                android:layout_marginTop="@dimen/dp24"
+                android:layout_marginEnd="@dimen/dp60"
+                android:orientation="horizontal"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="@+id/vTopBg"
+                app:layout_constraintStart_toStartOf="@+id/vTopBg"
+                app:layout_constraintTop_toBottomOf="@+id/vDividerBottom">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvEditComment"
+                    style="@style/ButtonStyleText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/dp16"
+                    android:text="@string/order_edit_comment" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvEditOrganization"
+                    style="@style/ButtonStyleText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/dp16"
+                    android:text="@string/order_edit_organization" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvEditCart"
+                    style="@style/ButtonStyleText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/dp16"
+                    android:text="@string/order_edit_cart" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvExportPos"
+                    style="@style/ButtonStyleGreen"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:minWidth="@dimen/dp200"
+                    android:text="@string/order_export_pos"
+                    android:visibility="gone" />
+            </LinearLayout>
+
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvOrderTotalLabel"
                 style="@style/TextStyle.Black.24"
                 android:layout_width="wrap_content"
@@ -166,7 +225,7 @@
                 android:layout_marginTop="@dimen/dp48"
                 android:text="@string/order_single_total"
                 app:layout_constraintStart_toStartOf="@+id/vTopBg"
-                app:layout_constraintTop_toBottomOf="@+id/vDividerBottom" />
+                app:layout_constraintTop_toBottomOf="@+id/llOperatorActions" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvOrderTotalValue"
@@ -178,20 +237,8 @@
                 android:gravity="end"
                 app:layout_constraintEnd_toEndOf="@+id/vTopBg"
                 app:layout_constraintStart_toEndOf="@+id/tvOrderTotalLabel"
-                app:layout_constraintTop_toBottomOf="@+id/vDividerBottom"
+                app:layout_constraintTop_toBottomOf="@+id/llOperatorActions"
                 tools:text="1 110 ₽" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvOrderAction"
-                style="@style/ButtonStyleGreen"
-                android:layout_width="wrap_content"
-                android:layout_marginEnd="@dimen/dp60"
-                android:elevation="2dp"
-                android:minWidth="@dimen/dp264"
-                app:layout_constraintEnd_toEndOf="@+id/vTopBg"
-                app:layout_constraintTop_toTopOf="@+id/vBottomBg"
-                app:layout_constraintBottom_toBottomOf="@+id/vBottomBg"
-                tools:text="@string/order_status_delivery" />
 
             <View
                 android:id="@+id/vSpace4"

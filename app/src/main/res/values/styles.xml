@@ -90,6 +90,18 @@
         <item name="android:layout_width">match_parent</item>
     </style>
 
+    <style name="ButtonStylePurple">
+        <item name="android:textSize" tools:ignore="SpUsage">@dimen/dp24</item>
+        <item name="android:fontFamily">@font/euclid_circular_400</item>
+        <item name="android:gravity">center</item>
+        <item name="android:paddingStart">@dimen/dp24</item>
+        <item name="android:paddingEnd">@dimen/dp24</item>
+        <item name="android:background">@drawable/sl_purple_button</item>
+        <item name="android:textColor">@color/sl_purple_button</item>
+        <item name="android:layout_height">@dimen/dp64</item>
+        <item name="android:layout_width">match_parent</item>
+    </style>
+
     <style name="ButtonStyleBlack">
         <item name="android:textSize" tools:ignore="SpUsage">@dimen/dp18</item>
         <item name="android:fontFamily">@font/euclid_circular_400</item>

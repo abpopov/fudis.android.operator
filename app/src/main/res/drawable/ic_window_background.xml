@@ -10,7 +10,7 @@
     <item>
         <bitmap
             android:gravity="center"
-            android:src="@drawable/ic_mb_logo"/>
+            android:src="@drawable/ic_logo_d"/>
     </item>
 
 </layer-list>

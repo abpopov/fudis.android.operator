@@ -41,6 +41,7 @@ data class OrderEntity(
     val phone: String?,
     val clientComment: String?,
     val operatorComment: String?,
+    val externalUuid: String?,
     val lat: Double?,
     val lng: Double?,
     val createdAt: Long?,

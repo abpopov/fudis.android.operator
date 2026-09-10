@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import android.view.animation.AccelerateInterpolator
 import android.view.animation.Animation
 import android.view.animation.ScaleAnimation
-import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.setFragmentResultListener
 import androidx.navigation.NavController
@@ -20,13 +19,11 @@ import mb.delivery.operator.domain.model.ORDER_STATUS_NEW
 import mb.delivery.operator.domain.model.ResultEntity
 import mb.delivery.operator.ui.base.BaseFragment
 import mb.delivery.operator.ui.categories.CategoriesViewModel
-import mb.delivery.operator.ui.dialogs.PauseViewModel
 import mb.delivery.operator.utils.SoundPlayer
 
 class OrdersFragment : BaseFragment() {
 
     private val viewModel: OrdersViewModel by sharedViewModel()
-    private val pauseViewModel: PauseViewModel by sharedViewModel()
     private val catsViewModel: CategoriesViewModel by sharedViewModel()
 
     private var soundPlayer: SoundPlayer? = null
@@ -100,6 +97,11 @@ class OrdersFragment : BaseFragment() {
             viewModel.selectMenu(4)
             navigate(OrdersFragmentDirections.actionHelp(source))
         }
+        binding?.tvPause?.setOnClickListener {
+            viewModel.selectMenu(1)
+            navController?.navigate(R.id.highloadFragment)
+            catsViewModel.search.postValue("")
+        }
     }
 
     private fun initObservers() {
@@ -131,36 +133,6 @@ class OrdersFragment : BaseFragment() {
             binding?.tvCats?.isEnabled = pos != 2
             binding?.tvStops?.isEnabled = pos != 3
             binding?.tvHelp?.isEnabled = pos != 4
-        }
-        pauseViewModel.pauseRequest.observe(viewLifecycleOwner) { result ->
-            when (result) {
-                is ResultEntity.Loading -> {
-
-                }
-
-                is ResultEntity.Error -> {
-                    result.error.message.let {
-                        if (it.isEmpty().not()) {
-                            Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
-                        }
-                    }
-                }
-
-                is ResultEntity.Success -> {
-                    pauseViewModel.working.postValue(result.data)
-                }
-            }
-        }
-        pauseViewModel.working.observe(viewLifecycleOwner) { working ->
-            binding?.tvPause?.setOnClickListener {
-                val source = viewModel.menuPos.value ?: 0
-                viewModel.selectMenu(1)
-                if (working == true) {
-                    navigate(OrdersFragmentDirections.actionPause(source))
-                } else {
-                    navigate(OrdersFragmentDirections.actionStart(source))
-                }
-            }
         }
         viewModel.orders.observe(viewLifecycleOwner) { result ->
             when (result) {

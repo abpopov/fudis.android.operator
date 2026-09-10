@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import mb.delivery.operator.databinding.FragmentSplashBinding
+import mb.delivery.operator.domain.model.SplashDestination
 import mb.delivery.operator.ui.base.BaseFragment
 
 class SplashFragment : BaseFragment() {
@@ -26,23 +27,18 @@ class SplashFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initObservers()
+        viewModel.destination.observe(viewLifecycleOwner) { dest ->
+            when (dest) {
+                SplashDestination.ORDERS -> navigate(SplashFragmentDirections.actionOrders())
+                SplashDestination.AUTH -> navigate(SplashFragmentDirections.actionAuth())
+                SplashDestination.PROJECT -> navigate(SplashFragmentDirections.actionProject())
+            }
+        }
+        viewModel.start()
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-    }
-
-    private fun initObservers() {
-        if (viewModel.isLoggedIn()) {
-            navigate(SplashFragmentDirections.actionOrders())
-        } else {
-            if (viewModel.hasProject()) {
-                navigate(SplashFragmentDirections.actionAuth())
-            } else {
-                navigate(SplashFragmentDirections.actionProject())
-            }
-        }
     }
 }

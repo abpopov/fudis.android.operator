@@ -3,10 +3,10 @@ package mb.delivery.operator.data.api.model
 import com.google.gson.annotations.SerializedName
 
 class AuthResultApi(
-    @SerializedName("token")
-    val token: String?,
+    @SerializedName("result")
+    val result: Boolean?,
     @SerializedName("user")
     val user: UserApi?,
-    errorCode: Int?,
-    errorMessage: String?
-) : BaseApi(errorCode, errorMessage)
+    @SerializedName("errors")
+    val errors: Map<String, String>?
+)

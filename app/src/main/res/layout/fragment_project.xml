@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/vRoot"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/grey_bg">
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/ivLogo"
@@ -41,15 +42,32 @@
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tvNext"
-        style="@style/ButtonStyleGreen"
+        style="@style/ButtonStylePurple"
         android:layout_width="0dp"
         android:layout_marginTop="@dimen/dp36"
         android:elevation="2dp"
         android:text="@string/auth_project_next"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/tvToggle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etProject"
         app:layout_constraintWidth_percent="0.43" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvToggle"
+        style="@style/TextStyle.Grey.20"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp24"
+        android:clickable="true"
+        android:focusable="true"
+        android:gravity="center"
+        android:padding="@dimen/dp8"
+        android:text="@string/auth_project_or_host"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvNext"
+        app:layout_constraintWidth_percent="0.5" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

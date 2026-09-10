@@ -12,6 +12,11 @@
 
     <string name="auth_project_hint">Номер проекта</string>
     <string name="auth_project_next">Ввести номер проекта</string>
+    <string name="auth_host_hint">https://…</string>
+    <string name="auth_host_next">Продолжить</string>
+    <string name="auth_project_or_host">или укажите ссылку на хост</string>
+    <string name="auth_host_or_project">или введите номер проекта</string>
+    <string name="auth_host_label">Хост</string>
 
     <string name="menu_orders">Заказы</string>
     <string name="menu_pause">Нагрузка</string>
@@ -32,16 +37,41 @@
     <string name="pause_reason_food">Закончились продукты</string>
     <string name="pause_reason_other">Другое</string>
     <string name="pause_action">Поставить на паузу</string>
-    <string name="pause_start_action">Снять с паузы</string>
+    <string name="pause_start_action">Снять</string>
+    <string name="pause_org_title">Организация</string>
+    <string name="pause_org_hint">Выберите организацию</string>
+    <string name="pause_mode_highload">Высокая нагрузка</string>
+    <string name="pause_mode_stop">Стоп</string>
+    <string name="pause_gap_title">Добавить минут</string>
+    <string name="pause_comment_hint">Комментарий</string>
+    <string name="pause_action_highload">Включить нагрузку</string>
+    <string name="pause_action_stop">Поставить на стоп</string>
+    <string name="pause_status_highload">Сейчас включена высокая нагрузка</string>
+    <string name="pause_status_stop">Организация на стопе</string>
+    <string name="pause_load_error">Не удалось загрузить организации</string>
+    <string name="highload_empty">Нет организаций на стопе или высокой нагрузке</string>
+    <string name="highload_apply">Поставить высокую нагрузку или стоп</string>
+    <string name="highload_status_stop">Стоп</string>
+    <string name="highload_status_highload">Высокая нагрузка</string>
+    <string name="highload_reload">Обновить</string>
+    <string name="highload_no_idle">Все доступные точки уже на стопе или высокой нагрузке</string>
+    <string name="highload_drop_error">Не удалось снять статус</string>
 
     <string name="categories_search_hint">Найти блюдо</string>
     <string name="categories_reload">Загрузить меню</string>
 
-    <string name="stops_search_hint">Найти ингредиент</string>
+    <string name="stops_search_hint">Найти блюдо</string>
     <string name="stops_dialog_text">Вы уверены, что хотите добавить продукт в стоп-лист?</string>
     <string name="stops_dialog_yes">Да</string>
     <string name="stops_dialog_no">Нет</string>
-    <string name="stops_reload">Загрузить товары</string>
+    <string name="stops_reload">Обновить</string>
+    <string name="stops_empty">Нет блюд на стопе</string>
+    <string name="stops_apply">Поставить на стоп</string>
+    <string name="stops_product_search">Найти блюдо</string>
+    <string name="stops_drop_error">Не удалось снять со стопа</string>
+    <string name="stops_apply_error">Не удалось поставить на стоп</string>
+    <string name="stops_no_orgs">Нет доступных организаций</string>
+    <string name="stops_pick_org">Сначала выберите организацию</string>
 
     <string name="orders_error">Ошибка обновления списка - %s</string>
     <string name="order_active">Активные</string>
@@ -63,6 +93,21 @@
     <string name="order_status_delivered">Доставлен</string>
     <string name="order_client_comment">🔥 %s</string>
     <string name="order_status_error">Не все позиции готовы</string>
+    <string name="order_edit_comment">Комментарий</string>
+    <string name="order_edit_organization">Организация</string>
+    <string name="order_edit_cart">Состав</string>
+    <string name="order_export_pos">Выгрузить в POS</string>
+    <string name="order_export_pos_done">Заказ уже выгружен в POS</string>
+    <string name="order_export_pos_queued">Заказ поставлен в очередь POS</string>
+    <string name="order_edit_comment_title">Комментарий к заказу</string>
+    <string name="order_edit_organization_title">Организация заказа</string>
+    <string name="order_edit_cart_title">Состав заказа</string>
+    <string name="order_edit_cart_add">Добавить блюдо</string>
+    <string name="order_edit_cart_save">Сохранить состав</string>
+    <string name="order_edit_cart_remove">Удалить</string>
+    <string name="order_edit_save">Сохранить</string>
+    <string name="order_edit_cancel">Отмена</string>
+    <string name="order_edit_modifiers_title">Модификаторы</string>
 
     <plurals name="order_forks_value">
         <item quantity="zero">Не надо</item>
