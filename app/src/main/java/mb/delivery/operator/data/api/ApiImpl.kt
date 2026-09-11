@@ -5,6 +5,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import mb.delivery.operator.BuildConfig
 import mb.delivery.operator.data.api.model.AuthRequestApi
+import mb.delivery.operator.data.api.model.OrderApi
 import mb.delivery.operator.data.api.model.OrderCartItemRequestApi
 import mb.delivery.operator.data.api.model.OrderCartUpdateRequestApi
 import mb.delivery.operator.data.api.model.OrderExportToPosRequestApi
