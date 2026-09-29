@@ -1,15 +1,13 @@
 package mb.delivery.operator.ui.orders
 
 import android.os.Bundle
-import android.text.InputType
 import android.text.format.DateUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
 import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
 import androidx.core.view.isVisible
+import androidx.fragment.app.setFragmentResultListener
 import androidx.navigation.fragment.navArgs
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import mb.delivery.operator.R
@@ -18,6 +16,7 @@ import mb.delivery.operator.data.api.model.OrderCartItemRequestApi
 import mb.delivery.operator.data.api.model.OrderCartModificatorRequestApi
 import mb.delivery.operator.databinding.FragmentOrderBinding
 import mb.delivery.operator.domain.model.CartEntity
+import mb.delivery.operator.domain.model.CommentMode
 import mb.delivery.operator.domain.model.ORDER_STATUS_READY
 import mb.delivery.operator.domain.model.OrderEntity
 import mb.delivery.operator.domain.model.OrganizationKitchenEntity
@@ -26,6 +25,11 @@ import mb.delivery.operator.domain.model.SOURCE_TYPE_DC
 import mb.delivery.operator.domain.model.SOURCE_TYPE_YA
 import mb.delivery.operator.ui.adapters.CartAdapter
 import mb.delivery.operator.ui.base.BaseFragment
+import mb.delivery.operator.ui.dialogs.CartEditDialog
+import mb.delivery.operator.ui.dialogs.CommentEditDialog
+import mb.delivery.operator.ui.dialogs.ModifiersPickDialog
+import mb.delivery.operator.ui.dialogs.OrganizationPickDialog
+import mb.delivery.operator.ui.dialogs.ProductPickDialog
 import mb.delivery.operator.utils.toOrderAction
 import mb.delivery.operator.utils.toOrderStatus
 import java.text.NumberFormat
@@ -44,12 +48,65 @@ class OrderFragment : BaseFragment() {
 
     private var pendingOrganizations: List<OrganizationKitchenEntity> = emptyList()
     private var pendingEditProducts: List<EditProductApi> = emptyList()
-    private var draftCart: MutableList<OrderCartItemRequestApi> = mutableListOf()
 
     private val formatter by lazy {
         NumberFormat.getNumberInstance().also {
             it.minimumFractionDigits = 0
             it.maximumFractionDigits = 2
+        }
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setFragmentResultListener(CommentEditDialog.REQUEST_KEY) { _, bundle ->
+            val order = viewModel.currentOrder.value ?: return@setFragmentResultListener
+            val comment = bundle.getString(CommentEditDialog.RESULT_COMMENT).orEmpty()
+            viewModel.updateOrder(order.id, clientComment = comment)
+        }
+        setFragmentResultListener(OrganizationPickDialog.REQUEST_KEY) { _, bundle ->
+            val order = viewModel.currentOrder.value ?: return@setFragmentResultListener
+            val orgId = bundle.getInt(OrganizationPickDialog.RESULT_ORG_ID, 0)
+            if (orgId > 0) {
+                viewModel.updateOrder(order.id, organizationId = orgId)
+            }
+        }
+        setFragmentResultListener(CartEditDialog.REQUEST_KEY) { _, bundle ->
+            when (bundle.getString(CartEditDialog.RESULT_ACTION)) {
+                CartEditDialog.ACTION_SAVE -> {
+                    val order = viewModel.currentOrder.value ?: return@setFragmentResultListener
+                    viewModel.updateCart(order.id, viewModel.cartEditDraft.toList())
+                    viewModel.clearCartEdit()
+                }
+                CartEditDialog.ACTION_ADD -> {
+                    val order = viewModel.currentOrder.value ?: return@setFragmentResultListener
+                    viewModel.loadEditProducts(order.organizationId)
+                }
+            }
+        }
+        setFragmentResultListener(ProductPickDialog.REQUEST_KEY) { _, bundle ->
+            if (bundle.getBoolean(ProductPickDialog.RESULT_CANCELLED, false)) {
+                CartEditDialog.show(parentFragmentManager)
+                return@setFragmentResultListener
+            }
+            val productId = bundle.getLong(ProductPickDialog.RESULT_PRODUCT_ID, 0L)
+            val product = pendingEditProducts.find { it.id == productId }
+            if (product == null) {
+                CartEditDialog.show(parentFragmentManager)
+                return@setFragmentResultListener
+            }
+            pickModifiersAndAdd(product)
+        }
+        setFragmentResultListener(ModifiersPickDialog.REQUEST_KEY) { _, bundle ->
+            if (bundle.getBoolean(ModifiersPickDialog.RESULT_CANCELLED, false)) {
+                CartEditDialog.show(parentFragmentManager)
+                return@setFragmentResultListener
+            }
+            val productId = bundle.getLong(ModifiersPickDialog.RESULT_PRODUCT_ID, 0L)
+            val modIds = bundle.getLongArray(ModifiersPickDialog.RESULT_MOD_IDS)?.toList().orEmpty()
+            addProductToDraft(
+                productId,
+                modIds.map { OrderCartModificatorRequestApi(modificatorId = it, count = 1) }
+            )
         }
     }
 
@@ -117,15 +174,23 @@ class OrderFragment : BaseFragment() {
             }
         }
         binding?.tvEditComment?.setOnClickListener {
-            showCommentDialog()
+            val order = viewModel.currentOrder.value ?: return@setOnClickListener
+            CommentEditDialog.show(parentFragmentManager, order.clientComment)
         }
         binding?.tvEditOrganization?.setOnClickListener {
             viewModel.loadOrganizations()
         }
         binding?.tvEditCart?.setOnClickListener {
             val order = viewModel.currentOrder.value ?: return@setOnClickListener
-            draftCart = viewModel.toCartRequest(order.cartData).toMutableList()
-            showCartEditDialog()
+            val items = viewModel.toCartRequest(order.cartData)
+            val titles = items.map { item ->
+                val product = order.cartData.find { it.item.id == item.catalogItemId }
+                product?.item?.baseTitle
+                    ?: product?.item?.title
+                    ?: "#${item.catalogItemId}"
+            }
+            viewModel.startCartEdit(items, titles)
+            CartEditDialog.show(parentFragmentManager)
         }
         binding?.tvExportPos?.setOnClickListener {
             val order = viewModel.currentOrder.value ?: return@setOnClickListener
@@ -156,6 +221,12 @@ class OrderFragment : BaseFragment() {
                 Toast.makeText(requireContext(), result.error.message, Toast.LENGTH_SHORT).show()
             }
         }
+        viewModel.pendingItemChanges.observe(viewLifecycleOwner) {
+            (binding?.rvCartList?.adapter as? CartAdapter)?.notifyPendingStateChanged()
+        }
+        viewModel.pendingItemTick.observe(viewLifecycleOwner) {
+            (binding?.rvCartList?.adapter as? CartAdapter)?.refreshPendingCountdown()
+        }
         viewModel.exportPos.observe(viewLifecycleOwner) { result ->
             binding?.tvExportPos?.isEnabled = true
             when (result) {
@@ -175,11 +246,31 @@ class OrderFragment : BaseFragment() {
         viewModel.enableManualPosExport.observe(viewLifecycleOwner) {
             updateOperatorActionsVisibility()
         }
+        viewModel.showOrganization.observe(viewLifecycleOwner) {
+            updateOperatorActionsVisibility()
+        }
+        viewModel.commentMode.observe(viewLifecycleOwner) {
+            updateOperatorActionsVisibility()
+            viewModel.currentOrder.value?.let { order -> setChangeableData(order) }
+        }
         viewModel.organizations.observe(viewLifecycleOwner) { result ->
             when (result) {
                 is ResultEntity.Success -> {
                     pendingOrganizations = result.data
-                    showOrganizationDialog()
+                    val order = viewModel.currentOrder.value ?: return@observe
+                    if (pendingOrganizations.isEmpty()) {
+                        Toast.makeText(
+                            requireContext(),
+                            R.string.order_edit_organization_title,
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        return@observe
+                    }
+                    OrganizationPickDialog.show(
+                        parentFragmentManager,
+                        pendingOrganizations,
+                        order.organizationId
+                    )
                 }
                 is ResultEntity.Error -> {
                     Toast.makeText(requireContext(), result.error.message, Toast.LENGTH_SHORT).show()
@@ -190,11 +281,22 @@ class OrderFragment : BaseFragment() {
         viewModel.editProducts.observe(viewLifecycleOwner) { result ->
             when (result) {
                 is ResultEntity.Success -> {
-                    pendingEditProducts = result.data
-                    showAddProductDialog()
+                    viewModel.editProductsCatalog = result.data
+                    pendingEditProducts = result.data.items
+                    if (pendingEditProducts.isEmpty()) {
+                        Toast.makeText(
+                            requireContext(),
+                            R.string.order_edit_cart_add,
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        CartEditDialog.show(parentFragmentManager)
+                        return@observe
+                    }
+                    ProductPickDialog.show(parentFragmentManager)
                 }
                 is ResultEntity.Error -> {
                     Toast.makeText(requireContext(), result.error.message, Toast.LENGTH_SHORT).show()
+                    CartEditDialog.show(parentFragmentManager)
                 }
                 else -> Unit
             }
@@ -204,11 +306,16 @@ class OrderFragment : BaseFragment() {
     private fun updateOperatorActionsVisibility() {
         val allowEdit = viewModel.allowEditOrder.value == true
         val allowPos = viewModel.enableManualPosExport.value == true
+        val showOrg = viewModel.showOrganization.value == true
+        val canEditComment = CommentMode.canEdit(viewModel.commentMode.value)
         val order = viewModel.currentOrder.value
-        binding?.llOperatorActions?.isVisible = allowEdit || allowPos
-        binding?.tvEditComment?.isVisible = allowEdit
-        binding?.tvEditOrganization?.isVisible = allowEdit
-        binding?.tvEditCart?.isVisible = allowEdit
+        val showCart = allowEdit
+        val showOrganizationBtn = allowEdit && showOrg
+        val showCommentBtn = allowEdit && canEditComment
+        binding?.llOperatorActions?.isVisible = showCart || showOrganizationBtn || showCommentBtn || allowPos
+        binding?.tvEditComment?.isVisible = showCommentBtn
+        binding?.tvEditOrganization?.isVisible = showOrganizationBtn
+        binding?.tvEditCart?.isVisible = showCart
         binding?.tvExportPos?.isVisible = allowPos
         binding?.tvExportPos?.isEnabled = order?.externalUuid.isNullOrBlank()
         if (!order?.externalUuid.isNullOrBlank()) {
@@ -218,166 +325,39 @@ class OrderFragment : BaseFragment() {
         }
     }
 
-    private fun showCommentDialog() {
-        val order = viewModel.currentOrder.value ?: return
-        val input = EditText(requireContext()).apply {
-            inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_FLAG_MULTI_LINE
-            setText(order.clientComment.orEmpty())
-            minLines = 3
-        }
-        AlertDialog.Builder(requireContext())
-            .setTitle(R.string.order_edit_comment_title)
-            .setView(input)
-            .setPositiveButton(R.string.order_edit_save) { _, _ ->
-                viewModel.updateOrder(order.id, clientComment = input.text?.toString().orEmpty())
-            }
-            .setNegativeButton(R.string.order_edit_cancel, null)
-            .show()
-    }
-
-    private fun showOrganizationDialog() {
-        val order = viewModel.currentOrder.value ?: return
-        if (pendingOrganizations.isEmpty()) {
-            Toast.makeText(requireContext(), R.string.order_edit_organization_title, Toast.LENGTH_SHORT).show()
-            return
-        }
-        val titles = pendingOrganizations.map { it.title }.toTypedArray()
-        val checked = pendingOrganizations.indexOfFirst { it.id == order.organizationId }.coerceAtLeast(0)
-        AlertDialog.Builder(requireContext())
-            .setTitle(R.string.order_edit_organization_title)
-            .setSingleChoiceItems(titles, checked) { dialog, which ->
-                val selected = pendingOrganizations.getOrNull(which) ?: return@setSingleChoiceItems
-                viewModel.updateOrder(order.id, organizationId = selected.id)
-                dialog.dismiss()
-            }
-            .setNegativeButton(R.string.order_edit_cancel, null)
-            .show()
-    }
-
-    private fun showCartEditDialog() {
-        val order = viewModel.currentOrder.value ?: return
-        val labels = draftCart.map { item ->
-            val product = order.cartData.find { it.item.id == item.catalogItemId }
-            val title = product?.item?.baseTitle
-                ?: product?.item?.title
-                ?: pendingEditProducts.find { it.id == item.catalogItemId }?.title
-                ?: "#${item.catalogItemId}"
-            "${item.count} × $title"
-        }.toTypedArray()
-
-        AlertDialog.Builder(requireContext())
-            .setTitle(R.string.order_edit_cart_title)
-            .setItems(labels) { _, which ->
-                showCartLineDialog(which)
-            }
-            .setNeutralButton(R.string.order_edit_cart_add) { _, _ ->
-                viewModel.loadEditProducts(order.organizationId)
-            }
-            .setPositiveButton(R.string.order_edit_cart_save) { _, _ ->
-                if (draftCart.isEmpty()) {
-                    Toast.makeText(requireContext(), R.string.order_edit_cart_title, Toast.LENGTH_SHORT).show()
-                    return@setPositiveButton
-                }
-                viewModel.updateCart(order.id, draftCart.toList())
-            }
-            .setNegativeButton(R.string.order_edit_cancel, null)
-            .show()
-    }
-
-    private fun showCartLineDialog(index: Int) {
-        val item = draftCart.getOrNull(index) ?: return
-        val options = arrayOf("+1", "-1", getString(R.string.order_edit_cart_remove))
-        AlertDialog.Builder(requireContext())
-            .setTitle(R.string.order_edit_cart_title)
-            .setItems(options) { _, which ->
-                when (which) {
-                    0 -> draftCart[index] = item.copy(count = item.count + 1)
-                    1 -> {
-                        if (item.count <= 1) {
-                            draftCart.removeAt(index)
-                        } else {
-                            draftCart[index] = item.copy(count = item.count - 1)
-                        }
-                    }
-                    2 -> draftCart.removeAt(index)
-                }
-                showCartEditDialog()
-            }
-            .setNegativeButton(R.string.order_edit_cancel) { _, _ ->
-                showCartEditDialog()
-            }
-            .show()
-    }
-
-    private fun showAddProductDialog() {
-        if (pendingEditProducts.isEmpty()) {
-            Toast.makeText(requireContext(), R.string.order_edit_cart_add, Toast.LENGTH_SHORT).show()
-            return
-        }
-        val titles = pendingEditProducts.map { it.title.orEmpty() }.toTypedArray()
-        AlertDialog.Builder(requireContext())
-            .setTitle(R.string.order_edit_cart_add)
-            .setItems(titles) { _, which ->
-                val product = pendingEditProducts.getOrNull(which) ?: return@setItems
-                pickModifiersAndAdd(product)
-            }
-            .setNegativeButton(R.string.order_edit_cancel) { _, _ ->
-                showCartEditDialog()
-            }
-            .show()
-    }
-
     private fun pickModifiersAndAdd(product: EditProductApi) {
         val productId = product.id ?: return
         val mods = product.modificators.orEmpty().filter { it.id != null }
         if (mods.isEmpty()) {
-            draftCart.add(
-                OrderCartItemRequestApi(
-                    catalogItemId = productId,
-                    count = 1,
-                    status = CartEntity.STATUS_NEW,
-                    modificators = emptyList()
-                )
-            )
-            showCartEditDialog()
+            addProductToDraft(productId, emptyList())
             return
         }
-        val titles = mods.map {
-            val price = it.price ?: 0f
-            "${it.title.orEmpty()} (+${formatter.format(price)} ₽)"
-        }.toTypedArray()
-        val checked = BooleanArray(mods.size)
-        AlertDialog.Builder(requireContext())
-            .setTitle(R.string.order_edit_modifiers_title)
-            .setMultiChoiceItems(titles, checked) { _, which, isChecked ->
-                checked[which] = isChecked
-            }
-            .setPositiveButton(R.string.order_edit_save) { _, _ ->
-                val selected = mods.mapIndexedNotNull { index, mod ->
-                    if (!checked[index]) return@mapIndexedNotNull null
-                    OrderCartModificatorRequestApi(
-                        modificatorId = mod.id ?: return@mapIndexedNotNull null,
-                        count = 1
-                    )
-                }
-                draftCart.add(
-                    OrderCartItemRequestApi(
-                        catalogItemId = productId,
-                        count = 1,
-                        status = CartEntity.STATUS_NEW,
-                        modificators = selected
-                    )
-                )
-                showCartEditDialog()
-            }
-            .setNegativeButton(R.string.order_edit_cancel) { _, _ ->
-                showCartEditDialog()
-            }
-            .show()
+        ModifiersPickDialog.show(parentFragmentManager, productId, mods, formatter)
+    }
+
+    private fun addProductToDraft(
+        productId: Long,
+        modificators: List<OrderCartModificatorRequestApi>
+    ) {
+        val title = pendingEditProducts.find { it.id == productId }.let { p ->
+            p?.title?.takeIf { it.isNotBlank() } ?: p?.baseTitle ?: "#$productId"
+        }
+        viewModel.cartEditDraft.add(
+            OrderCartItemRequestApi(
+                catalogItemId = productId,
+                count = 1,
+                status = CartEntity.STATUS_NEW,
+                modificators = modificators
+            )
+        )
+        viewModel.cartEditTitles.add(title)
+        CartEditDialog.show(parentFragmentManager)
     }
 
     private fun setChangeableData(item: OrderEntity) {
-        if (item.clientComment.isNullOrEmpty()) {
+        val commentVisible = CommentMode.isVisible(viewModel.commentMode.value)
+            && !item.clientComment.isNullOrEmpty()
+        if (!commentVisible) {
             binding?.tvClientComment?.visibility = View.GONE
         } else {
             binding?.tvClientComment?.visibility = View.VISIBLE

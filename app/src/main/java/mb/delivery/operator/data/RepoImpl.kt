@@ -127,6 +127,18 @@ class RepoImpl(
         prefs.setEnableManualPosExport(value)
     }
 
+    override fun getShowOrganization() = prefs.getShowOrganization()
+
+    override fun setShowOrganization(value: Boolean?) {
+        prefs.setShowOrganization(value)
+    }
+
+    override fun getCommentMode() = prefs.getCommentMode()
+
+    override fun setCommentMode(value: String?) {
+        prefs.setCommentMode(value)
+    }
+
     // api
 
     override suspend fun auth(username: String?, password: String?) = api.auth(username, password)

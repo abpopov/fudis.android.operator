@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="@dimen/dp12"
+    android:paddingBottom="@dimen/dp12">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvTitle"
+        style="@style/TextStyle.Black.24"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/dp16"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btnMinus"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="2 × Пицца" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/btnMinus"
+        style="@style/ButtonStyleBlack"
+        android:layout_width="wrap_content"
+        android:layout_marginEnd="@dimen/dp8"
+        android:minWidth="@dimen/dp64"
+        android:text="−"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/tvCount"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvCount"
+        style="@style/TextStyle.Black.24"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/dp8"
+        android:gravity="center"
+        android:minWidth="@dimen/dp40"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btnPlus"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="2" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/btnPlus"
+        style="@style/ButtonStyleBlack"
+        android:layout_width="wrap_content"
+        android:layout_marginEnd="@dimen/dp12"
+        android:minWidth="@dimen/dp64"
+        android:text="+"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btnRemove"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/btnRemove"
+        style="@style/ButtonStyleLink"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/order_edit_cart_remove"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -3,6 +3,7 @@ package mb.delivery.operator.data.prefs
 import android.content.Context
 import android.content.SharedPreferences
 import com.google.gson.Gson
+import mb.delivery.operator.domain.model.CommentMode
 
 class PrefsImpl(
     ctx: Context,
@@ -26,6 +27,8 @@ class PrefsImpl(
         private const val ALLOW_STATUS_WITHOUT_DISHES_READY = "ALLOW_STATUS_WITHOUT_DISHES_READY"
         private const val ALLOW_EDIT_ORDER = "ALLOW_EDIT_ORDER"
         private const val ENABLE_MANUAL_POS_EXPORT = "ENABLE_MANUAL_POS_EXPORT"
+        private const val SHOW_ORGANIZATION = "SHOW_ORGANIZATION"
+        private const val COMMENT_MODE = "COMMENT_MODE"
     }
 
     private var prefs: SharedPreferences = ctx.getSharedPreferences("naukoteka.prefs", Context.MODE_PRIVATE)
@@ -266,6 +269,34 @@ class PrefsImpl(
                 it.remove(ENABLE_MANUAL_POS_EXPORT)
             } else {
                 it.putBoolean(ENABLE_MANUAL_POS_EXPORT, value)
+            }
+        }.apply()
+    }
+
+    override fun getShowOrganization(): Boolean {
+        return prefs.getBoolean(SHOW_ORGANIZATION, false)
+    }
+
+    override fun setShowOrganization(value: Boolean?) {
+        prefs.edit().also {
+            if (value == null) {
+                it.remove(SHOW_ORGANIZATION)
+            } else {
+                it.putBoolean(SHOW_ORGANIZATION, value)
+            }
+        }.apply()
+    }
+
+    override fun getCommentMode(): String {
+        return prefs.getString(COMMENT_MODE, CommentMode.VIEW) ?: CommentMode.VIEW
+    }
+
+    override fun setCommentMode(value: String?) {
+        prefs.edit().also {
+            if (value == null) {
+                it.remove(COMMENT_MODE)
+            } else {
+                it.putString(COMMENT_MODE, CommentMode.normalize(value))
             }
         }.apply()
     }

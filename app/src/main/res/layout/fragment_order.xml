@@ -113,7 +113,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/dp24"
                 android:layout_marginTop="@dimen/dp48"
+                android:layout_marginEnd="@dimen/dp24"
                 android:gravity="center_vertical"
+                android:ellipsize="end"
+                android:maxLines="1"
+                app:layout_constraintEnd_toEndOf="@+id/vTopBg"
                 app:layout_constraintStart_toEndOf="@+id/ivLogoService"
                 app:layout_constraintTop_toTopOf="@+id/vTopBg"
                 tools:text="№ 15-8908-7708" />
@@ -164,6 +168,7 @@
                 android:layout_marginEnd="@dimen/dp60"
                 android:elevation="2dp"
                 android:minWidth="@dimen/dp264"
+                android:minHeight="@dimen/btn_primary_height"
                 app:layout_constraintEnd_toEndOf="@+id/vTopBg"
                 app:layout_constraintTop_toTopOf="@+id/vBottomBg"
                 app:layout_constraintBottom_toBottomOf="@+id/vBottomBg"
@@ -176,6 +181,7 @@
                 android:layout_marginStart="@dimen/dp60"
                 android:layout_marginTop="@dimen/dp24"
                 android:layout_marginEnd="@dimen/dp60"
+                android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="@+id/vTopBg"
@@ -184,7 +190,7 @@
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tvEditComment"
-                    style="@style/ButtonStyleText"
+                    style="@style/ButtonStyleLink"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/dp16"
@@ -192,7 +198,7 @@
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tvEditOrganization"
-                    style="@style/ButtonStyleText"
+                    style="@style/ButtonStyleLink"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/dp16"
@@ -200,7 +206,7 @@
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tvEditCart"
-                    style="@style/ButtonStyleText"
+                    style="@style/ButtonStyleLink"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/dp16"
@@ -210,7 +216,7 @@
                     android:id="@+id/tvExportPos"
                     style="@style/ButtonStyleGreen"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="@dimen/btn_primary_height"
                     android:minWidth="@dimen/dp200"
                     android:text="@string/order_export_pos"
                     android:visibility="gone" />

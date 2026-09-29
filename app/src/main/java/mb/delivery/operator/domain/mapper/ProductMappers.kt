@@ -1,10 +1,14 @@
 package mb.delivery.operator.domain.mapper
 
+import mb.delivery.operator.data.api.model.CatalogProductsListApi
 import mb.delivery.operator.data.api.model.ProductApi
 import mb.delivery.operator.data.api.model.StopListItemApi
 import mb.delivery.operator.data.api.model.StopListResponseApi
+import mb.delivery.operator.data.api.model.StopProductCategoryApi
 import mb.delivery.operator.domain.model.ProductEntity
 import mb.delivery.operator.domain.model.StopListItemEntity
+import mb.delivery.operator.domain.model.StopProductCategoryEntity
+import mb.delivery.operator.domain.model.StopProductsIndex
 
 object ProductListApiToEntityMapper : BaseMapperSafe<List<ProductApi>, List<ProductEntity>> {
 
@@ -23,6 +27,43 @@ object ProductApiToEntityMapper : BaseMapperNullable<ProductApi, ProductEntity> 
             id = type.id,
             title = type.title,
             isStopped = type.isStopped ?: false
+        )
+    }
+
+}
+
+object StopProductCategoryApiToEntityMapper : BaseMapperNullable<StopProductCategoryApi, StopProductCategoryEntity> {
+
+    override fun map(type: StopProductCategoryApi?): StopProductCategoryEntity? {
+        type ?: return null
+        val id = type.id ?: return null
+        val title = type.title ?: return null
+        return StopProductCategoryEntity(
+            id = id,
+            title = title,
+            items = ProductListApiToEntityMapper.map(type.items)
+        )
+    }
+
+}
+
+object CatalogProductsListApiToIndexMapper : BaseMapperSafe<CatalogProductsListApi, StopProductsIndex> {
+
+    override fun map(type: CatalogProductsListApi?): StopProductsIndex {
+        val categories = type?.categories?.mapNotNull { StopProductCategoryApiToEntityMapper.map(it) }
+            .orEmpty()
+        val flat = ProductListApiToEntityMapper.map(type?.items)
+        val items = if (flat.isNotEmpty()) {
+            flat
+        } else {
+            categories.flatMap { it.items }.distinctBy { it.id }
+        }
+        return StopProductsIndex(
+            categories = categories.ifEmpty {
+                if (items.isEmpty()) emptyList()
+                else listOf(StopProductCategoryEntity(0, "Все блюда", items))
+            },
+            items = items
         )
     }
 

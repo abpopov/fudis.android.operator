@@ -72,7 +72,9 @@ class OrderHolder(view: View) : BaseHolder<OrdersViewModel, OrderEntity>(view) {
             SOURCE_TYPE_DC -> imgLogoService.setImageResource(R.drawable.ic_logo_delivery_club)
             else -> imgLogoService.setImageResource(0)
         }
-        if (item.clientComment.isNullOrEmpty()) {
+        val commentVisible = CommentMode.isVisible(viewModel.commentMode.value)
+            && !item.clientComment.isNullOrEmpty()
+        if (!commentVisible) {
             textOrderComment.visibility = View.GONE
         } else {
             textOrderComment.visibility = View.VISIBLE

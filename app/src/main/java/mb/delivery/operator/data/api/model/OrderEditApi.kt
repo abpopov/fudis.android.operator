@@ -66,6 +66,15 @@ data class EditProductApi(
     val modificators: List<EditModificatorApi>?
 ) : Serializable
 
+data class EditProductCategoryApi(
+    @SerializedName("id")
+    val id: Long?,
+    @SerializedName("title")
+    val title: String?,
+    @SerializedName("items")
+    val items: List<EditProductApi>?
+) : Serializable
+
 data class EditModificatorApi(
     @SerializedName("id")
     val id: Long?,
@@ -76,6 +85,8 @@ data class EditModificatorApi(
 ) : Serializable
 
 data class EditProductsListApi(
+    @SerializedName("categories")
+    val categories: List<EditProductCategoryApi>?,
     @SerializedName("items")
     val items: List<EditProductApi>?
 ) : Serializable

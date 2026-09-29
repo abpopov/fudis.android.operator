@@ -38,4 +38,8 @@ interface Prefs {
     fun setAllowEditOrder(value: Boolean?)
     fun getEnableManualPosExport(): Boolean
     fun setEnableManualPosExport(value: Boolean?)
+    fun getShowOrganization(): Boolean
+    fun setShowOrganization(value: Boolean?)
+    fun getCommentMode(): String
+    fun setCommentMode(value: String?)
 }

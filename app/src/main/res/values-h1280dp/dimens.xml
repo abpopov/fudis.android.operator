@@ -27,4 +27,20 @@
     <dimen name="dp4">4dp</dimen>
     <dimen name="dp2">2dp</dimen>
     <dimen name="dp1">1dp</dimen>
+
+    <dimen name="btn_primary_height">64dp</dimen>
+    <dimen name="btn_chip_height">48dp</dimen>
+    <dimen name="btn_text_min_height">52dp</dimen>
+    <dimen name="btn_chip_min_width">96dp</dimen>
+    <dimen name="btn_chip_text">20sp</dimen>
+    <dimen name="btn_chip_pad_h">20dp</dimen>
+    <dimen name="btn_text_pad_h">20dp</dimen>
+    <dimen name="btn_text_pad_v">14dp</dimen>
+    <dimen name="edit_min_height">56dp</dimen>
+    <dimen name="edit_pad_v">16dp</dimen>
+
+    <dimen name="text_20">22sp</dimen>
+    <dimen name="text_24">28sp</dimen>
+    <dimen name="text_32">34sp</dimen>
+    <dimen name="text_40">42sp</dimen>
 </resources>

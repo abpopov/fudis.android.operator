@@ -5,12 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.setFragmentResult
+import androidx.fragment.app.setFragmentResultListener
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -19,8 +19,9 @@ import mb.delivery.operator.R
 import mb.delivery.operator.databinding.FragmentStopApplyBinding
 import mb.delivery.operator.domain.model.OrganizationKitchenEntity
 import mb.delivery.operator.domain.model.ResultEntity
-import mb.delivery.operator.ui.adapters.StopProductAdapter
+import mb.delivery.operator.ui.adapters.StopPickAdapter
 import mb.delivery.operator.ui.base.BaseDialogFragment
+import mb.delivery.operator.ui.dialogs.OrganizationPickDialog
 
 class StopApplyFragment : BaseDialogFragment() {
 
@@ -30,6 +31,15 @@ class StopApplyFragment : BaseDialogFragment() {
     private val binding get() = _binding
 
     private var orgs: List<OrganizationKitchenEntity> = listOf()
+    private var pickAdapter: StopPickAdapter? = null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setFragmentResultListener(OrganizationPickDialog.REQUEST_KEY) { _, bundle ->
+            val id = bundle.getInt(OrganizationPickDialog.RESULT_ORG_ID, 0)
+            orgs.firstOrNull { it.id == id }?.let { viewModel.selectOrganization(it) }
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -66,14 +76,17 @@ class StopApplyFragment : BaseDialogFragment() {
                 }
             )
         }
-        binding?.rvProducts?.adapter = StopProductAdapter(viewModel) { item, _ ->
-            viewModel.apply(item)
-        }
+        pickAdapter = StopPickAdapter(
+            onCategory = { viewModel.openCategory(it) },
+            onProduct = { viewModel.apply(it) }
+        )
+        binding?.rvProducts?.adapter = pickAdapter
     }
 
     private fun initListeners() {
         binding?.ivClose?.setOnClickListener { close() }
         binding?.tvOrganization?.setOnClickListener { showOrgPicker() }
+        binding?.tvBackCategories?.setOnClickListener { viewModel.backToCategories() }
         binding?.etSearch?.doAfterTextChanged {
             viewModel.search.postValue(it?.toString().orEmpty())
         }
@@ -96,9 +109,9 @@ class StopApplyFragment : BaseDialogFragment() {
         }
         viewModel.selectedOrg.observe(viewLifecycleOwner) { org ->
             bindSelectedOrg(org)
-            renderProductList()
+            renderList()
         }
-        viewModel.products.observe(viewLifecycleOwner) { result ->
+        viewModel.catalog.observe(viewLifecycleOwner) { result ->
             when (result) {
                 is ResultEntity.Error -> {
                     val message = result.error.message
@@ -108,10 +121,16 @@ class StopApplyFragment : BaseDialogFragment() {
                 }
                 else -> Unit
             }
-            renderProductList()
+            renderList()
         }
-        viewModel.filteredProducts.observe(viewLifecycleOwner) {
-            renderProductList()
+        viewModel.browseRows.observe(viewLifecycleOwner) {
+            renderList()
+        }
+        viewModel.search.observe(viewLifecycleOwner) {
+            renderList()
+        }
+        viewModel.selectedCategoryId.observe(viewLifecycleOwner) {
+            renderList()
         }
         viewModel.applyRequest.observe(viewLifecycleOwner) { result ->
             if (result is ResultEntity.Error) {
@@ -153,31 +172,41 @@ class StopApplyFragment : BaseDialogFragment() {
         if (orgs.size <= 1) {
             return
         }
-        AlertDialog.Builder(requireContext())
-            .setTitle(R.string.pause_org_title)
-            .setItems(orgs.map { it.label() }.toTypedArray()) { _, which ->
-                orgs.getOrNull(which)?.let { viewModel.selectOrganization(it) }
-            }
-            .show()
+        OrganizationPickDialog.show(
+            parentFragmentManager,
+            orgs,
+            viewModel.selectedOrg.value?.id
+        )
     }
 
     private fun bindSelectedOrg(org: OrganizationKitchenEntity?) {
         binding?.tvOrganization?.text = org?.label().orEmpty()
     }
 
-    private fun renderProductList() {
-        val items = viewModel.filteredProducts.value.orEmpty()
-        (binding?.rvProducts?.adapter as? StopProductAdapter)?.submitList(items)
-        val loading = viewModel.products.value is ResultEntity.Loading
+    private fun renderList() {
+        val rows = viewModel.browseRows.value.orEmpty()
+        pickAdapter?.submitList(rows)
+        val loading = viewModel.catalog.value is ResultEntity.Loading
         val hasOrg = viewModel.selectedOrg.value != null
-        binding?.tvEmpty?.isVisible = !loading && items.isEmpty()
+        val searching = !viewModel.search.value.isNullOrBlank()
+        val insideCategory = viewModel.isInsideCategory() && !searching
+
+        binding?.tvBackCategories?.isVisible = insideCategory
+        binding?.tvCategoryTitle?.isVisible = insideCategory
+        binding?.tvCategoryTitle?.text = viewModel.categoryTitle().orEmpty()
+
+        binding?.tvEmpty?.isVisible = !loading && rows.isEmpty()
         binding?.tvEmpty?.setText(
-            if (hasOrg) R.string.stops_empty else R.string.stops_pick_org
+            when {
+                !hasOrg -> R.string.stops_pick_org
+                searching || insideCategory -> R.string.stops_empty
+                else -> R.string.stops_categories_empty
+            }
         )
-        binding?.rvProducts?.isVisible = items.isNotEmpty()
+        binding?.rvProducts?.isVisible = rows.isNotEmpty()
     }
 
     private fun close() {
-        navigate(StopApplyFragmentDirections.actionClose())
+        findNavController().navigateUp()
     }
 }

@@ -27,4 +27,22 @@
     <dimen name="dp4">2dp</dimen>
     <dimen name="dp2">1dp</dimen>
     <dimen name="dp1">0.5dp</dimen>
+
+    <!-- Touch targets (Material ~48dp). Not tied to design-scale dp* names. -->
+    <dimen name="btn_primary_height">48dp</dimen>
+    <dimen name="btn_chip_height">48dp</dimen>
+    <dimen name="btn_text_min_height">48dp</dimen>
+    <dimen name="btn_chip_min_width">72dp</dimen>
+    <dimen name="btn_chip_text">16sp</dimen>
+    <dimen name="btn_chip_pad_h">16dp</dimen>
+    <dimen name="btn_text_pad_h">16dp</dimen>
+    <dimen name="btn_text_pad_v">12dp</dimen>
+    <dimen name="edit_min_height">52dp</dimen>
+    <dimen name="edit_pad_v">14dp</dimen>
+
+    <!-- Readable type (kitchen viewing distance). Separate from layout dp*. -->
+    <dimen name="text_20">18sp</dimen>
+    <dimen name="text_24">20sp</dimen>
+    <dimen name="text_32">26sp</dimen>
+    <dimen name="text_40">32sp</dimen>
 </resources>

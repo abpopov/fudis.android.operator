@@ -23,6 +23,23 @@
     <string name="menu_cats">Меню</string>
     <string name="menu_stops">Стоп-лист</string>
     <string name="menu_help">Нужна помощь</string>
+    <string name="settings_content_description">Настройки</string>
+    <string name="settings_title">Настройки экрана</string>
+    <string name="text_scale_title">Размер текста</string>
+    <string name="text_scale_preview">Так выглядит текст заказа № 12345</string>
+    <string name="text_scale_minus">A−</string>
+    <string name="text_scale_plus">A+</string>
+    <string name="ui_scale_title">Масштаб интерфейса</string>
+    <string name="ui_scale_minus">−</string>
+    <string name="ui_scale_plus">+</string>
+    <string name="theme_title">Тема</string>
+    <string name="theme_light">Светлая</string>
+    <string name="theme_dark">Тёмная</string>
+    <string name="text_scale_close">Готово</string>
+    <string name="logout_action">Выйти из аккаунта</string>
+    <string name="logout_confirm_title">Выйти из аккаунта?</string>
+    <string name="logout_confirm_message">Сессия будет завершена. Для продолжения работы нужно войти снова.</string>
+    <string name="logout_confirm_yes">Выйти</string>
 
     <string name="help_text">Если у вас возник срочный вопрос, позвоните в нашу службу поддержки:</string>
     <string name="help_phone">+7 499 460 56 95</string>
@@ -68,6 +85,8 @@
     <string name="stops_empty">Нет блюд на стопе</string>
     <string name="stops_apply">Поставить на стоп</string>
     <string name="stops_product_search">Найти блюдо</string>
+    <string name="stops_back_categories">К категориям</string>
+    <string name="stops_categories_empty">Нет доступных категорий</string>
     <string name="stops_drop_error">Не удалось снять со стопа</string>
     <string name="stops_apply_error">Не удалось поставить на стоп</string>
     <string name="stops_no_orgs">Нет доступных организаций</string>
@@ -102,6 +121,7 @@
     <string name="order_edit_comment_title">Комментарий к заказу</string>
     <string name="order_edit_organization_title">Организация заказа</string>
     <string name="order_edit_cart_title">Состав заказа</string>
+    <string name="order_edit_cart_empty">Состав пуст — добавьте блюдо</string>
     <string name="order_edit_cart_add">Добавить блюдо</string>
     <string name="order_edit_cart_save">Сохранить состав</string>
     <string name="order_edit_cart_remove">Удалить</string>
@@ -124,6 +144,8 @@
     <string name="order_single_action_start">Начать</string>
     <string name="order_single_action_ready">Готово</string>
     <string name="order_single_action_done">Отдать</string>
+    <string name="order_single_action_undo">Отменить</string>
+    <string name="order_single_status_pending">%1$s через %2$d с</string>
     <string name="order_single_status_new">Новый</string>
     <string name="order_single_status_ready">Можно готовить</string>
     <string name="order_single_status_cooking">Готовится</string>

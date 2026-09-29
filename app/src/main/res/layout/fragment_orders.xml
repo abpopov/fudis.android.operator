@@ -22,6 +22,7 @@
         android:layout_marginEnd="@dimen/dp10"
         android:layout_marginStart="@dimen/dp60"
         android:drawableStart="@drawable/sl_menu"
+        android:minHeight="@dimen/btn_text_min_height"
         android:paddingTop="@dimen/dp40"
         android:paddingBottom="@dimen/dp40"
         android:text="@string/menu_cats"
@@ -70,6 +71,7 @@
         android:text="@string/menu_stops"
         app:layout_constraintEnd_toStartOf="@+id/tvHelp"
         app:layout_constraintStart_toEndOf="@+id/tvPause"
+        app:layout_goneMarginEnd="@dimen/dp10"
         app:layout_goneMarginStart="@dimen/dp60"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -77,20 +79,34 @@
         android:id="@+id/tvHelp"
         style="@style/ButtonStyleMenu"
         android:layout_marginTop="@dimen/dp24"
-        android:layout_marginEnd="@dimen/dp50"
+        android:layout_marginEnd="@dimen/dp10"
         android:drawableStart="@drawable/sl_help"
         android:paddingTop="@dimen/dp40"
         android:paddingBottom="@dimen/dp40"
         android:text="@string/menu_help"
         android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btnSettings"
         app:layout_constraintStart_toEndOf="@+id/tvStops"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/btnSettings"
+        android:layout_width="@dimen/btn_text_min_height"
+        android:layout_height="@dimen/btn_text_min_height"
+        android:layout_marginTop="@dimen/dp24"
+        android:layout_marginEnd="@dimen/dp50"
+        android:background="@drawable/ic_bg_rounded_tr_8_ripple"
+        android:contentDescription="@string/settings_content_description"
+        android:padding="@dimen/dp12"
+        android:scaleType="centerInside"
+        android:src="@drawable/ic_settings"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.constraintlayout.widget.Barrier
         android:id="@+id/vBarrier"
         app:barrierDirection="bottom"
-        app:constraint_referenced_ids="tvHelp,tvCats,tvOrders,tvPause,tvStops"
+        app:constraint_referenced_ids="tvHelp,tvCats,tvOrders,tvPause,tvStops,btnSettings"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 

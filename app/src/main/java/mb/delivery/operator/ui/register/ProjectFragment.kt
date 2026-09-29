@@ -14,6 +14,8 @@ import mb.delivery.operator.utils.EmailValidator
 import mb.delivery.operator.utils.Validate
 import mb.delivery.operator.utils.ViewsValidator
 import mb.delivery.operator.utils.hideKeyboard
+import mb.delivery.operator.utils.keepVisibleAboveIme
+import mb.delivery.operator.utils.liftContentAboveIme
 
 class ProjectFragment : BaseFragment() {
 
@@ -48,6 +50,8 @@ class ProjectFragment : BaseFragment() {
     }
 
     private fun initViews() {
+        binding?.root?.liftContentAboveIme()
+        binding?.etProject?.keepVisibleAboveIme()
         validator = ViewsValidator(
             listOfNotNull(
                 EmailValidator(

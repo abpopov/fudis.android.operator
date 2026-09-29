@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Тёмная кухня: фон / текст / поверхности -->
+    <color name="black">#FFECEAE6</color>
+    <color name="black_05">#14FFFFFF</color>
+    <color name="black_10">#1FFFFFFF</color>
+    <color name="black_20">#33FFFFFF</color>
+    <color name="black_40">#99B8B5AE</color>
+    <color name="grey_bg">#FF161514</color>
+    <color name="grey_bg_80">#CC161514</color>
+    <color name="grey_btn_bg">#FF2E2C2A</color>
+    <color name="grey_dark_btn_bg">#FF3D3B39</color>
+    <color name="grey_btn_text">#FF8A8782</color>
+    <color name="surface_elevated">#FF2A2826</color>
+    <color name="ink">#FF0A0A0A</color>
+</resources>

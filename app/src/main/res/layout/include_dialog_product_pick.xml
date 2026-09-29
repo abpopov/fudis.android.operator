@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/etSearch"
+        style="@style/EditStyle"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/edit_min_height"
+        android:background="@drawable/ic_bg_rounded_grey_12"
+        android:hint="@string/stops_product_search" />
+
+    <LinearLayout
+        android:id="@+id/vCategoryHeader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingTop="@dimen/dp12"
+        android:visibility="gone">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvBackCategories"
+            style="@style/ButtonStyleLink"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minHeight="@dimen/btn_text_min_height"
+            android:text="@string/stops_back_categories" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvCategoryTitle"
+            style="@style/TextStyle.Black.24"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp16"
+            android:layout_weight="1" />
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvItems"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/dp8"
+        android:layout_weight="1"
+        android:clipToPadding="false"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:listitem="@layout/list_item_dialog_choice" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvEmpty"
+        style="@style/TextStyle.Grey.24"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="@dimen/dp24"
+        android:text="@string/stops_categories_empty"
+        android:visibility="gone" />
+
+</LinearLayout>

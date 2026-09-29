@@ -11,5 +11,7 @@ data class MenuEntity(
     val showHighload: Boolean,
     val allowStatusWithoutDishesReady: Boolean,
     val allowEditOrder: Boolean,
-    val enableManualPosExport: Boolean
+    val enableManualPosExport: Boolean,
+    val showOrganization: Boolean,
+    val commentMode: String
 ) : Parcelable

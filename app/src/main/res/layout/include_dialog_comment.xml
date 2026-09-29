@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.AppCompatEditText xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/etComment"
+    style="@style/EditStyle"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/ic_bg_rounded_grey_12"
+    android:gravity="top|start"
+    android:hint="@string/order_edit_comment_title"
+    android:inputType="textMultiLine"
+    android:minLines="6"
+    android:padding="@dimen/dp24" />

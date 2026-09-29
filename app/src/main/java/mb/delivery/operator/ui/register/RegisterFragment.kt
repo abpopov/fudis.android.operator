@@ -43,6 +43,9 @@ class RegisterFragment : BaseFragment() {
     }
 
     private fun initViews() {
+        binding?.root?.liftContentAboveIme()
+        binding?.etLogin?.keepVisibleAboveIme()
+        binding?.etPwd?.keepVisibleAboveIme()
         validator = ViewsValidator(
             listOfNotNull(
                 EmailValidator(

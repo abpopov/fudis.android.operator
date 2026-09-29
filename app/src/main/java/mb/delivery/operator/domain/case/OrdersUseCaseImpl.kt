@@ -1,7 +1,7 @@
 package mb.delivery.operator.domain.case
 
 import mb.delivery.operator.data.Repo
-import mb.delivery.operator.data.api.model.EditProductApi
+import mb.delivery.operator.data.api.model.EditProductCategoryApi
 import mb.delivery.operator.data.api.model.OrderApi
 import mb.delivery.operator.data.api.model.OrderCartItemRequestApi
 import mb.delivery.operator.domain.mapper.MenuApiToEntityMapper
@@ -9,6 +9,7 @@ import mb.delivery.operator.domain.mapper.OrderApiToEntityMapper
 import mb.delivery.operator.domain.mapper.OrderListApiToEntityMapper
 import mb.delivery.operator.domain.mapper.OrganizationKitchenIndexApiToEntityMapper
 import mb.delivery.operator.domain.mapper.ReceiptApiToEntityMapper
+import mb.delivery.operator.domain.model.EditProductsCatalog
 import mb.delivery.operator.domain.model.ErrorEntity
 import mb.delivery.operator.domain.model.MenuEntity
 import mb.delivery.operator.domain.model.OrderEntity
@@ -34,6 +35,10 @@ class OrdersUseCaseImpl(private val repo: Repo) : OrdersUseCase {
     override fun getAllowEditOrder() = repo.getAllowEditOrder()
 
     override fun getEnableManualPosExport() = repo.getEnableManualPosExport()
+
+    override fun getShowOrganization() = repo.getShowOrganization()
+
+    override fun getCommentMode() = repo.getCommentMode()
 
     override suspend fun getOrders() = with(repo.orders()) {
         OrderListApiToEntityMapper.map(items).addHeaders()
@@ -71,8 +76,20 @@ class OrdersUseCaseImpl(private val repo: Repo) : OrdersUseCase {
         return mapOrderOrThrow(response.order)
     }
 
-    override suspend fun editProducts(organizationId: Int): List<EditProductApi> {
-        return repo.editProducts(organizationId).items.orEmpty()
+    override suspend fun editProducts(organizationId: Int): EditProductsCatalog {
+        val response = repo.editProducts(organizationId)
+        val items = response.items.orEmpty()
+        val categories = response.categories.orEmpty().ifEmpty {
+            if (items.isEmpty()) emptyList()
+            else listOf(
+                EditProductCategoryApi(
+                    id = 0L,
+                    title = "Все блюда",
+                    items = items
+                )
+            )
+        }
+        return EditProductsCatalog(categories = categories, items = items)
     }
 
     override suspend fun organizations(): List<OrganizationKitchenEntity> {
@@ -103,6 +120,8 @@ class OrdersUseCaseImpl(private val repo: Repo) : OrdersUseCase {
         repo.setAllowStatusWithoutDishesReady(result.allowStatusWithoutDishesReady)
         repo.setAllowEditOrder(result.allowEditOrder)
         repo.setEnableManualPosExport(result.enableManualPosExport)
+        repo.setShowOrganization(result.showOrganization)
+        repo.setCommentMode(result.commentMode)
         return MenuApiToEntityMapper.map(result)
     }
 

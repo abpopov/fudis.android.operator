@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
@@ -21,6 +20,7 @@ import mb.delivery.operator.domain.model.OrganizationKitchenEntity
 import mb.delivery.operator.domain.model.ResultEntity
 import mb.delivery.operator.ui.adapters.StopListAdapter
 import mb.delivery.operator.ui.base.BaseFragment
+import mb.delivery.operator.ui.dialogs.OrganizationPickDialog
 
 class StopsFragment : BaseFragment() {
 
@@ -33,6 +33,11 @@ class StopsFragment : BaseFragment() {
         super.onCreate(savedInstanceState)
         setFragmentResultListener(REQUEST_STOP_CHANGED) { _, _ ->
             viewModel.loadStopList()
+        }
+        setFragmentResultListener(OrganizationPickDialog.REQUEST_KEY) { _, bundle ->
+            val id = bundle.getInt(OrganizationPickDialog.RESULT_ORG_ID, 0)
+            viewModel.organizationsList().firstOrNull { it.id == id }
+                ?.let { viewModel.selectOrganization(it) }
         }
     }
 
@@ -170,12 +175,11 @@ class StopsFragment : BaseFragment() {
         if (orgs.size <= 1) {
             return
         }
-        AlertDialog.Builder(requireContext())
-            .setTitle(R.string.pause_org_title)
-            .setItems(orgs.map { it.label() }.toTypedArray()) { _, which ->
-                orgs.getOrNull(which)?.let { viewModel.selectOrganization(it) }
-            }
-            .show()
+        OrganizationPickDialog.show(
+            parentFragmentManager,
+            orgs,
+            viewModel.selectedOrg.value?.id
+        )
     }
 
     companion object {

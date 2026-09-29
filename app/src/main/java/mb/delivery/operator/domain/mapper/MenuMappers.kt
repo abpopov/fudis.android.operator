@@ -1,6 +1,7 @@
 package mb.delivery.operator.domain.mapper
 
 import mb.delivery.operator.data.api.model.MenuApi
+import mb.delivery.operator.domain.model.CommentMode
 import mb.delivery.operator.domain.model.MenuEntity
 
 object MenuApiToEntityMapper : BaseMapperSafe<MenuApi, MenuEntity> {
@@ -10,10 +11,12 @@ object MenuApiToEntityMapper : BaseMapperSafe<MenuApi, MenuEntity> {
             showMenu = type?.showMenu ?: false,
             showOrders = type?.showOrders ?: false,
             showStopList = type?.showStopList ?: false,
-            showHighload = type?.showHighload ?: false,
+            showHighload = type?.showHighload ?: true,
             allowStatusWithoutDishesReady = type?.allowStatusWithoutDishesReady ?: false,
             allowEditOrder = type?.allowEditOrder ?: false,
-            enableManualPosExport = type?.enableManualPosExport ?: false
+            enableManualPosExport = type?.enableManualPosExport ?: false,
+            showOrganization = type?.showOrganization ?: false,
+            commentMode = CommentMode.normalize(type?.commentMode)
         )
     }
 

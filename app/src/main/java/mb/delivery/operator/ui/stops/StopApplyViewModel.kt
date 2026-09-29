@@ -1,6 +1,7 @@
 package mb.delivery.operator.ui.stops
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import mb.delivery.operator.domain.case.StopsUseCase
 import mb.delivery.operator.domain.model.OrganizationKitchenEntity
@@ -8,24 +9,59 @@ import mb.delivery.operator.domain.model.OrganizationKitchenIndex
 import mb.delivery.operator.domain.model.ProductEntity
 import mb.delivery.operator.domain.model.ResultEntity
 import mb.delivery.operator.domain.model.StopListItemEntity
+import mb.delivery.operator.domain.model.StopProductCategoryEntity
+import mb.delivery.operator.domain.model.StopProductsIndex
 import mb.delivery.operator.ui.base.BaseViewModel
-import mb.delivery.operator.utils.Combined2LiveData
 import mb.delivery.operator.utils.SingleLiveEvent
 import mb.delivery.operator.utils.containsWord
+
+sealed class StopPickRow {
+    data class Category(val category: StopProductCategoryEntity) : StopPickRow()
+    data class Product(val product: ProductEntity) : StopPickRow()
+}
 
 class StopApplyViewModel(private val useCase: StopsUseCase) : BaseViewModel() {
 
     val organizations = MutableLiveData<ResultEntity<OrganizationKitchenIndex>>()
     val selectedOrg = MutableLiveData<OrganizationKitchenEntity?>()
-    val products = MutableLiveData<ResultEntity<List<ProductEntity>>>()
+    val catalog = MutableLiveData<ResultEntity<StopProductsIndex>>()
     val search = MutableLiveData("")
+    val selectedCategoryId = MutableLiveData<Long?>(null)
     val applyRequest = SingleLiveEvent<ResultEntity<StopListItemEntity>>()
     val close = SingleLiveEvent<Boolean>()
 
-    val filteredProducts: LiveData<List<ProductEntity>> = Combined2LiveData(search, products) { query, result ->
-        val list = (result as? ResultEntity.Success)?.data.orEmpty().filter { !it.isStopped }
-        val q = query.orEmpty()
-        list.filter { q.isEmpty() || it.title.containsWord(q) }
+    val browseRows: LiveData<List<StopPickRow>> = MediatorLiveData<List<StopPickRow>>().apply {
+        fun update() {
+            val index = (catalog.value as? ResultEntity.Success)?.data
+            if (index == null) {
+                value = emptyList()
+                return
+            }
+            val query = search.value.orEmpty().trim()
+            val categoryId = selectedCategoryId.value
+            value = when {
+                query.isNotEmpty() -> {
+                    index.items
+                        .filter { !it.isStopped && it.title.containsWord(query) }
+                        .map { StopPickRow.Product(it) }
+                }
+                categoryId != null -> {
+                    val category = index.categories.firstOrNull { it.id == categoryId }
+                    category?.items
+                        ?.filter { !it.isStopped }
+                        ?.map { StopPickRow.Product(it) }
+                        .orEmpty()
+                }
+                else -> {
+                    index.categories
+                        .filter { it.availableCount > 0 }
+                        .map { StopPickRow.Category(it) }
+                }
+            }
+        }
+        addSource(catalog) { update() }
+        addSource(search) { update() }
+        addSource(selectedCategoryId) { update() }
     }
 
     fun load() {
@@ -55,16 +91,27 @@ class StopApplyViewModel(private val useCase: StopsUseCase) : BaseViewModel() {
         selectedOrg.value = org
         if (org == null) {
             search.value = ""
-            products.value = ResultEntity.Success(listOf())
+            selectedCategoryId.value = null
+            catalog.value = ResultEntity.Success(StopProductsIndex(emptyList(), emptyList()))
             return
         }
         useCase.saveOrganizationId(org.id)
         if (!sameOrg) {
             search.value = ""
+            selectedCategoryId.value = null
         }
-        if (!sameOrg || products.value !is ResultEntity.Success) {
+        if (!sameOrg || catalog.value !is ResultEntity.Success) {
             loadProducts(org.id)
         }
+    }
+
+    fun openCategory(category: StopProductCategoryEntity) {
+        search.value = ""
+        selectedCategoryId.value = category.id
+    }
+
+    fun backToCategories() {
+        selectedCategoryId.value = null
     }
 
     fun apply(item: ProductEntity) {
@@ -80,7 +127,17 @@ class StopApplyViewModel(private val useCase: StopsUseCase) : BaseViewModel() {
         )
     }
 
+    fun isInsideCategory(): Boolean = selectedCategoryId.value != null
+
+    fun categoryTitle(): String? {
+        val id = selectedCategoryId.value ?: return null
+        return (catalog.value as? ResultEntity.Success)?.data?.categories
+            ?.firstOrNull { it.id == id }
+            ?.title
+    }
+
     private fun loadProducts(organizationId: Int) {
-        doRequest(products) { useCase.loadProducts(organizationId) }
+        selectedCategoryId.value = null
+        doRequest(catalog) { useCase.loadProducts(organizationId) }
     }
 }

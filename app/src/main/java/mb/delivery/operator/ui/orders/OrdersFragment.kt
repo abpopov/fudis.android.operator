@@ -8,23 +8,29 @@ import android.view.ViewGroup
 import android.view.animation.AccelerateInterpolator
 import android.view.animation.Animation
 import android.view.animation.ScaleAnimation
+import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.setFragmentResultListener
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
-import org.koin.androidx.viewmodel.ext.android.sharedViewModel
+import androidx.navigation.fragment.findNavController
 import mb.delivery.operator.R
 import mb.delivery.operator.databinding.FragmentOrdersBinding
 import mb.delivery.operator.domain.model.ORDER_STATUS_NEW
 import mb.delivery.operator.domain.model.ResultEntity
 import mb.delivery.operator.ui.base.BaseFragment
 import mb.delivery.operator.ui.categories.CategoriesViewModel
+import mb.delivery.operator.ui.dialogs.DisplaySettingsDialog
+import mb.delivery.operator.ui.dialogs.HelpViewModel
+import mb.delivery.operator.ui.dialogs.LogoutConfirmDialog
 import mb.delivery.operator.utils.SoundPlayer
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class OrdersFragment : BaseFragment() {
 
     private val viewModel: OrdersViewModel by sharedViewModel()
     private val catsViewModel: CategoriesViewModel by sharedViewModel()
+    private val helpViewModel: HelpViewModel by sharedViewModel()
 
     private var soundPlayer: SoundPlayer? = null
     private var anim: Animation? = null
@@ -43,6 +49,20 @@ class OrdersFragment : BaseFragment() {
         setFragmentResultListener(SOURCE_MENU) { key, bundle ->
             bundle.getInt(key).let {
                 viewModel.selectMenu(it)
+            }
+        }
+        setFragmentResultListener(LogoutConfirmDialog.REQUEST_KEY) { _, bundle ->
+            if (!bundle.getBoolean(LogoutConfirmDialog.RESULT_CONFIRMED, false)) return@setFragmentResultListener
+            helpViewModel.logout()
+            Toast.makeText(requireContext(), R.string.logout, Toast.LENGTH_SHORT).show()
+            (parentFragmentManager.findFragmentByTag(DisplaySettingsDialog.TAG) as? DisplaySettingsDialog)
+                ?.let {
+                    it.skipRecreateOnDismiss()
+                    it.dismissAllowingStateLoss()
+                }
+            try {
+                findNavController().navigate(R.id.action_logout)
+            } catch (_: Exception) {
             }
         }
     }
@@ -102,6 +122,9 @@ class OrdersFragment : BaseFragment() {
             navController?.navigate(R.id.highloadFragment)
             catsViewModel.search.postValue("")
         }
+        binding?.btnSettings?.setOnClickListener {
+            DisplaySettingsDialog.show(parentFragmentManager)
+        }
     }
 
     private fun initObservers() {
@@ -116,6 +139,10 @@ class OrdersFragment : BaseFragment() {
         }
         viewModel.showHighload.observe(viewLifecycleOwner) {
             binding?.tvPause?.isVisible = it == true
+            if (it != true && viewModel.menuPos.value == 1) {
+                viewModel.selectMenu(0)
+                navController?.navigate(R.id.orderListFragment)
+            }
         }
         viewModel.menu.observe(viewLifecycleOwner) {
             if (it is ResultEntity.Success) {

@@ -19,7 +19,7 @@
             android:launchMode="singleTask"
             android:screenOrientation="landscape"
             android:theme="@style/Theme.Fudis"
-            android:windowSoftInputMode="adjustPan">
+            android:windowSoftInputMode="adjustResize|stateHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

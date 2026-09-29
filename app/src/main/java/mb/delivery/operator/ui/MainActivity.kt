@@ -1,5 +1,6 @@
 package mb.delivery.operator.ui
 
+import android.content.Context
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
@@ -7,6 +8,7 @@ import androidx.navigation.fragment.NavHostFragment
 import mb.delivery.operator.R
 import mb.delivery.operator.data.auth.SessionEvents
 import mb.delivery.operator.notifications.OperatorWebSocket
+import mb.delivery.operator.utils.DisplayPrefs
 import org.koin.android.ext.android.inject
 
 class MainActivity : AppCompatActivity() {
@@ -16,7 +18,13 @@ class MainActivity : AppCompatActivity() {
     private val socket: OperatorWebSocket by inject()
     private val sessionEvents: SessionEvents by inject()
 
+    override fun attachBaseContext(newBase: Context) {
+        DisplayPrefs.applyTheme(newBase)
+        super.attachBaseContext(DisplayPrefs.wrap(newBase))
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
+        DisplayPrefs.applyTheme(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_fragment) as? NavHostFragment

@@ -15,6 +15,25 @@ data class ProductEntity(
     override fun sameContent(other: ListItem) = this == other
 }
 
+data class StopProductCategoryEntity(
+    val id: Long,
+    val title: String,
+    val items: List<ProductEntity>
+) : ListItem {
+
+    val availableCount: Int
+        get() = items.count { !it.isStopped }
+
+    override fun unique() = id
+
+    override fun sameContent(other: ListItem) = this == other
+}
+
+data class StopProductsIndex(
+    val categories: List<StopProductCategoryEntity>,
+    val items: List<ProductEntity>
+)
+
 data class StopListItemEntity(
     val catalogItemId: Long,
     val title: String,

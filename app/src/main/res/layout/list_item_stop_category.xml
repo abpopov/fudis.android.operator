@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dp80"
+    android:background="@drawable/ic_bg_rounded_tr_8_ripple">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvItemName"
+        style="@style/TextStyle.Black.24"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/dp16"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/tvCount"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Пицца" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvCount"
+        style="@style/TextStyle.Grey.20"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/dp8"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/ivChevron"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="12" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ivChevron"
+        android:layout_width="@dimen/dp32"
+        android:layout_height="@dimen/dp32"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_chevron_big_down"
+        android:rotation="-90" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

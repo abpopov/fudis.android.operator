@@ -17,5 +17,9 @@ data class MenuApi(
     @SerializedName("allow_edit_order")
     val allowEditOrder: Boolean?,
     @SerializedName("enable_manual_pos_export")
-    val enableManualPosExport: Boolean?
+    val enableManualPosExport: Boolean?,
+    @SerializedName("show_organization")
+    val showOrganization: Boolean?,
+    @SerializedName("comment_mode")
+    val commentMode: String?
 ) : Serializable

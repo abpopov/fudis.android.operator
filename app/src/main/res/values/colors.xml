@@ -17,4 +17,7 @@
       <color name="grey_btn_text">#C6C6C6</color>
       <color name="grey_btn_bg">#EFEFEF</color>
       <color name="grey_dark_btn_bg">#4E4E4E</color>
+      <color name="surface_elevated">#FFFFFFFF</color>
+      <!-- Always dark fill for chip/primary black buttons -->
+      <color name="ink">#FF000000</color>
   </resources>

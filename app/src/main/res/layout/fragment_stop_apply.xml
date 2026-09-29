@@ -116,7 +116,7 @@
             android:id="@+id/etSearch"
             style="@style/EditStyle"
             android:layout_width="0dp"
-            android:layout_height="@dimen/dp64"
+            android:layout_height="@dimen/edit_min_height"
             android:layout_marginTop="@dimen/dp24"
             android:background="@drawable/ic_bg_rounded_grey_12"
             android:hint="@string/stops_product_search"
@@ -124,16 +124,40 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvOrganization" />
 
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvBackCategories"
+            style="@style/ButtonStyleLink"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp12"
+            android:minHeight="@dimen/btn_text_min_height"
+            android:text="@string/stops_back_categories"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/etSearch" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvCategoryTitle"
+            style="@style/TextStyle.Black.24"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp16"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@+id/tvBackCategories"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/tvBackCategories"
+            app:layout_constraintTop_toTopOf="@+id/tvBackCategories" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvProducts"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginTop="@dimen/dp16"
+            android:layout_marginTop="@dimen/dp8"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/etSearch" />
+            app:layout_constraintTop_toBottomOf="@+id/tvBackCategories" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvEmpty"
@@ -153,7 +177,7 @@
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/ivClose"
         android:layout_width="@dimen/dp64"
-        android:layout_height="@dimen/dp64"
+        android:layout_height="@dimen/edit_min_height"
         android:layout_marginStart="@dimen/dp24"
         android:background="@drawable/ic_bg_circle_tr_ripple"
         android:elevation="2dp"

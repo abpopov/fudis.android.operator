@@ -12,7 +12,18 @@ data class ProductApi(
     val isStopped: Boolean?
 ) : Serializable
 
+data class StopProductCategoryApi(
+    @SerializedName("id")
+    val id: Long?,
+    @SerializedName("title")
+    val title: String?,
+    @SerializedName("items")
+    val items: List<ProductApi>?
+) : Serializable
+
 data class CatalogProductsListApi(
+    @SerializedName("categories")
+    val categories: List<StopProductCategoryApi>?,
     @SerializedName("items")
     val items: List<ProductApi>?
 ) : Serializable

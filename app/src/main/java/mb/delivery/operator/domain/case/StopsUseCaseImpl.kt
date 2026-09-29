@@ -1,14 +1,14 @@
 package mb.delivery.operator.domain.case
 
 import mb.delivery.operator.data.Repo
+import mb.delivery.operator.domain.mapper.CatalogProductsListApiToIndexMapper
 import mb.delivery.operator.domain.mapper.OrganizationKitchenIndexApiToEntityMapper
-import mb.delivery.operator.domain.mapper.ProductListApiToEntityMapper
 import mb.delivery.operator.domain.mapper.StopListItemApiToEntityMapper
 import mb.delivery.operator.domain.mapper.StopListResponseApiToEntityMapper
 import mb.delivery.operator.domain.model.ErrorEntity
 import mb.delivery.operator.domain.model.OrganizationKitchenIndex
-import mb.delivery.operator.domain.model.ProductEntity
 import mb.delivery.operator.domain.model.StopListItemEntity
+import mb.delivery.operator.domain.model.StopProductsIndex
 import mb.delivery.operator.utils.FudisException
 
 class StopsUseCaseImpl(private val repo: Repo) : StopsUseCase {
@@ -30,8 +30,8 @@ class StopsUseCaseImpl(private val repo: Repo) : StopsUseCase {
             ?: throw FudisException(serverError())
     }
 
-    override suspend fun loadProducts(organizationId: Int): List<ProductEntity> {
-        return ProductListApiToEntityMapper.map(repo.products(organizationId).items)
+    override suspend fun loadProducts(organizationId: Int): StopProductsIndex {
+        return CatalogProductsListApiToIndexMapper.map(repo.products(organizationId))
     }
 
     override suspend fun setProductStop(

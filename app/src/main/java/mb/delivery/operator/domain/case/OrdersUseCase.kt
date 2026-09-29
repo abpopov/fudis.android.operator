@@ -1,7 +1,9 @@
 package mb.delivery.operator.domain.case
 
 import mb.delivery.operator.data.api.model.EditProductApi
+import mb.delivery.operator.data.api.model.EditProductCategoryApi
 import mb.delivery.operator.data.api.model.OrderCartItemRequestApi
+import mb.delivery.operator.domain.model.EditProductsCatalog
 import mb.delivery.operator.domain.model.MenuEntity
 import mb.delivery.operator.domain.model.OrderEntity
 import mb.delivery.operator.domain.model.OrganizationKitchenEntity
@@ -15,6 +17,8 @@ interface OrdersUseCase : BaseUseCase {
     fun getAllowStatusWithoutDishesReady(): Boolean
     fun getAllowEditOrder(): Boolean
     fun getEnableManualPosExport(): Boolean
+    fun getShowOrganization(): Boolean
+    fun getCommentMode(): String
     suspend fun getOrders(): List<OrderEntity>
     suspend fun getReceipt(id: Long): ReceiptEntity
     suspend fun changeStatus(id: Long, status: Int): OrderEntity
@@ -22,7 +26,7 @@ interface OrdersUseCase : BaseUseCase {
     suspend fun updateOrder(id: Long, clientComment: String?, organizationId: Int?): OrderEntity
     suspend fun updateCart(id: Long, cartItems: List<OrderCartItemRequestApi>): OrderEntity
     suspend fun exportToPos(id: Long): OrderEntity
-    suspend fun editProducts(organizationId: Int): List<EditProductApi>
+    suspend fun editProducts(organizationId: Int): EditProductsCatalog
     suspend fun organizations(): List<OrganizationKitchenEntity>
     suspend fun getMenu(): MenuEntity
 }
