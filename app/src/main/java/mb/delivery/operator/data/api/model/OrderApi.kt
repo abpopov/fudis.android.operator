@@ -10,6 +10,8 @@ data class OrderApi(
     val dcOrderId: String?,
     @SerializedName("order_source")
     val orderSource: Int?,
+    @SerializedName("order_type")
+    val orderType: Int?,
     @SerializedName("status")
     val status: Int?,
     @SerializedName("client_comment")

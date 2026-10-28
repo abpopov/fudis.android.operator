@@ -152,7 +152,7 @@
             app:layout_constraintBottom_toBottomOf="@+id/vBottomBg"
             app:layout_constraintEnd_toEndOf="@+id/vTopBg"
             app:layout_constraintTop_toTopOf="@+id/vBottomBg"
-            tools:text="@string/order_status_delivery" />
+            tools:text="@string/order_status_in_delivery" />
 
         <View
             android:id="@+id/vSpace3"

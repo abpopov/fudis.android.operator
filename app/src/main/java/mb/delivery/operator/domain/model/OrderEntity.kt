@@ -1,4 +1,4 @@
- package mb.delivery.operator.domain.model
+package mb.delivery.operator.domain.model
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
@@ -17,12 +17,18 @@ const val ORDER_STATUS_READY = 15
 const val ORDER_STATUS_IN_DELIVERY = 20
 const val ORDER_STATUS_DELIVERED = 30
 
+const val ORDER_TYPE_SELFSERVICE = 10
+const val ORDER_TYPE_DELIVERY = 20
+const val ORDER_TYPE_RESTAURANT = 30
+
 @Parcelize
 data class OrderEntity(
     val id: Long,
     val cartData: List<CartEntity>,
     val gift: CatalogItemEntity?,
     val orderSource: Int,
+    /** 10 самовывоз, 20 доставка, 30 зал */
+    val orderType: Int,
     val organizationId: Int,
     var status: Int,
     val paymentType: Int,
@@ -50,12 +56,18 @@ data class OrderEntity(
     var header: Int? = null
 ) : Parcelable, ListItem {
 
+    fun isDeliveryOrder(): Boolean = orderType == ORDER_TYPE_DELIVERY
+
+    fun canCancel(): Boolean =
+        status != ORDER_STATUS_CANCELED && status != ORDER_STATUS_DELIVERED
+
     fun getNextStatus(): Int {
         return when (status) {
             ORDER_STATUS_NEW -> ORDER_STATUS_ACCEPTED
             ORDER_STATUS_ACCEPTED -> ORDER_STATUS_IN_PROGRESS
             ORDER_STATUS_IN_PROGRESS -> ORDER_STATUS_READY
-            ORDER_STATUS_READY -> ORDER_STATUS_IN_DELIVERY
+            ORDER_STATUS_READY -> if (isDeliveryOrder()) ORDER_STATUS_IN_DELIVERY else ORDER_STATUS_DELIVERED
+            ORDER_STATUS_IN_DELIVERY -> ORDER_STATUS_DELIVERED
             else -> -1
         }
     }

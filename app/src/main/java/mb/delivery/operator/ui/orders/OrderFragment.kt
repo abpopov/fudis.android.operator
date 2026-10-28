@@ -5,6 +5,7 @@ import android.text.format.DateUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.setFragmentResultListener
@@ -25,13 +26,15 @@ import mb.delivery.operator.domain.model.SOURCE_TYPE_DC
 import mb.delivery.operator.domain.model.SOURCE_TYPE_YA
 import mb.delivery.operator.ui.adapters.CartAdapter
 import mb.delivery.operator.ui.base.BaseFragment
+import mb.delivery.operator.ui.dialogs.CancelOrderConfirmDialog
 import mb.delivery.operator.ui.dialogs.CartEditDialog
 import mb.delivery.operator.ui.dialogs.CommentEditDialog
 import mb.delivery.operator.ui.dialogs.ModifiersPickDialog
 import mb.delivery.operator.ui.dialogs.OrganizationPickDialog
 import mb.delivery.operator.ui.dialogs.ProductPickDialog
-import mb.delivery.operator.utils.toOrderAction
-import mb.delivery.operator.utils.toOrderStatus
+import mb.delivery.operator.utils.hasOrderAction
+import mb.delivery.operator.utils.toOrderActionLabel
+import mb.delivery.operator.utils.toOrderStatusLabel
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -108,6 +111,13 @@ class OrderFragment : BaseFragment() {
                 modIds.map { OrderCartModificatorRequestApi(modificatorId = it, count = 1) }
             )
         }
+        setFragmentResultListener(CancelOrderConfirmDialog.REQUEST_KEY) { _, bundle ->
+            if (!bundle.getBoolean(CancelOrderConfirmDialog.RESULT_CONFIRMED, false)) {
+                return@setFragmentResultListener
+            }
+            val order = viewModel.currentOrder.value ?: return@setFragmentResultListener
+            viewModel.cancelOrder(order.id)
+        }
     }
 
     override fun onCreateView(
@@ -159,6 +169,18 @@ class OrderFragment : BaseFragment() {
     private fun initListeners() {
         binding?.tvBack?.setOnClickListener {
             navigate(OrderFragmentDirections.actionBack())
+        }
+        binding?.ivOrderMenu?.setOnClickListener { anchor ->
+            val order = viewModel.currentOrder.value ?: return@setOnClickListener
+            if (!order.canCancel()) return@setOnClickListener
+            PopupMenu(anchor.context, anchor).apply {
+                menu.add(0, 1, 0, R.string.order_cancel)
+                setOnMenuItemClickListener {
+                    CancelOrderConfirmDialog.show(parentFragmentManager)
+                    true
+                }
+                show()
+            }
         }
         binding?.tvOrderAction?.setOnClickListener {
             val order = viewModel.currentOrder.value
@@ -213,6 +235,11 @@ class OrderFragment : BaseFragment() {
             if (result is ResultEntity.Error) {
                 Toast.makeText(requireContext(), result.error.message, Toast.LENGTH_SHORT).show()
                 binding?.tvOrderAction?.isEnabled = true
+            }
+        }
+        viewModel.orderClosed.observe(viewLifecycleOwner) { id ->
+            if (id == args.order.id) {
+                navigate(OrderFragmentDirections.actionBack())
             }
         }
         viewModel.itemStatus.observe(viewLifecycleOwner) { result ->
@@ -399,13 +426,12 @@ class OrderFragment : BaseFragment() {
             binding?.tvDueValue?.text = ""
         }
         binding?.tvOrderTotalValue?.text = String.format("%s ₽", formatter.format(item.orderSum))
-        val status = item.status.toOrderStatus()
-        binding?.tvStatusValue?.text = getString(status)
-        val action = item.status.toOrderAction()
-        if (action != 0) {
+        binding?.tvStatusValue?.text = getString(item.toOrderStatusLabel())
+        binding?.ivOrderMenu?.isVisible = item.canCancel()
+        if (item.hasOrderAction()) {
             binding?.tvOrderAction?.isEnabled = true
             binding?.tvOrderAction?.visibility = View.VISIBLE
-            binding?.tvOrderAction?.text = getString(action)
+            binding?.tvOrderAction?.text = getString(item.toOrderActionLabel())
         } else {
             binding?.tvOrderAction?.visibility = View.INVISIBLE
         }

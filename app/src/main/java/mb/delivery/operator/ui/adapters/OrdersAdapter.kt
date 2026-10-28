@@ -14,8 +14,9 @@ import mb.delivery.operator.domain.model.*
 import mb.delivery.operator.ui.base.BaseHolder
 import mb.delivery.operator.ui.base.BaseListAdapter
 import mb.delivery.operator.ui.orders.OrdersViewModel
-import mb.delivery.operator.utils.toOrderAction
-import mb.delivery.operator.utils.toOrderStatus
+import mb.delivery.operator.utils.hasOrderAction
+import mb.delivery.operator.utils.toOrderActionLabel
+import mb.delivery.operator.utils.toOrderStatusLabel
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -144,14 +145,13 @@ class OrderHolder(view: View) : BaseHolder<OrdersViewModel, OrderEntity>(view) {
     }
 
     private fun setChangeableData(item: OrderEntity) {
-        val status = item.status.toOrderStatus()
+        val status = item.toOrderStatusLabel()
         textOrderStatus.text = itemView.context.getString(status)
         bgRoot.setBackgroundResource(if (status == R.string.order_status_new) R.drawable.ic_bg_stroke_gr_32 else 0)
-        val action = item.status.toOrderAction()
-        if (action != 0) {
+        if (item.hasOrderAction()) {
             btnOrderAction.isEnabled = true
             btnOrderAction.visibility = View.VISIBLE
-            btnOrderAction.text = itemView.context.getString(action)
+            btnOrderAction.text = itemView.context.getString(item.toOrderActionLabel())
         } else {
             btnOrderAction.visibility = View.INVISIBLE
         }

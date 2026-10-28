@@ -19,6 +19,7 @@ object OrderApiToEntityMapper : BaseMapperNullable<OrderApi, OrderEntity> {
         return OrderEntity(
             id = type.id,
             orderSource = type.orderSource ?: SOURCE_TYPE_SITE,
+            orderType = type.orderType ?: ORDER_TYPE_DELIVERY,
             status = type.status ?: ORDER_STATUS_NEW,
             organizationId = type.organizationId ?: 0,
             paymentType = 0,

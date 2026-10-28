@@ -35,33 +35,48 @@ fun Long?.toDate(): Date? {
 }
 
 @StringRes
-fun Int.toOrderStatus(): Int {
-    return when (this) {
+fun OrderEntity.toOrderStatusLabel(): Int {
+    return when (status) {
         ORDER_STATUS_ACCEPTED -> R.string.order_status_queue
         ORDER_STATUS_IN_PROGRESS -> R.string.order_status_cooking
         ORDER_STATUS_READY -> R.string.order_status_ready
-        ORDER_STATUS_IN_DELIVERY -> R.string.order_status_delivery
-        ORDER_STATUS_DELIVERED -> R.string.order_status_delivered
+        ORDER_STATUS_IN_DELIVERY -> R.string.order_status_in_delivery
+        ORDER_STATUS_DELIVERED -> if (isDeliveryOrder()) {
+            R.string.order_status_delivered
+        } else {
+            R.string.order_status_completed
+        }
+        ORDER_STATUS_CANCELED -> R.string.order_status_canceled
         else -> R.string.order_status_new
     }
 }
 
 @StringRes
-fun Int.toOrderAction(): Int {
-    return when (this) {
+fun OrderEntity.toOrderActionLabel(): Int {
+    return when (status) {
         ORDER_STATUS_ACCEPTED -> R.string.order_status_start
         ORDER_STATUS_IN_PROGRESS -> R.string.order_status_ready
-        ORDER_STATUS_READY -> R.string.order_status_delivery
-        ORDER_STATUS_IN_DELIVERY -> 0
-        ORDER_STATUS_DELIVERED -> 0
+        ORDER_STATUS_READY -> if (isDeliveryOrder()) {
+            R.string.order_action_to_delivery
+        } else {
+            R.string.order_action_complete
+        }
+        ORDER_STATUS_IN_DELIVERY -> R.string.order_action_delivered
         else -> R.string.order_status_queue_2
     }
 }
 
+fun OrderEntity.hasOrderAction(): Boolean = getNextStatus() >= 0
+
 fun List<OrderEntity>.addHeaders(): List<OrderEntity> {
-    val result = this.sortedByDescending { it.updatedAt ?: it.createdAt }.onEach {
-        it.header = null
-    }
+    val result = this
+        .filter {
+            it.status != ORDER_STATUS_CANCELED && it.status != ORDER_STATUS_DELIVERED
+        }
+        .sortedByDescending { it.updatedAt ?: it.createdAt }
+        .onEach {
+            it.header = null
+        }
 
     return mutableListOf<OrderEntity>().apply {
         addAll(result.filter { it.status < ORDER_STATUS_IN_DELIVERY }.also {

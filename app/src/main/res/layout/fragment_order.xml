@@ -106,6 +106,22 @@
                 app:layout_constraintTop_toTopOf="@+id/tvNumberOrder"
                 tools:background="@tools:sample/avatars" />
 
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivOrderMenu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/dp40"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="@string/order_cancel"
+                android:minWidth="@dimen/text_32"
+                android:minHeight="@dimen/text_32"
+                android:padding="@dimen/dp4"
+                android:scaleType="centerInside"
+                app:layout_constraintBottom_toBottomOf="@+id/tvNumberOrder"
+                app:layout_constraintEnd_toEndOf="@+id/vTopBg"
+                app:layout_constraintTop_toTopOf="@+id/tvNumberOrder"
+                app:srcCompat="@drawable/ic_more_vert" />
+
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvServiceName"
                 style="@style/TextStyle.Black.24"
@@ -113,11 +129,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/dp24"
                 android:layout_marginTop="@dimen/dp48"
-                android:layout_marginEnd="@dimen/dp24"
-                android:gravity="center_vertical"
+                android:layout_marginEnd="@dimen/dp16"
                 android:ellipsize="end"
+                android:gravity="center_vertical"
                 android:maxLines="1"
-                app:layout_constraintEnd_toEndOf="@+id/vTopBg"
+                app:layout_constraintEnd_toStartOf="@+id/ivOrderMenu"
                 app:layout_constraintStart_toEndOf="@+id/ivLogoService"
                 app:layout_constraintTop_toTopOf="@+id/vTopBg"
                 tools:text="№ 15-8908-7708" />
@@ -172,7 +188,7 @@
                 app:layout_constraintEnd_toEndOf="@+id/vTopBg"
                 app:layout_constraintTop_toTopOf="@+id/vBottomBg"
                 app:layout_constraintBottom_toBottomOf="@+id/vBottomBg"
-                tools:text="@string/order_status_delivery" />
+                tools:text="@string/order_status_in_delivery" />
 
             <LinearLayout
                 android:id="@+id/llOperatorActions"

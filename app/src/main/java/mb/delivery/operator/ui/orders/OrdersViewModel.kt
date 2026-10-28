@@ -14,6 +14,8 @@ import mb.delivery.operator.domain.case.OrdersUseCase
 import mb.delivery.operator.domain.model.CartEntity
 import mb.delivery.operator.domain.model.EditProductsCatalog
 import mb.delivery.operator.domain.model.MenuEntity
+import mb.delivery.operator.domain.model.ORDER_STATUS_CANCELED
+import mb.delivery.operator.domain.model.ORDER_STATUS_DELIVERED
 import mb.delivery.operator.domain.model.ORDER_STATUS_IN_DELIVERY
 import mb.delivery.operator.domain.model.OrderEntity
 import mb.delivery.operator.domain.model.OrganizationKitchenEntity
@@ -69,6 +71,8 @@ class OrdersViewModel(
     val organizations = SingleLiveEvent<ResultEntity<List<OrganizationKitchenEntity>>>()
     val editProducts = SingleLiveEvent<ResultEntity<EditProductsCatalog>>()
     val exportPos = SingleLiveEvent<ResultEntity<OrderEntity>>()
+    /** Заказ закрыт/отменён — уйти с деталки. */
+    val orderClosed = SingleLiveEvent<Long>()
 
     /** Отложенные смены статусов позиций (id → pending). */
     val pendingItemChanges = MutableLiveData<Map<Int, PendingItemStatusChange>>(emptyMap())
@@ -264,6 +268,10 @@ class OrdersViewModel(
         )
     }
 
+    fun cancelOrder(id: Long) {
+        changeStatus(id, ORDER_STATUS_CANCELED)
+    }
+
     fun updateOrder(id: Long, clientComment: String? = null, organizationId: Int? = null) {
         doPostActionRequest(
             status,
@@ -335,13 +343,15 @@ class OrdersViewModel(
     }
 
     private fun applyUpdatedOrder(updated: OrderEntity) {
+        val closed = updated.status == ORDER_STATUS_CANCELED ||
+            updated.status == ORDER_STATUS_DELIVERED
         val order = orders.value
         if (order is ResultEntity.Success) {
             val list = order.data.map {
                 if (it.id == updated.id) updated else it
             }.addHeaders()
             orders.postValue(ResultEntity.Success(list))
-            if (updated.status >= ORDER_STATUS_IN_DELIVERY && list.any {
+            if (!closed && updated.status >= ORDER_STATUS_IN_DELIVERY && list.any {
                     it.status < ORDER_STATUS_IN_DELIVERY
                 }) {
                 scrollUp.postValue(true)
@@ -350,6 +360,9 @@ class OrdersViewModel(
         val current = currentOrder.value
         if (current?.id == updated.id) {
             currentOrder.postValue(updated)
+            if (closed) {
+                orderClosed.postValue(updated.id)
+            }
         }
     }
 
