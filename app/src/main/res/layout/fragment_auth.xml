@@ -27,7 +27,7 @@
         android:id="@+id/etLogin"
         style="@style/EditStyle"
         android:layout_width="0dp"
-        android:layout_height="@dimen/edit_min_height"
+        android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dp72"
         android:background="@drawable/ic_bg_rounded_wh_12"
         android:elevation="2dp"
@@ -43,7 +43,7 @@
         android:id="@+id/etPwd"
         style="@style/EditStyle"
         android:layout_width="0dp"
-        android:layout_height="@dimen/edit_min_height"
+        android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dp36"
         android:background="@drawable/ic_bg_rounded_wh_12"
         android:elevation="2dp"
@@ -71,8 +71,9 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/vProject"
         android:layout_width="0dp"
-        android:layout_height="@dimen/dp64"
+        android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dp36"
+        android:minHeight="@dimen/btn_chip_height"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -85,26 +86,29 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="@string/auth_project_label"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_chainStyle="packed"
             app:layout_constraintBottom_toTopOf="@+id/tvProjectValue"
             app:layout_constraintEnd_toStartOf="@+id/tvProjectNext"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvProjectValue"
             style="@style/TextStyle.Black.20"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/tvProjectLabel"
+            android:ellipsize="middle"
+            android:includeFontPadding="true"
+            android:maxLines="1"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/tvProjectNext"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvProjectLabel" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvProjectNext"
             style="@style/ButtonStyleBlack"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:elevation="2dp"
             android:text="@string/auth_project_change"
             app:layout_constraintBottom_toBottomOf="parent"

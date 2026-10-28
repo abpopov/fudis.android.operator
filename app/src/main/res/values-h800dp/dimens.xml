@@ -36,8 +36,8 @@
     <dimen name="btn_chip_pad_h">18dp</dimen>
     <dimen name="btn_text_pad_h">16dp</dimen>
     <dimen name="btn_text_pad_v">12dp</dimen>
-    <dimen name="edit_min_height">52dp</dimen>
-    <dimen name="edit_pad_v">14dp</dimen>
+    <dimen name="edit_min_height">64dp</dimen>
+    <dimen name="edit_pad_v">12dp</dimen>
 
     <dimen name="text_20">20sp</dimen>
     <dimen name="text_24">24sp</dimen>

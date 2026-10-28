@@ -10,6 +10,8 @@ data class MenuEntity(
     val showStopList: Boolean,
     val showHighload: Boolean,
     val allowStatusWithoutDishesReady: Boolean,
+    /** Кнопки готовности позиций (Готово/Отдано). Default true — как раньше. */
+    val cartItemReadyEnabled: Boolean,
     val allowEditOrder: Boolean,
     val enableManualPosExport: Boolean,
     val showOrganization: Boolean,

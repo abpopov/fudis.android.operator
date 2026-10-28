@@ -15,6 +15,7 @@ interface OrdersUseCase : BaseUseCase {
     fun getShowStopList(): Boolean
     fun getShowHighload(): Boolean
     fun getAllowStatusWithoutDishesReady(): Boolean
+    fun getCartItemReadyEnabled(): Boolean
     fun getAllowEditOrder(): Boolean
     fun getEnableManualPosExport(): Boolean
     fun getShowOrganization(): Boolean

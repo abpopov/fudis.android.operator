@@ -34,6 +34,8 @@ interface Prefs {
     fun setShowHighload(value: Boolean?)
     fun getAllowStatusWithoutDishesReady(): Boolean
     fun setAllowStatusWithoutDishesReady(value: Boolean?)
+    fun getCartItemReadyEnabled(): Boolean
+    fun setCartItemReadyEnabled(value: Boolean?)
     fun getAllowEditOrder(): Boolean
     fun setAllowEditOrder(value: Boolean?)
     fun getEnableManualPosExport(): Boolean

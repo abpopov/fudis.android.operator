@@ -61,6 +61,7 @@ class OrdersViewModel(
     val showStopList = MutableLiveData(useCase.getShowStopList())
     val showHighload = MutableLiveData(useCase.getShowHighload())
     val allowStatusWithoutDishesReady = MutableLiveData(useCase.getAllowStatusWithoutDishesReady())
+    val cartItemReadyEnabled = MutableLiveData(useCase.getCartItemReadyEnabled())
     val allowEditOrder = MutableLiveData(useCase.getAllowEditOrder())
     val enableManualPosExport = MutableLiveData(useCase.getEnableManualPosExport())
     val showOrganization = MutableLiveData(useCase.getShowOrganization())
@@ -149,8 +150,17 @@ class OrdersViewModel(
      * Старт отложенной смены статуса позиции (10 с, как в SPA).
      * API вызывается только после таймера либо не вызывается при отмене.
      */
+    /**
+     * Как на бэке: не требовать READY по позициям, если фича готовности выкл
+     * или явно разрешён bypass ([allowStatusWithoutDishesReady]).
+     */
+    fun skipDishReadyChecks(): Boolean {
+        return cartItemReadyEnabled.value != true || allowStatusWithoutDishesReady.value == true
+    }
+
     fun scheduleItemStatusChange(itemId: Int, nextStatus: Int, actionLabelRes: Int) {
         if (itemId < 0) return
+        if (cartItemReadyEnabled.value != true) return
         cancelPendingItemStatus(itemId)
         val endsAt = SystemClock.elapsedRealtime() + ITEM_STATUS_UNDO_MS
         val pending = PendingItemStatusChange(
@@ -355,6 +365,10 @@ class OrdersViewModel(
         showStopList.postValue(data.showStopList)
         showHighload.postValue(data.showHighload)
         allowStatusWithoutDishesReady.postValue(data.allowStatusWithoutDishesReady)
+        cartItemReadyEnabled.postValue(data.cartItemReadyEnabled)
+        if (!data.cartItemReadyEnabled) {
+            clearAllPendingItemStatuses()
+        }
         allowEditOrder.postValue(data.allowEditOrder)
         enableManualPosExport.postValue(data.enableManualPosExport)
         showOrganization.postValue(data.showOrganization)

@@ -165,8 +165,7 @@ class OrderFragment : BaseFragment() {
             order ?: return@setOnClickListener
             binding?.tvOrderAction?.isEnabled = false
             val next = order.getNextStatus()
-            val allowWithoutReady = viewModel.allowStatusWithoutDishesReady.value == true
-            if (next == ORDER_STATUS_READY && !allowWithoutReady && !order.itemsAreReady()) {
+            if (next == ORDER_STATUS_READY && !viewModel.skipDishReadyChecks() && !order.itemsAreReady()) {
                 Toast.makeText(it.context, R.string.order_status_error, Toast.LENGTH_LONG).show()
                 binding?.tvOrderAction?.isEnabled = true
             } else {
@@ -239,6 +238,9 @@ class OrderFragment : BaseFragment() {
                 }
                 else -> Unit
             }
+        }
+        viewModel.cartItemReadyEnabled.observe(viewLifecycleOwner) {
+            (binding?.rvCartList?.adapter as? CartAdapter)?.notifyPendingStateChanged()
         }
         viewModel.allowEditOrder.observe(viewLifecycleOwner) {
             updateOperatorActionsVisibility()

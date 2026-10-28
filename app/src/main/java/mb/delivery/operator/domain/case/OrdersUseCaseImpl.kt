@@ -32,6 +32,8 @@ class OrdersUseCaseImpl(private val repo: Repo) : OrdersUseCase {
 
     override fun getAllowStatusWithoutDishesReady() = repo.getAllowStatusWithoutDishesReady()
 
+    override fun getCartItemReadyEnabled() = repo.getCartItemReadyEnabled()
+
     override fun getAllowEditOrder() = repo.getAllowEditOrder()
 
     override fun getEnableManualPosExport() = repo.getEnableManualPosExport()
@@ -118,6 +120,7 @@ class OrdersUseCaseImpl(private val repo: Repo) : OrdersUseCase {
         repo.setShowStopList(result.showStopList)
         repo.setShowHighload(result.showHighload)
         repo.setAllowStatusWithoutDishesReady(result.allowStatusWithoutDishesReady)
+        repo.setCartItemReadyEnabled(result.cartItemReadyEnabled)
         repo.setAllowEditOrder(result.allowEditOrder)
         repo.setEnableManualPosExport(result.enableManualPosExport)
         repo.setShowOrganization(result.showOrganization)

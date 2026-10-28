@@ -115,6 +115,12 @@ class RepoImpl(
         prefs.setAllowStatusWithoutDishesReady(value)
     }
 
+    override fun getCartItemReadyEnabled() = prefs.getCartItemReadyEnabled()
+
+    override fun setCartItemReadyEnabled(value: Boolean?) {
+        prefs.setCartItemReadyEnabled(value)
+    }
+
     override fun getAllowEditOrder() = prefs.getAllowEditOrder()
 
     override fun setAllowEditOrder(value: Boolean?) {

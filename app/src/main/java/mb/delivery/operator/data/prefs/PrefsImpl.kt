@@ -25,6 +25,7 @@ class PrefsImpl(
         private const val SHOW_STOP_LIST = "SHOW_STOP_LIST"
         private const val SHOW_HIGHLOAD = "SHOW_HIGHLOAD"
         private const val ALLOW_STATUS_WITHOUT_DISHES_READY = "ALLOW_STATUS_WITHOUT_DISHES_READY"
+        private const val CART_ITEM_READY_ENABLED = "CART_ITEM_READY_ENABLED"
         private const val ALLOW_EDIT_ORDER = "ALLOW_EDIT_ORDER"
         private const val ENABLE_MANUAL_POS_EXPORT = "ENABLE_MANUAL_POS_EXPORT"
         private const val SHOW_ORGANIZATION = "SHOW_ORGANIZATION"
@@ -241,6 +242,20 @@ class PrefsImpl(
                 it.remove(ALLOW_STATUS_WITHOUT_DISHES_READY)
             } else {
                 it.putBoolean(ALLOW_STATUS_WITHOUT_DISHES_READY, value)
+            }
+        }.apply()
+    }
+
+    override fun getCartItemReadyEnabled(): Boolean {
+        return prefs.getBoolean(CART_ITEM_READY_ENABLED, true)
+    }
+
+    override fun setCartItemReadyEnabled(value: Boolean?) {
+        prefs.edit().also {
+            if (value == null) {
+                it.remove(CART_ITEM_READY_ENABLED)
+            } else {
+                it.putBoolean(CART_ITEM_READY_ENABLED, value)
             }
         }.apply()
     }

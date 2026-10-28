@@ -13,6 +13,7 @@ object MenuApiToEntityMapper : BaseMapperSafe<MenuApi, MenuEntity> {
             showStopList = type?.showStopList ?: false,
             showHighload = type?.showHighload ?: true,
             allowStatusWithoutDishesReady = type?.allowStatusWithoutDishesReady ?: false,
+            cartItemReadyEnabled = type?.cartItemReadyEnabled ?: true,
             allowEditOrder = type?.allowEditOrder ?: false,
             enableManualPosExport = type?.enableManualPosExport ?: false,
             showOrganization = type?.showOrganization ?: false,

@@ -41,12 +41,22 @@ fun Activity.hideKeyboard() {
 
 /**
  * Поднимает контент над IME (нужно при translucent status, где adjustResize часто не работает).
+ * Если Activity уже сделала adjustResize — доп. padding не добавляем (иначе поля сжимаются вдвое).
  */
 fun View.liftContentAboveIme() {
     ViewCompat.setOnApplyWindowInsetsListener(this) { view, insets ->
         val imeBottom = insets.getInsets(WindowInsetsCompat.Type.ime()).bottom
-        if (view.paddingBottom != imeBottom) {
-            view.setPadding(view.paddingLeft, view.paddingTop, view.paddingRight, imeBottom)
+        val navBottom = insets.getInsets(WindowInsetsCompat.Type.navigationBars()).bottom
+        val rawIme = (imeBottom - navBottom).coerceAtLeast(0)
+        val root = view.rootView
+        val coveredByResize = (root.resources.displayMetrics.heightPixels - root.height)
+            .coerceAtLeast(0)
+        val pad = (rawIme - coveredByResize).coerceAtLeast(0)
+        if (view.paddingBottom != pad) {
+            view.setPadding(view.paddingLeft, view.paddingTop, view.paddingRight, pad)
+        }
+        if (rawIme > 0) {
+            view.findFocus()?.requestVisibleAboveIme()
         }
         insets
     }
@@ -57,10 +67,14 @@ fun View.liftContentAboveIme() {
 fun View.keepVisibleAboveIme() {
     setOnFocusChangeListener { v, hasFocus ->
         if (!hasFocus) return@setOnFocusChangeListener
-        v.post {
-            val extra = (32 * v.resources.displayMetrics.density).toInt()
-            val rect = Rect(0, 0, v.width, v.height + extra)
-            v.requestRectangleOnScreen(rect, true)
-        }
+        v.requestVisibleAboveIme()
+    }
+}
+
+private fun View.requestVisibleAboveIme() {
+    post {
+        val extra = (48 * resources.displayMetrics.density).toInt()
+        val rect = Rect(0, 0, width.coerceAtLeast(1), height + extra)
+        requestRectangleOnScreen(rect, true)
     }
 }

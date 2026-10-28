@@ -14,6 +14,8 @@ data class MenuApi(
     val showHighload: Boolean?,
     @SerializedName("allow_status_without_dishes_ready")
     val allowStatusWithoutDishesReady: Boolean?,
+    @SerializedName("cart_item_ready_enabled")
+    val cartItemReadyEnabled: Boolean?,
     @SerializedName("allow_edit_order")
     val allowEditOrder: Boolean?,
     @SerializedName("enable_manual_pos_export")

@@ -86,13 +86,20 @@ class CartHolder(view: View) : BaseHolder<OrdersViewModel, CartEntity>(view) {
             (it.count * it.modificator.price).toDouble()
         }) * item.count))
 
-        val pending = viewModel.getPendingItemStatus(item.id)
-        if (pending != null) {
-            boundActionLabelRes = pending.actionLabelRes
-            bindPending(item, pending.actionLabelRes, viewModel.pendingSecondsLeft(item.id), viewModel)
-        } else {
+        if (viewModel.cartItemReadyEnabled.value != true) {
             boundActionLabelRes = null
-            bindStatusActions(item, viewModel)
+            btnStatus.isInvisible = true
+            btnAction.isInvisible = true
+            btnAction.setOnClickListener(null)
+        } else {
+            val pending = viewModel.getPendingItemStatus(item.id)
+            if (pending != null) {
+                boundActionLabelRes = pending.actionLabelRes
+                bindPending(item, pending.actionLabelRes, viewModel.pendingSecondsLeft(item.id), viewModel)
+            } else {
+                boundActionLabelRes = null
+                bindStatusActions(item, viewModel)
+            }
         }
 
         btnMore.isInvisible = !item.hasTechCard

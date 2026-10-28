@@ -69,8 +69,7 @@ class OrderListFragment : BaseFragment() {
                     }
                     ACTION -> {
                         val next = item.getNextStatus()
-                        val allowWithoutReady = viewModel.allowStatusWithoutDishesReady.value == true
-                        if (next == ORDER_STATUS_READY && !allowWithoutReady && !item.itemsAreReady()) {
+                        if (next == ORDER_STATUS_READY && !viewModel.skipDishReadyChecks() && !item.itemsAreReady()) {
                             Toast.makeText(view.context, R.string.order_status_error, Toast.LENGTH_LONG).show()
                         } else {
                             viewModel.changeStatus(item.id, next)
