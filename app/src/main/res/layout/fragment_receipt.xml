@@ -130,28 +130,33 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/barrierContent" />
 
-                <View
-                    android:id="@+id/vDividerBottom"
+                <HorizontalScrollView
+                    android:id="@+id/vTableScroll"
                     android:layout_width="0dp"
-                    android:layout_height="2dp"
-                    android:layout_marginStart="@dimen/dp60"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dp16"
-                    android:layout_marginEnd="@dimen/dp60"
-                    android:background="@color/black_05"
+                    android:fillViewport="true"
+                    android:overScrollMode="never"
+                    android:scrollbars="none"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/vTableHeader" />
+                    app:layout_constraintTop_toBottomOf="@+id/vDividerTop">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/vTableBlock"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:minWidth="560dp"
+                        android:paddingStart="@dimen/dp60"
+                        android:paddingEnd="@dimen/dp60">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/vTableHeader"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/dp60"
-                    android:layout_marginTop="@dimen/dp16"
-                    android:layout_marginEnd="@dimen/dp60"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/vDividerTop">
+                    app:layout_constraintTop_toTopOf="parent">
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tvColumnNumber"
@@ -230,12 +235,20 @@
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
+                <View
+                    android:id="@+id/vDividerBottom"
+                    android:layout_width="0dp"
+                    android:layout_height="2dp"
+                    android:layout_marginTop="@dimen/dp16"
+                    android:background="@color/black_05"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/vTableHeader" />
+
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rvReceiptList"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/dp60"
-                    android:layout_marginEnd="@dimen/dp60"
                     android:nestedScrollingEnabled="false"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -243,6 +256,9 @@
                     app:layout_constraintTop_toBottomOf="@+id/vDividerBottom"
                     tools:itemCount="8"
                     tools:listitem="@layout/list_item_receipt" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </HorizontalScrollView>
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tvWeightText"
@@ -257,7 +273,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/rvReceiptList"
+                    app:layout_constraintTop_toBottomOf="@+id/vTableScroll"
                     tools:text="Вес готового продукта в расчете на 1 порцию - 0,52 кг" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>

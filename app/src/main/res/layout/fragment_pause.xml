@@ -68,18 +68,42 @@
         app:layout_constraintStart_toEndOf="@+id/tvStops"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.core.widget.NestedScrollView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/vContentWrapper"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp24"
+        android:layout_marginEnd="@dimen/dp24"
         android:background="@drawable/ic_bg_rounded_wh_32"
         android:elevation="2dp"
-        android:fillViewport="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintWidth_percent="0.62">
+        app:layout_constraintWidth_max="720dp">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivClose"
+            android:layout_width="@dimen/dp64"
+            android:layout_height="@dimen/dp64"
+            android:layout_marginTop="@dimen/dp16"
+            android:layout_marginEnd="@dimen/dp16"
+            android:background="@drawable/ic_bg_circle_tr_ripple"
+            android:elevation="4dp"
+            android:padding="@dimen/dp14"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_close_36_g" />
+
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/vPauseScroll"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:fillViewport="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -236,18 +260,7 @@
                 android:enabled="false"
                 android:text="@string/pause_action" />
         </LinearLayout>
-    </androidx.core.widget.NestedScrollView>
-
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/ivClose"
-        android:layout_width="@dimen/dp64"
-        android:layout_height="@dimen/dp64"
-        android:layout_marginStart="@dimen/dp24"
-        android:background="@drawable/ic_bg_circle_tr_ripple"
-        android:elevation="2dp"
-        android:padding="@dimen/dp14"
-        app:layout_constraintStart_toEndOf="@+id/vContentWrapper"
-        app:layout_constraintTop_toTopOf="@+id/vContentWrapper"
-        app:srcCompat="@drawable/ic_close_36_g" />
+        </androidx.core.widget.NestedScrollView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

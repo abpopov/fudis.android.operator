@@ -45,4 +45,12 @@
     <dimen name="text_24">20sp</dimen>
     <dimen name="text_32">26sp</dimen>
     <dimen name="text_40">32sp</dimen>
+
+    <!-- Top menu: compact by default (split / floating). -->
+    <dimen name="menu_text">18sp</dimen>
+    <dimen name="menu_item_pad_v">8dp</dimen>
+    <dimen name="menu_row_pad_h">12dp</dimen>
+    <dimen name="menu_settings_margin_end">8dp</dimen>
+    <dimen name="menu_drawable_pad">6dp</dimen>
+    <dimen name="menu_icon">20dp</dimen>
 </resources>

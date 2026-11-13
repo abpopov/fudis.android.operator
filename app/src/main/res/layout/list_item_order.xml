@@ -11,8 +11,8 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/dp8"
-        android:layout_marginTop="@dimen/dp40"
-        android:layout_marginBottom="@dimen/dp50"
+        android:layout_marginTop="@dimen/dp24"
+        android:layout_marginBottom="@dimen/dp16"
         android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@+id/vRoot"
         app:layout_constraintEnd_toEndOf="parent"
@@ -24,7 +24,7 @@
         android:id="@+id/vRoot"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/dp40"
+        android:layout_marginBottom="@dimen/dp16"
         android:background="@drawable/ic_bg_stroke_gr_32"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -47,25 +47,10 @@
         <View
             android:id="@+id/vSpace"
             android:layout_width="0dp"
-            android:layout_height="@dimen/dp48"
+            android:layout_height="@dimen/dp16"
             app:layout_constraintEnd_toEndOf="@+id/vTopBg"
             app:layout_constraintStart_toStartOf="@+id/vTopBg"
             app:layout_constraintTop_toBottomOf="@id/tvOrderContent" />
-
-        <androidx.constraintlayout.widget.Barrier
-            android:id="@+id/barrierLine"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:barrierDirection="bottom"
-            app:constraint_referenced_ids="tvForksValue,tvTimeValue,tvDueValue,tvStatusValue" />
-
-        <View
-            android:id="@+id/vSpace2"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/dp44"
-            app:layout_constraintEnd_toEndOf="@+id/vBottomBg"
-            app:layout_constraintStart_toStartOf="@+id/vBottomBg"
-            app:layout_constraintTop_toBottomOf="@id/barrierLine" />
 
         <View
             android:id="@+id/vBottomBg"
@@ -75,7 +60,7 @@
             android:layout_marginEnd="@dimen/dp8"
             android:layout_marginBottom="@dimen/dp8"
             android:background="@drawable/ic_bottom_rounded_bl10_32"
-            app:layout_constraintBottom_toBottomOf="@+id/vSpace2"
+            app:layout_constraintBottom_toBottomOf="@+id/vFooterPad"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/vTopBg" />
@@ -85,18 +70,18 @@
             style="@style/TextStyle.Black.24"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/dp60"
-            android:layout_marginTop="@dimen/dp48"
+            android:layout_marginStart="@dimen/dp24"
             android:gravity="center_vertical"
+            app:layout_constraintBottom_toBottomOf="@+id/tvOrderMore"
             app:layout_constraintStart_toStartOf="@+id/vTopBg"
-            app:layout_constraintTop_toTopOf="@+id/vTopBg"
+            app:layout_constraintTop_toTopOf="@+id/tvOrderMore"
             tools:text="№ 10987" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/ivLogoService"
             android:layout_width="@dimen/dp48"
             android:layout_height="@dimen/dp48"
-            android:layout_marginStart="@dimen/dp32"
+            android:layout_marginStart="@dimen/dp16"
             app:layout_constraintBottom_toBottomOf="@+id/tvNumberOrder"
             app:layout_constraintStart_toEndOf="@+id/tvNumberOrder"
             app:layout_constraintTop_toTopOf="@+id/tvNumberOrder"
@@ -107,93 +92,125 @@
             style="@style/TextStyle.Black.24"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/dp24"
-            android:layout_marginTop="@dimen/dp48"
+            android:layout_marginStart="@dimen/dp16"
+            android:layout_marginEnd="@dimen/dp12"
+            android:ellipsize="end"
             android:gravity="center_vertical"
+            android:maxLines="1"
+            app:layout_constraintBottom_toBottomOf="@+id/tvOrderMore"
             app:layout_constraintEnd_toStartOf="@+id/tvOrderMore"
             app:layout_constraintStart_toEndOf="@+id/ivLogoService"
-            app:layout_constraintTop_toTopOf="@+id/vTopBg"
+            app:layout_constraintTop_toTopOf="@+id/tvOrderMore"
             tools:text="№ 15-8908-7708" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvOrderMore"
             style="@style/ButtonStyleBlack"
-            android:layout_marginEnd="@dimen/dp60"
+            android:layout_marginTop="@dimen/dp16"
+            android:layout_marginEnd="@dimen/dp32"
             android:elevation="2dp"
-            android:minWidth="@dimen/dp140"
+            android:includeFontPadding="false"
             android:text="@string/order_more"
-            app:layout_constraintBottom_toBottomOf="@+id/tvServiceName"
             app:layout_constraintEnd_toEndOf="@+id/vTopBg"
-            app:layout_constraintTop_toTopOf="@+id/tvServiceName" />
+            app:layout_constraintTop_toTopOf="@+id/vTopBg" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvCourierInfo"
+            style="@style/ButtonStyleLink"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp8"
+            android:layout_marginEnd="@dimen/dp32"
+            android:text="@string/courier_info_button"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="@+id/vTopBg"
+            app:layout_constraintTop_toBottomOf="@+id/tvOrderMore"
+            tools:visibility="visible" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvCourierServiceStatus"
+            style="@style/TextStyle.Grey.20"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp24"
+            android:layout_marginTop="@dimen/dp8"
+            android:layout_marginEnd="@dimen/dp16"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:visibility="gone"
+            app:layout_constraintEnd_toStartOf="@+id/tvCourierInfo"
+            app:layout_constraintStart_toStartOf="@+id/vTopBg"
+            app:layout_constraintTop_toBottomOf="@+id/tvNumberOrder"
+            tools:text="Доставка: Курьер найден"
+            tools:visibility="visible" />
+
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/barrierCourierHeader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:barrierDirection="bottom"
+            app:constraint_referenced_ids="tvNumberOrder,tvCourierServiceStatus,tvCourierInfo,tvOrderMore" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvOrderContent"
             style="@style/TextStyle.Black.20"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/dp60"
-            android:layout_marginTop="@dimen/dp40"
-            android:layout_marginEnd="@dimen/dp60"
+            android:layout_marginStart="@dimen/dp24"
+            android:layout_marginTop="@dimen/dp12"
+            android:layout_marginEnd="@dimen/dp24"
             android:gravity="center_vertical"
-            android:lineSpacingExtra="5dp"
+            android:lineSpacingExtra="4dp"
             app:layout_constraintEnd_toEndOf="@+id/vTopBg"
             app:layout_constraintStart_toStartOf="@+id/vTopBg"
-            app:layout_constraintTop_toBottomOf="@+id/tvNumberOrder"
-            tools:text="1 х Паноццо с тунцом и овощами  •  1 х Пицца с мортаделлой и грибами (без соуса, 32 см, Мортаделла 30 гр)  •  1 × Чизкейк Нью-Йорк" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvOrderAction"
-            style="@style/ButtonStyleGreen"
-            android:layout_width="wrap_content"
-            android:layout_marginEnd="@dimen/dp60"
-            android:elevation="2dp"
-            android:minWidth="@dimen/dp264"
-            android:minHeight="@dimen/btn_primary_height"
-            app:layout_constraintBottom_toBottomOf="@+id/vBottomBg"
-            app:layout_constraintEnd_toEndOf="@+id/vTopBg"
-            app:layout_constraintTop_toTopOf="@+id/vBottomBg"
-            tools:text="@string/order_status_in_delivery" />
-
-        <View
-            android:id="@+id/vSpace3"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp16"
-            app:layout_constraintStart_toStartOf="@+id/vBottomBg"
-            app:layout_constraintTop_toTopOf="@+id/vBottomBg" />
+            app:layout_constraintTop_toBottomOf="@+id/barrierCourierHeader"
+            tools:text="1 х Паноццо с тунцом и овощами  •  1 х Пицца с мортаделлой и грибами" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvClientComment"
             style="@style/TextStyle.Black.20"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dp28"
-            android:layout_marginEnd="@dimen/dp18"
+            android:layout_marginStart="@dimen/dp24"
+            android:layout_marginTop="@dimen/dp12"
+            android:layout_marginEnd="@dimen/dp24"
             android:text="@string/order_client_comment"
             android:visibility="gone"
-            app:layout_constraintEnd_toStartOf="@+id/tvOrderAction"
-            app:layout_constraintStart_toStartOf="@+id/tvTimeLabel"
-            app:layout_constraintTop_toBottomOf="@+id/vSpace3" />
+            app:layout_constraintEnd_toEndOf="@+id/vBottomBg"
+            app:layout_constraintStart_toStartOf="@+id/vBottomBg"
+            app:layout_constraintTop_toTopOf="@+id/vBottomBg" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guidelineFooterMid"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.5" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvTimeLabel"
             style="@style/TextStyle.Grey.20"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/dp60"
-            android:layout_marginTop="@dimen/dp28"
+            android:layout_marginStart="@dimen/dp24"
+            android:layout_marginTop="@dimen/dp12"
+            android:layout_marginEnd="@dimen/dp8"
             android:text="@string/order_time_label"
-            app:layout_constraintEnd_toStartOf="@+id/tvDueLabel"
-            app:layout_constraintHorizontal_chainStyle="spread_inside"
+            app:layout_constraintEnd_toStartOf="@+id/guidelineFooterMid"
             app:layout_constraintStart_toStartOf="@+id/vBottomBg"
             app:layout_constraintTop_toBottomOf="@+id/tvClientComment" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvTimeValue"
             style="@style/TextStyle.Black.20"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/dp60"
-            android:layout_marginTop="@dimen/dp12"
+            android:layout_marginStart="@dimen/dp24"
+            android:layout_marginTop="@dimen/dp4"
+            android:layout_marginEnd="@dimen/dp8"
+            android:ellipsize="end"
+            android:maxLines="2"
+            app:layout_constraintEnd_toStartOf="@+id/guidelineFooterMid"
             app:layout_constraintStart_toStartOf="@+id/vBottomBg"
             app:layout_constraintTop_toBottomOf="@+id/tvTimeLabel"
             tools:text="28.07.21 в 19:18" />
@@ -201,63 +218,115 @@
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvDueLabel"
             style="@style/TextStyle.Grey.20"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp8"
+            android:layout_marginEnd="@dimen/dp24"
             android:text="@string/order_due_label"
-            app:layout_constraintEnd_toStartOf="@+id/tvForksLabel"
-            app:layout_constraintStart_toEndOf="@+id/tvTimeLabel"
+            app:layout_constraintEnd_toEndOf="@+id/vBottomBg"
+            app:layout_constraintStart_toEndOf="@+id/guidelineFooterMid"
             app:layout_constraintTop_toTopOf="@+id/tvTimeLabel" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvDueValue"
             style="@style/TextStyle.Black.20"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dp12"
-            app:layout_constraintStart_toStartOf="@+id/tvDueLabel"
+            android:layout_marginStart="@dimen/dp8"
+            android:layout_marginTop="@dimen/dp4"
+            android:layout_marginEnd="@dimen/dp24"
+            android:ellipsize="end"
+            android:maxLines="2"
+            app:layout_constraintEnd_toEndOf="@+id/vBottomBg"
+            app:layout_constraintStart_toEndOf="@+id/guidelineFooterMid"
             app:layout_constraintTop_toBottomOf="@+id/tvDueLabel"
-            tools:text="Сегодня, 19:35" />
+            tools:text="Как можно скорее" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvForksLabel"
             style="@style/TextStyle.Grey.20"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp24"
+            android:layout_marginTop="@dimen/dp12"
+            android:layout_marginEnd="@dimen/dp8"
             android:text="@string/order_forks_label"
-            app:layout_constraintEnd_toStartOf="@+id/tvStatusLabel"
-            app:layout_constraintStart_toEndOf="@+id/tvDueLabel"
-            app:layout_constraintTop_toTopOf="@+id/tvDueLabel" />
+            app:layout_constraintEnd_toStartOf="@+id/guidelineFooterMid"
+            app:layout_constraintStart_toStartOf="@+id/vBottomBg"
+            app:layout_constraintTop_toBottomOf="@+id/tvTimeValue" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvForksValue"
             style="@style/TextStyle.Black.20"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dp12"
-            app:layout_constraintStart_toStartOf="@+id/tvForksLabel"
+            android:layout_marginStart="@dimen/dp24"
+            android:layout_marginTop="@dimen/dp4"
+            android:layout_marginEnd="@dimen/dp8"
+            app:layout_constraintEnd_toStartOf="@+id/guidelineFooterMid"
+            app:layout_constraintStart_toStartOf="@+id/vBottomBg"
             app:layout_constraintTop_toBottomOf="@+id/tvForksLabel"
             tools:text="2 комплекта" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvStatusLabel"
             style="@style/TextStyle.Grey.20"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/dp80"
+            android:layout_marginStart="@dimen/dp8"
+            android:layout_marginEnd="@dimen/dp24"
             android:text="@string/order_status_label"
-            app:layout_constraintEnd_toStartOf="@+id/tvOrderAction"
-            app:layout_constraintStart_toEndOf="@+id/tvForksLabel"
-            app:layout_constraintTop_toTopOf="@+id/tvTimeLabel" />
+            app:layout_constraintEnd_toEndOf="@+id/vBottomBg"
+            app:layout_constraintStart_toEndOf="@+id/guidelineFooterMid"
+            app:layout_constraintTop_toTopOf="@+id/tvForksLabel" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvStatusValue"
             style="@style/TextStyle.Black.20"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dp12"
-            app:layout_constraintStart_toStartOf="@+id/tvStatusLabel"
+            android:layout_marginStart="@dimen/dp8"
+            android:layout_marginTop="@dimen/dp4"
+            android:layout_marginEnd="@dimen/dp24"
+            android:ellipsize="end"
+            android:maxLines="2"
+            app:layout_constraintEnd_toEndOf="@+id/vBottomBg"
+            app:layout_constraintStart_toEndOf="@+id/guidelineFooterMid"
             app:layout_constraintTop_toBottomOf="@+id/tvStatusLabel"
             tools:text="@string/order_status_ready" />
+
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/barrierLine"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:barrierDirection="bottom"
+            app:constraint_referenced_ids="tvForksValue,tvTimeValue,tvDueValue,tvStatusValue" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvOrderAction"
+            style="@style/ButtonStyleGreen"
+            android:layout_width="0dp"
+            android:layout_marginStart="@dimen/dp32"
+            android:layout_marginTop="@dimen/dp20"
+            android:layout_marginEnd="@dimen/dp32"
+            android:elevation="2dp"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:minHeight="@dimen/btn_primary_height"
+            android:paddingTop="@dimen/dp12"
+            android:paddingBottom="@dimen/dp12"
+            app:layout_constraintEnd_toEndOf="@+id/vBottomBg"
+            app:layout_constraintStart_toStartOf="@+id/vBottomBg"
+            app:layout_constraintTop_toBottomOf="@+id/barrierLine"
+            tools:text="@string/order_status_in_delivery" />
+
+        <View
+            android:id="@+id/vFooterPad"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dp20"
+            app:layout_constraintEnd_toEndOf="@+id/vBottomBg"
+            app:layout_constraintStart_toStartOf="@+id/vBottomBg"
+            app:layout_constraintTop_toBottomOf="@+id/tvOrderAction" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -29,9 +29,12 @@ import mb.delivery.operator.ui.base.BaseFragment
 import mb.delivery.operator.ui.dialogs.CancelOrderConfirmDialog
 import mb.delivery.operator.ui.dialogs.CartEditDialog
 import mb.delivery.operator.ui.dialogs.CommentEditDialog
+import mb.delivery.operator.ui.dialogs.CourierInfoDialog
 import mb.delivery.operator.ui.dialogs.ModifiersPickDialog
 import mb.delivery.operator.ui.dialogs.OrganizationPickDialog
 import mb.delivery.operator.ui.dialogs.ProductPickDialog
+import mb.delivery.operator.utils.courierServiceStatusLabel
+import mb.delivery.operator.utils.courierServiceTypeLabel
 import mb.delivery.operator.utils.hasOrderAction
 import mb.delivery.operator.utils.toOrderActionLabel
 import mb.delivery.operator.utils.toOrderStatusLabel
@@ -194,6 +197,10 @@ class OrderFragment : BaseFragment() {
                 viewModel.changeStatus(order.id, next)
             }
         }
+        binding?.tvCourierInfo?.setOnClickListener {
+            val order = viewModel.currentOrder.value ?: return@setOnClickListener
+            CourierInfoDialog.show(parentFragmentManager, order)
+        }
         binding?.tvEditComment?.setOnClickListener {
             val order = viewModel.currentOrder.value ?: return@setOnClickListener
             CommentEditDialog.show(parentFragmentManager, order.clientComment)
@@ -341,7 +348,10 @@ class OrderFragment : BaseFragment() {
         val showCart = allowEdit
         val showOrganizationBtn = allowEdit && showOrg
         val showCommentBtn = allowEdit && canEditComment
-        binding?.llOperatorActions?.isVisible = showCart || showOrganizationBtn || showCommentBtn || allowPos
+        val showCourier = order?.hasExternalCourierInfo() == true
+        binding?.llOperatorActions?.isVisible =
+            showCart || showOrganizationBtn || showCommentBtn || allowPos || showCourier
+        binding?.tvCourierInfo?.isVisible = showCourier
         binding?.tvEditComment?.isVisible = showCommentBtn
         binding?.tvEditOrganization?.isVisible = showOrganizationBtn
         binding?.tvEditCart?.isVisible = showCart
@@ -423,17 +433,30 @@ class OrderFragment : BaseFragment() {
                 SimpleDateFormat("dd.MM.yy, HH:mm", Locale.getDefault()).format(dateObj)
             }
         } ?: run {
-            binding?.tvDueValue?.text = ""
+            binding?.tvDueValue?.text = getString(R.string.order_due_asap)
         }
         binding?.tvOrderTotalValue?.text = String.format("%s ₽", formatter.format(item.orderSum))
-        binding?.tvStatusValue?.text = getString(item.toOrderStatusLabel())
+        val kitchenStatus = getString(item.toOrderStatusLabel())
+        val courierStatusRes = courierServiceStatusLabel(item.courierServiceStatus)
+        binding?.tvStatusValue?.text = if (item.hasExternalCourierInfo() && courierStatusRes != null) {
+            val typeRes = courierServiceTypeLabel(item.courierServiceType)
+            val typeTitle = if (typeRes != null) {
+                getString(typeRes)
+            } else {
+                getString(R.string.courier_service_type_unknown, item.courierServiceType ?: 0)
+            }
+            "$kitchenStatus · ${getString(courierStatusRes)} ($typeTitle)"
+        } else {
+            kitchenStatus
+        }
         binding?.ivOrderMenu?.isVisible = item.canCancel()
+        updateOperatorActionsVisibility()
         if (item.hasOrderAction()) {
             binding?.tvOrderAction?.isEnabled = true
             binding?.tvOrderAction?.visibility = View.VISIBLE
             binding?.tvOrderAction?.text = getString(item.toOrderActionLabel())
         } else {
-            binding?.tvOrderAction?.visibility = View.INVISIBLE
+            binding?.tvOrderAction?.visibility = View.GONE
         }
         (binding?.rvCartList?.adapter as? CartAdapter)?.submitList(mutableListOf<CartEntity>().apply {
             addAll(item.cartData)

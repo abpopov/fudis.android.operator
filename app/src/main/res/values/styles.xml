@@ -84,8 +84,11 @@
         <item name="android:textSize" tools:ignore="SpUsage">@dimen/text_24</item>
         <item name="android:fontFamily">@font/euclid_circular_400</item>
         <item name="android:gravity">center</item>
+        <item name="android:includeFontPadding">false</item>
         <item name="android:paddingStart">@dimen/dp24</item>
         <item name="android:paddingEnd">@dimen/dp24</item>
+        <item name="android:paddingTop">@dimen/dp12</item>
+        <item name="android:paddingBottom">@dimen/dp12</item>
         <item name="android:background">@drawable/sl_green_button</item>
         <item name="android:textColor">@color/sl_green_button</item>
         <item name="android:layout_height">@dimen/btn_primary_height</item>
@@ -110,8 +113,11 @@
         <item name="android:textSize" tools:ignore="SpUsage">@dimen/btn_chip_text</item>
         <item name="android:fontFamily">@font/euclid_circular_400</item>
         <item name="android:gravity">center</item>
+        <item name="android:includeFontPadding">false</item>
         <item name="android:paddingStart">@dimen/btn_chip_pad_h</item>
         <item name="android:paddingEnd">@dimen/btn_chip_pad_h</item>
+        <item name="android:paddingTop">@dimen/dp8</item>
+        <item name="android:paddingBottom">@dimen/dp8</item>
         <item name="android:background">@drawable/ic_bg_rounded_bl_8_ripple</item>
         <item name="android:textColor">@color/white</item>
         <item name="android:layout_height">@dimen/btn_chip_height</item>
@@ -167,14 +173,15 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:singleLine">true</item>
-        <item name="android:ellipsize">marquee</item>
+        <item name="android:ellipsize">end</item>
         <item name="android:gravity">center_vertical</item>
-        <item name="android:textSize" tools:ignore="SpUsage">@dimen/text_40</item>
+        <item name="android:textSize" tools:ignore="SpUsage">@dimen/menu_text</item>
         <item name="android:fontFamily">@font/euclid_circular_400</item>
         <item name="android:background">@drawable/ic_bg_rounded_tr_8_ripple</item>
         <item name="android:textColor">@color/sl_menu_button</item>
-        <item name="android:drawablePadding">@dimen/dp20</item>
-        <item name="android:paddingEnd">@dimen/dp10</item>
+        <item name="android:drawablePadding">@dimen/menu_drawable_pad</item>
+        <item name="android:paddingEnd">@dimen/dp8</item>
+        <item name="android:minHeight">@dimen/btn_text_min_height</item>
     </style>
 
     <style name="ButtonStyleRadio">

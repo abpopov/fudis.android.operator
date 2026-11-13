@@ -110,6 +110,7 @@ class CartHolder(view: View) : BaseHolder<OrdersViewModel, CartEntity>(view) {
         })
         listModifiers.adapter = modifierAdapter
         modifierAdapter.submitList(item.modifiers)
+        listModifiers.visibility = if (item.modifiers.isEmpty()) View.GONE else View.VISIBLE
     }
 
     fun refreshPendingCountdown(viewModel: OrdersViewModel) {

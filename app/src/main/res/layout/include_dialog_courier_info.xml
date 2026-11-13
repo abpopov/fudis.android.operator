@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingTop="@dimen/dp8"
+    android:paddingBottom="@dimen/dp8">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvCourierServiceLabel"
+        style="@style/TextStyle.Grey.20"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/courier_info_service"
+        android:visibility="gone"
+        tools:visibility="visible" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvCourierServiceValue"
+        style="@style/TextStyle.Black.24"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/dp16"
+        android:visibility="gone"
+        tools:text="Яндекс Доставка"
+        tools:visibility="visible" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvCourierStatusLabel"
+        style="@style/TextStyle.Grey.20"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/courier_info_service_status"
+        android:visibility="gone"
+        tools:visibility="visible" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvCourierStatusValue"
+        style="@style/TextStyle.Black.24"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/dp16"
+        android:visibility="gone"
+        tools:text="Курьер найден"
+        tools:visibility="visible" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvCourierNameLabel"
+        style="@style/TextStyle.Grey.20"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/courier_info_name"
+        android:visibility="gone" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvCourierNameValue"
+        style="@style/TextStyle.Black.24"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/dp16"
+        android:visibility="gone" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvCourierPhoneLabel"
+        style="@style/TextStyle.Grey.20"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/courier_info_phone"
+        android:visibility="gone" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvCourierPhoneValue"
+        style="@style/TextStyle.Black.24"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/dp16"
+        android:autoLink="phone"
+        android:visibility="gone" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvCourierCarModelLabel"
+        style="@style/TextStyle.Grey.20"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/courier_info_car_model"
+        android:visibility="gone" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvCourierCarModelValue"
+        style="@style/TextStyle.Black.24"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/dp16"
+        android:visibility="gone" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvCourierCarNumberLabel"
+        style="@style/TextStyle.Grey.20"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/courier_info_car_number"
+        android:visibility="gone" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvCourierCarNumberValue"
+        style="@style/TextStyle.Black.24"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/dp16"
+        android:visibility="gone" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvCourierCarColorLabel"
+        style="@style/TextStyle.Grey.20"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/courier_info_car_color"
+        android:visibility="gone" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvCourierCarColorValue"
+        style="@style/TextStyle.Black.24"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/dp16"
+        android:visibility="gone" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvCourierTransportLabel"
+        style="@style/TextStyle.Grey.20"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/courier_info_transport"
+        android:visibility="gone" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvCourierTransportValue"
+        style="@style/TextStyle.Black.24"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/dp16"
+        android:visibility="gone" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvCourierCostLabel"
+        style="@style/TextStyle.Grey.20"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/courier_info_cost"
+        android:visibility="gone" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvCourierCostValue"
+        style="@style/TextStyle.Black.24"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/dp16"
+        android:visibility="gone" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvCourierTrackLabel"
+        style="@style/TextStyle.Grey.20"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/courier_info_track"
+        android:visibility="gone" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvCourierTrackValue"
+        style="@style/TextStyle.Black.24"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/dp16"
+        android:autoLink="web"
+        android:visibility="gone" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvCourierClaimLabel"
+        style="@style/TextStyle.Grey.20"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/courier_info_claim_id"
+        android:visibility="gone" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvCourierClaimValue"
+        style="@style/TextStyle.Black.24"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone" />
+
+</LinearLayout>

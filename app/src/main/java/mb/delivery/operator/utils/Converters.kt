@@ -68,6 +68,36 @@ fun OrderEntity.toOrderActionLabel(): Int {
 
 fun OrderEntity.hasOrderAction(): Boolean = getNextStatus() >= 0
 
+@StringRes
+fun courierServiceTypeLabel(type: Int?): Int? {
+    return when (type) {
+        COURIER_SERVICE_TYPE_YA_GO -> R.string.courier_service_type_yago
+        COURIER_SERVICE_TYPE_ONESYNC -> R.string.courier_service_type_onesync
+        else -> null
+    }
+}
+
+@StringRes
+fun courierServiceStatusLabel(status: Int?): Int? {
+    return when (status) {
+        COURIER_SERVICE_STATUS_COURIER_CANCELED -> R.string.courier_service_status_canceled_by_courier
+        COURIER_SERVICE_STATUS_CANCELED -> R.string.courier_service_status_canceled
+        COURIER_SERVICE_STATUS_CREATE_ERROR -> R.string.courier_service_status_create_error
+        COURIER_SERVICE_STATUS_NOT_ENABLED -> R.string.courier_service_status_not_enabled
+        COURIER_SERVICE_STATUS_COURIER_ERROR -> R.string.courier_service_status_error
+        COURIER_SERVICE_STATUS_DRAFT -> R.string.courier_service_status_draft
+        COURIER_SERVICE_STATUS_READY_FOR_APPROVAL -> R.string.courier_service_status_ready_for_approval
+        COURIER_SERVICE_STATUS_SEARCH_COURIER -> R.string.courier_service_status_search
+        COURIER_SERVICE_STATUS_COURIER_FOUND -> R.string.courier_service_status_found
+        COURIER_SERVICE_STATUS_COURIER_NOT_FOUND -> R.string.courier_service_status_not_found
+        COURIER_SERVICE_STATUS_COURIER_READY_FOR_PICK_UP -> R.string.courier_service_status_ready_pickup
+        COURIER_SERVICE_STATUS_COURIER_RETURN -> R.string.courier_service_status_return
+        COURIER_SERVICE_STATUS_COURIER_PICK_UP -> R.string.courier_service_status_pickup
+        COURIER_SERVICE_STATUS_COURIER_DELIVERED -> R.string.courier_service_status_delivered
+        else -> null
+    }
+}
+
 fun List<OrderEntity>.addHeaders(): List<OrderEntity> {
     val result = this
         .filter {

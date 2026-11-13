@@ -1,6 +1,9 @@
 package mb.delivery.operator.ui
 
 import android.content.Context
+import android.content.pm.ActivityInfo
+import android.content.res.Configuration
+import android.os.Build
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
@@ -26,6 +29,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         DisplayPrefs.applyTheme(this)
         super.onCreate(savedInstanceState)
+        applyOrientationForWindowMode()
         setContentView(R.layout.activity_main)
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_fragment) as? NavHostFragment
         navController = navHostFragment?.navController
@@ -71,5 +75,23 @@ class MainActivity : AppCompatActivity() {
     override fun onStop() {
         socket.stop()
         super.onStop()
+    }
+
+    override fun onMultiWindowModeChanged(isInMultiWindowMode: Boolean, newConfig: Configuration) {
+        super.onMultiWindowModeChanged(isInMultiWindowMode, newConfig)
+        applyOrientationForWindowMode()
+    }
+
+    /**
+     * В split / freeform жёсткий landscape даёт letterbox (чёрные поля).
+     * На полном экране оставляем landscape.
+     */
+    private fun applyOrientationForWindowMode() {
+        val multiWindow = Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && isInMultiWindowMode
+        requestedOrientation = if (multiWindow) {
+            ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
+        } else {
+            ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE
+        }
     }
 }

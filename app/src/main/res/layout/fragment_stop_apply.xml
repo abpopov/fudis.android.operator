@@ -80,12 +80,27 @@
         android:paddingTop="@dimen/dp36"
         android:paddingEnd="@dimen/dp48"
         android:paddingBottom="@dimen/dp36"
+        android:layout_marginStart="@dimen/dp24"
+        android:layout_marginEnd="@dimen/dp24"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHeight_percent="0.82"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvStops"
-        app:layout_constraintWidth_percent="0.62">
+        app:layout_constraintWidth_max="720dp">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivClose"
+            android:layout_width="@dimen/dp64"
+            android:layout_height="@dimen/edit_min_height"
+            android:layout_marginTop="@dimen/dp8"
+            android:layout_marginEnd="@dimen/dp8"
+            android:background="@drawable/ic_bg_circle_tr_ripple"
+            android:elevation="4dp"
+            android:padding="@dimen/dp14"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_close_36_g" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvOrgTitle"
@@ -93,9 +108,10 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="@string/pause_org_title"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="@+id/ivClose"
+            app:layout_constraintEnd_toStartOf="@+id/ivClose"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="@+id/ivClose" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvOrganization"
@@ -173,17 +189,5 @@
             app:layout_constraintTop_toTopOf="@+id/rvProducts" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/ivClose"
-        android:layout_width="@dimen/dp64"
-        android:layout_height="@dimen/edit_min_height"
-        android:layout_marginStart="@dimen/dp24"
-        android:background="@drawable/ic_bg_circle_tr_ripple"
-        android:elevation="2dp"
-        android:padding="@dimen/dp14"
-        app:layout_constraintStart_toEndOf="@+id/vContentWrapper"
-        app:layout_constraintTop_toTopOf="@+id/vContentWrapper"
-        app:srcCompat="@drawable/ic_close_36_g" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

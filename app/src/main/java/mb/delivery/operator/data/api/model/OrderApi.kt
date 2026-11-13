@@ -33,5 +33,19 @@ data class OrderApi(
     @SerializedName("gift")
     val gift: CatalogItemApi?,
     @SerializedName("cart_items")
-    val cartItems: List<CartApi>?
+    val cartItems: List<CartApi>?,
+    @SerializedName("courier_service_type")
+    val courierServiceType: Int? = null,
+    @SerializedName("courier_service_status")
+    val courierServiceStatus: Int? = null,
+    @SerializedName("courier_service_id")
+    val courierServiceId: String? = null,
+    @SerializedName("courier_service_phone")
+    val courierServicePhone: String? = null,
+    @SerializedName("courier_service_cost")
+    val courierServiceCost: String? = null,
+    @SerializedName("courier_service_data")
+    val courierServiceData: CourierServiceDataApi? = null,
+    @SerializedName("has_external_courier")
+    val hasExternalCourier: Boolean? = null,
 ) : Serializable

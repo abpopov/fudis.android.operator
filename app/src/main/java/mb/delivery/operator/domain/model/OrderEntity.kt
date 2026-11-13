@@ -53,10 +53,32 @@ data class OrderEntity(
     val createdAt: Long?,
     val deliveryAt: Long?,
     var updatedAt: Long?,
+    val courierServiceType: Int? = null,
+    val courierServiceStatus: Int? = null,
+    val courierServiceId: String? = null,
+    val courierServicePhone: String? = null,
+    val courierServiceCost: String? = null,
+    val courierServiceData: CourierServiceDataEntity? = null,
+    val hasExternalCourier: Boolean = false,
     var header: Int? = null
 ) : Parcelable, ListItem {
 
     fun isDeliveryOrder(): Boolean = orderType == ORDER_TYPE_DELIVERY
+
+    fun hasExternalCourierInfo(): Boolean {
+        if (hasExternalCourier) return true
+        val type = courierServiceType ?: return false
+        if (type != COURIER_SERVICE_TYPE_YA_GO && type != COURIER_SERVICE_TYPE_ONESYNC) {
+            return false
+        }
+        val status = courierServiceStatus
+        if (status != null && status != COURIER_SERVICE_STATUS_NOT_ENABLED) {
+            return true
+        }
+        return courierServiceData?.hasDisplayableFields() == true
+            || !courierServicePhone.isNullOrBlank()
+            || !courierServiceCost.isNullOrBlank()
+    }
 
     fun canCancel(): Boolean =
         status != ORDER_STATUS_CANCELED && status != ORDER_STATUS_DELIVERED

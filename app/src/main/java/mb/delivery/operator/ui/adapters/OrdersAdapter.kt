@@ -14,6 +14,8 @@ import mb.delivery.operator.domain.model.*
 import mb.delivery.operator.ui.base.BaseHolder
 import mb.delivery.operator.ui.base.BaseListAdapter
 import mb.delivery.operator.ui.orders.OrdersViewModel
+import mb.delivery.operator.utils.courierServiceStatusLabel
+import mb.delivery.operator.utils.courierServiceTypeLabel
 import mb.delivery.operator.utils.hasOrderAction
 import mb.delivery.operator.utils.toOrderActionLabel
 import mb.delivery.operator.utils.toOrderStatusLabel
@@ -22,6 +24,7 @@ import java.util.*
 
 const val MORE = 0
 const val ACTION = 1
+const val COURIER_INFO = 2
 
 class OrdersAdapter(
     glide: GlideRequests?,
@@ -50,6 +53,8 @@ class OrderHolder(view: View) : BaseHolder<OrdersViewModel, OrderEntity>(view) {
     private val textOrderForksLabel = view.findViewById<TextView>(R.id.tvForksLabel)
     private val btnOrderMore = view.findViewById<TextView>(R.id.tvOrderMore)
     private val btnOrderAction = view.findViewById<TextView>(R.id.tvOrderAction)
+    private val btnCourierInfo = view.findViewById<TextView>(R.id.tvCourierInfo)
+    private val textCourierServiceStatus = view.findViewById<TextView>(R.id.tvCourierServiceStatus)
     private val textOrderComment = view.findViewById<TextView>(R.id.tvClientComment)
     private val imgLogoService = view.findViewById<ImageView>(R.id.ivLogoService)
     private val bgRoot = view.findViewById<View>(R.id.vRoot)
@@ -124,7 +129,7 @@ class OrderHolder(view: View) : BaseHolder<OrdersViewModel, OrderEntity>(view) {
                 SimpleDateFormat("dd.MM.yy, HH:mm", Locale.getDefault()).format(dateObj)
             }
         } ?: run {
-            textOrderDue.text = ""
+            textOrderDue.text = itemView.context.getString(R.string.order_due_asap)
         }
         btnOrderMore.setOnClickListener {
             click(item, MORE)
@@ -132,6 +137,9 @@ class OrderHolder(view: View) : BaseHolder<OrdersViewModel, OrderEntity>(view) {
         btnOrderAction.setOnClickListener {
             btnOrderAction.isEnabled = false
             click(item, ACTION)
+        }
+        btnCourierInfo.setOnClickListener {
+            click(item, COURIER_INFO)
         }
         setChangeableData(item)
         viewModel.orders.observe(this) { orders ->
@@ -153,7 +161,27 @@ class OrderHolder(view: View) : BaseHolder<OrdersViewModel, OrderEntity>(view) {
             btnOrderAction.visibility = View.VISIBLE
             btnOrderAction.text = itemView.context.getString(item.toOrderActionLabel())
         } else {
-            btnOrderAction.visibility = View.INVISIBLE
+            btnOrderAction.visibility = View.GONE
+        }
+        val showCourier = item.hasExternalCourierInfo()
+        btnCourierInfo.visibility = if (showCourier) View.VISIBLE else View.GONE
+        val statusRes = courierServiceStatusLabel(item.courierServiceStatus)
+        if (showCourier && statusRes != null) {
+            val typeRes = courierServiceTypeLabel(item.courierServiceType)
+            val typeTitle = if (typeRes != null) {
+                itemView.context.getString(typeRes)
+            } else {
+                itemView.context.getString(
+                    R.string.courier_service_type_unknown,
+                    item.courierServiceType ?: 0
+                )
+            }
+            textCourierServiceStatus.visibility = View.VISIBLE
+            textCourierServiceStatus.text = itemView.context.getString(
+                R.string.order_courier_service_label
+            ) + ": " + itemView.context.getString(statusRes) + " · " + typeTitle
+        } else {
+            textCourierServiceStatus.visibility = View.GONE
         }
         item.header?.let {
             textHeader.visibility = View.VISIBLE

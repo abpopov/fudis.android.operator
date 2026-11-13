@@ -10,33 +10,28 @@
         style="@style/TextStyle.Black.20"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="@+id/tvItemMore"
+        android:layout_marginEnd="@dimen/dp24"
+        app:layout_constraintEnd_toStartOf="@+id/tvItemMore"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/tvItemMore"
-        app:layout_constraintWidth_max="wrap"
-        app:layout_constraintWidth_percent="0.75"
+        app:layout_constraintTop_toTopOf="parent"
         tools:text="1 × Паноцца с тунцом и овощами" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tvItemMore"
         style="@style/ButtonStyleBlack"
         android:layout_width="wrap_content"
-        android:layout_marginStart="@dimen/dp24"
         android:text="@string/order_single_more"
-        app:layout_constraintStart_toEndOf="@+id/tvItemTitle"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tvItemPrice"
         style="@style/TextStyle.Black.20"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/dp48"
-        android:gravity="end"
-        android:nestedScrollingEnabled="false"
-        app:layout_constraintBottom_toBottomOf="@+id/tvItemMore"
-        app:layout_constraintEnd_toStartOf="@+id/tvItemStatus"
-        app:layout_constraintTop_toTopOf="@+id/tvItemMore"
+        android:layout_marginTop="@dimen/dp12"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvItemTitle"
         tools:text="450 ₽" />
 
     <androidx.appcompat.widget.AppCompatTextView
@@ -44,49 +39,55 @@
         style="@style/TextStyle"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/btn_chip_height"
-        android:layout_marginEnd="@dimen/dp24"
+        android:layout_marginStart="@dimen/dp16"
         android:background="@drawable/ic_bg_rounded_red_8"
         android:gravity="center"
-        android:minWidth="@dimen/dp140"
+        android:minWidth="0dp"
         android:paddingStart="@dimen/btn_chip_pad_h"
         android:paddingEnd="@dimen/btn_chip_pad_h"
         android:text="@string/order_single_status_ready"
         android:textColor="@color/white"
         android:textSize="@dimen/btn_chip_text"
-        app:layout_constraintEnd_toStartOf="@+id/tvItemAction"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/tvItemPrice"
+        app:layout_constraintStart_toEndOf="@+id/tvItemPrice"
+        app:layout_constraintTop_toTopOf="@+id/tvItemPrice"
         tools:ignore="SpUsage" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tvItemAction"
         style="@style/ButtonStyleBlack"
         android:layout_width="wrap_content"
+        android:layout_marginStart="@dimen/dp16"
         android:text="@string/order_single_action_start"
+        app:layout_constraintBottom_toBottomOf="@+id/tvItemPrice"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintHorizontal_bias="1"
+        app:layout_constraintStart_toEndOf="@+id/tvItemStatus"
+        app:layout_constraintTop_toTopOf="@+id/tvItemPrice"
         app:textAllCaps="true" />
-
-    <View
-        android:layout_width="0dp"
-        android:layout_height="@dimen/dp24"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvItemTitle" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvModifiersList"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp20"
-        android:layout_marginEnd="@dimen/dp48"
-        android:layout_marginBottom="@dimen/dp2"
+        android:layout_marginTop="@dimen/dp8"
+        android:layout_marginBottom="@dimen/dp8"
         android:nestedScrollingEnabled="false"
+        android:visibility="gone"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/tvItemStatus"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvItemTitle"
+        app:layout_constraintTop_toBottomOf="@+id/tvItemPrice"
         tools:itemCount="2"
-        tools:listitem="@layout/list_item_product" />
+        tools:listitem="@layout/list_item_product"
+        tools:visibility="visible" />
+
+    <View
+        android:id="@+id/vRowSpacer"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/dp8"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rvModifiersList" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

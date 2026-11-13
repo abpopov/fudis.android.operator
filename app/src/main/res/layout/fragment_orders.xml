@@ -5,110 +5,119 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true">
 
-    <View
-        android:id="@+id/vAlert"
-        android:layout_width="@dimen/dp12"
-        android:layout_height="@dimen/dp12"
-        android:layout_marginTop="@dimen/dp64"
-        android:background="@drawable/ic_bg_circle_red"
-        android:visibility="gone"
-        app:layout_constraintStart_toEndOf="@+id/tvOrders"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <mb.delivery.operator.ui.components.CheckableTextView
-        android:id="@+id/tvCats"
-        style="@style/ButtonStyleMenu"
-        android:layout_marginTop="@dimen/dp24"
-        android:layout_marginEnd="@dimen/dp10"
-        android:layout_marginStart="@dimen/dp60"
-        android:drawableStart="@drawable/sl_menu"
-        android:minHeight="@dimen/btn_text_min_height"
-        android:paddingTop="@dimen/dp40"
-        android:paddingBottom="@dimen/dp40"
-        android:text="@string/menu_cats"
-        app:layout_constraintHorizontal_bias="0"
-        app:layout_constraintEnd_toStartOf="@+id/tvOrders"
-        app:layout_constraintHorizontal_chainStyle="packed"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <mb.delivery.operator.ui.components.CheckableTextView
-        android:id="@+id/tvOrders"
-        style="@style/ButtonStyleMenu"
-        android:layout_marginTop="@dimen/dp24"
-        android:layout_marginEnd="@dimen/dp10"
-        android:drawableStart="@drawable/sl_orders"
-        android:paddingTop="@dimen/dp40"
-        android:paddingBottom="@dimen/dp40"
-        android:text="@string/menu_orders"
-        app:layout_constraintEnd_toStartOf="@+id/tvPause"
-        app:layout_constraintStart_toEndOf="@+id/tvCats"
-        app:layout_goneMarginStart="@dimen/dp60"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <mb.delivery.operator.ui.components.CheckableTextView
-        android:id="@+id/tvPause"
-        style="@style/ButtonStyleMenu"
-        android:layout_marginTop="@dimen/dp24"
-        android:layout_marginEnd="@dimen/dp10"
-        android:drawableStart="@drawable/sl_pause"
-        android:paddingTop="@dimen/dp40"
-        android:paddingBottom="@dimen/dp40"
-        android:text="@string/menu_pause"
-        app:layout_constraintEnd_toStartOf="@+id/tvStops"
-        app:layout_constraintStart_toEndOf="@+id/tvOrders"
-        app:layout_goneMarginStart="@dimen/dp60"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <mb.delivery.operator.ui.components.CheckableTextView
-        android:id="@+id/tvStops"
-        style="@style/ButtonStyleMenu"
-        android:layout_marginTop="@dimen/dp24"
-        android:layout_marginEnd="@dimen/dp10"
-        android:drawableStart="@drawable/sl_stops"
-        android:paddingTop="@dimen/dp40"
-        android:paddingBottom="@dimen/dp40"
-        android:text="@string/menu_stops"
-        app:layout_constraintEnd_toStartOf="@+id/tvHelp"
-        app:layout_constraintStart_toEndOf="@+id/tvPause"
-        app:layout_goneMarginEnd="@dimen/dp10"
-        app:layout_goneMarginStart="@dimen/dp60"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <mb.delivery.operator.ui.components.CheckableTextView
-        android:id="@+id/tvHelp"
-        style="@style/ButtonStyleMenu"
-        android:layout_marginTop="@dimen/dp24"
-        android:layout_marginEnd="@dimen/dp10"
-        android:drawableStart="@drawable/sl_help"
-        android:paddingTop="@dimen/dp40"
-        android:paddingBottom="@dimen/dp40"
-        android:text="@string/menu_help"
-        android:visibility="gone"
+    <LinearLayout
+        android:id="@+id/vMenuRow"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/menu_row_pad_h"
+        android:layout_marginTop="@dimen/dp16"
+        android:layout_marginEnd="@dimen/dp8"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
         app:layout_constraintEnd_toStartOf="@+id/btnSettings"
-        app:layout_constraintStart_toEndOf="@+id/tvStops"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <FrameLayout
+            android:id="@+id/vOrdersTab"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <mb.delivery.operator.ui.components.CheckableTextView
+                android:id="@+id/tvOrders"
+                style="@style/ButtonStyleMenu"
+                android:layout_width="match_parent"
+                android:drawableStart="@drawable/sl_orders"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:paddingTop="@dimen/menu_item_pad_v"
+                android:paddingBottom="@dimen/menu_item_pad_v"
+                android:text="@string/menu_orders" />
+
+            <View
+                android:id="@+id/vAlert"
+                android:layout_width="@dimen/dp12"
+                android:layout_height="@dimen/dp12"
+                android:layout_gravity="top|end"
+                android:layout_marginTop="@dimen/dp8"
+                android:layout_marginEnd="@dimen/dp4"
+                android:background="@drawable/ic_bg_circle_red"
+                android:visibility="gone" />
+        </FrameLayout>
+
+        <mb.delivery.operator.ui.components.CheckableTextView
+            android:id="@+id/tvPause"
+            style="@style/ButtonStyleMenu"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:drawableStart="@drawable/sl_pause"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:paddingTop="@dimen/menu_item_pad_v"
+            android:paddingBottom="@dimen/menu_item_pad_v"
+            android:text="@string/menu_pause" />
+
+        <mb.delivery.operator.ui.components.CheckableTextView
+            android:id="@+id/tvStops"
+            style="@style/ButtonStyleMenu"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:drawableStart="@drawable/sl_stops"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:paddingTop="@dimen/menu_item_pad_v"
+            android:paddingBottom="@dimen/menu_item_pad_v"
+            android:text="@string/menu_stops" />
+
+        <mb.delivery.operator.ui.components.CheckableTextView
+            android:id="@+id/tvCats"
+            style="@style/ButtonStyleMenu"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:drawableStart="@drawable/sl_menu"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:paddingTop="@dimen/menu_item_pad_v"
+            android:paddingBottom="@dimen/menu_item_pad_v"
+            android:text="@string/menu_cats"
+            android:visibility="gone" />
+
+        <mb.delivery.operator.ui.components.CheckableTextView
+            android:id="@+id/tvHelp"
+            style="@style/ButtonStyleMenu"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:drawableStart="@drawable/sl_help"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:paddingTop="@dimen/menu_item_pad_v"
+            android:paddingBottom="@dimen/menu_item_pad_v"
+            android:text="@string/menu_help"
+            android:visibility="gone" />
+    </LinearLayout>
 
     <androidx.appcompat.widget.AppCompatImageButton
         android:id="@+id/btnSettings"
         android:layout_width="@dimen/btn_text_min_height"
         android:layout_height="@dimen/btn_text_min_height"
-        android:layout_marginTop="@dimen/dp24"
-        android:layout_marginEnd="@dimen/dp50"
+        android:layout_marginTop="@dimen/dp16"
+        android:layout_marginEnd="@dimen/menu_settings_margin_end"
         android:background="@drawable/ic_bg_rounded_tr_8_ripple"
         android:contentDescription="@string/settings_content_description"
         android:padding="@dimen/dp12"
         android:scaleType="centerInside"
         android:src="@drawable/ic_settings"
+        app:layout_constraintBottom_toBottomOf="@+id/vMenuRow"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@+id/vMenuRow" />
 
     <androidx.constraintlayout.widget.Barrier
         android:id="@+id/vBarrier"
-        app:barrierDirection="bottom"
-        app:constraint_referenced_ids="tvHelp,tvCats,tvOrders,tvPause,tvStops,btnSettings"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        app:barrierDirection="bottom"
+        app:constraint_referenced_ids="vMenuRow,btnSettings" />
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/orders_fragment"

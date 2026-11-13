@@ -132,6 +132,7 @@ class OrdersFragment : BaseFragment() {
             binding?.tvCats?.isVisible = it == true
         }
         viewModel.showOrders.observe(viewLifecycleOwner) {
+            binding?.vOrdersTab?.isVisible = it == true
             binding?.tvOrders?.isVisible = it == true
         }
         viewModel.showStopList.observe(viewLifecycleOwner) {

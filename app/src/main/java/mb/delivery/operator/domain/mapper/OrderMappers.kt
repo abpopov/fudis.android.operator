@@ -45,8 +45,37 @@ object OrderApiToEntityMapper : BaseMapperNullable<OrderApi, OrderEntity> {
             deliveryAt = type.deliveryAt?.toTimestamp(),
             updatedAt = type.updatedAt?.toTimestamp(),
             cartData = CartListApiToEntityMapper.map(type.cartItems),
-            gift = CatalogItemApiToEntityMapper.map(type.gift)
+            gift = CatalogItemApiToEntityMapper.map(type.gift),
+            courierServiceType = type.courierServiceType,
+            courierServiceStatus = type.courierServiceStatus,
+            courierServiceId = type.courierServiceId,
+            courierServicePhone = type.courierServicePhone,
+            courierServiceCost = type.courierServiceCost,
+            courierServiceData = CourierServiceDataApiToEntityMapper.map(type.courierServiceData),
+            hasExternalCourier = type.hasExternalCourier == true,
         )
+    }
+
+}
+
+object CourierServiceDataApiToEntityMapper :
+    BaseMapperNullable<CourierServiceDataApi, CourierServiceDataEntity> {
+
+    override fun map(type: CourierServiceDataApi?): CourierServiceDataEntity? {
+        type ?: return null
+        val entity = CourierServiceDataEntity(
+            name = type.name,
+            phone = type.phone,
+            phoneExt = type.phoneExt,
+            carModel = type.carModel,
+            carNumber = type.carNumber,
+            carColor = type.carColor,
+            transportType = type.transportType,
+            cost = type.cost,
+            trackLink = type.trackLink,
+            updatedAt = type.updatedAt,
+        )
+        return entity.takeIf { it.hasDisplayableFields() || it.updatedAt != null }
     }
 
 }

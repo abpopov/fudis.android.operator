@@ -68,23 +68,37 @@
         app:layout_constraintStart_toEndOf="@+id/tvStops"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/vContentWrapper"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp24"
+        android:layout_marginEnd="@dimen/dp24"
         android:background="@drawable/ic_bg_rounded_wh_32"
         android:elevation="2dp"
-        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintWidth_percent="0.51">
+        app:layout_constraintWidth_max="560dp">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivClose"
+            android:layout_width="@dimen/dp64"
+            android:layout_height="@dimen/dp64"
+            android:layout_marginTop="@dimen/dp8"
+            android:layout_marginEnd="@dimen/dp8"
+            android:background="@drawable/ic_bg_circle_tr_ripple"
+            android:elevation="4dp"
+            android:padding="@dimen/dp14"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_close_36_g" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvActionPause"
             style="@style/ButtonStyleGreen"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_marginStart="@dimen/dp48"
             android:layout_marginTop="@dimen/dp48"
             android:layout_marginEnd="@dimen/dp48"
@@ -94,21 +108,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/etPwd"
-            app:layout_constraintWidth_percent="0.33" />
+            app:layout_constraintTop_toBottomOf="@+id/ivClose" />
 
-    </LinearLayout>
-
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/ivClose"
-        android:layout_width="@dimen/dp64"
-        android:layout_height="@dimen/dp64"
-        android:layout_marginStart="@dimen/dp24"
-        android:background="@drawable/ic_bg_circle_tr_ripple"
-        android:elevation="2dp"
-        android:padding="@dimen/dp14"
-        app:layout_constraintStart_toEndOf="@+id/vContentWrapper"
-        app:layout_constraintTop_toTopOf="@+id/vContentWrapper"
-        app:srcCompat="@drawable/ic_close_36_g" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

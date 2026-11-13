@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="dp264">211.2dp</dimen>
-    <dimen name="dp226">180.8dp</dimen>
-    <dimen name="dp200">160dp</dimen>
-    <dimen name="dp140">112dp</dimen>
-    <dimen name="dp80">64dp</dimen>
+    <!-- Horizontal-critical: keep base scale (width comes from values-w840dp). -->
+    <dimen name="dp264">132dp</dimen>
+    <dimen name="dp226">113dp</dimen>
+    <dimen name="dp200">100dp</dimen>
+    <dimen name="dp140">70dp</dimen>
+    <dimen name="dp80">40dp</dimen>
     <dimen name="dp72">57.6dp</dimen>
     <dimen name="dp64">51.2dp</dimen>
-    <dimen name="dp60">48dp</dimen>
-    <dimen name="dp50">40dp</dimen>
+    <dimen name="dp60">30dp</dimen>
+    <dimen name="dp50">25dp</dimen>
     <dimen name="dp48">38.4dp</dimen>
     <dimen name="dp44">35.2dp</dimen>
     <dimen name="dp40">32dp</dimen>

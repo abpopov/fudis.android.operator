@@ -16,8 +16,10 @@ import mb.delivery.operator.domain.model.ORDER_STATUS_NEW
 import mb.delivery.operator.domain.model.ORDER_STATUS_READY
 import mb.delivery.operator.domain.model.ResultEntity
 import mb.delivery.operator.ui.adapters.ACTION
+import mb.delivery.operator.ui.adapters.COURIER_INFO
 import mb.delivery.operator.ui.adapters.MORE
 import mb.delivery.operator.ui.adapters.OrdersAdapter
+import mb.delivery.operator.ui.dialogs.CourierInfoDialog
 import mb.delivery.operator.ui.base.BaseFragment
 
 class OrderListFragment : BaseFragment() {
@@ -74,6 +76,9 @@ class OrderListFragment : BaseFragment() {
                         } else {
                             viewModel.changeStatus(item.id, next)
                         }
+                    }
+                    COURIER_INFO -> {
+                        CourierInfoDialog.show(parentFragmentManager, item)
                     }
                 }
             }
