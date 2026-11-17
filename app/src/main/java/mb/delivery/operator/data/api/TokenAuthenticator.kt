@@ -26,6 +26,7 @@ class TokenAuthenticator(
             return null
         }
         if (responseCount(response) >= 2) {
+            AuthSession.expire(prefs, socket, sessionEvents)
             return null
         }
 
@@ -50,14 +51,13 @@ class TokenAuthenticator(
                 val user = refreshResponse.body()
                 val access = user?.accessToken
                 if (!refreshResponse.isSuccessful || user == null || access.isNullOrEmpty()) {
-                    if (refreshResponse.code() == 401 || refreshResponse.code() == 400) {
-                        AuthSession.expire(prefs, socket, sessionEvents)
-                    }
+                    AuthSession.expire(prefs, socket, sessionEvents)
                     return null
                 }
                 AuthSession.applyUser(prefs, socket, sessionEvents, user)
                 authorized(response.request, access)
             } catch (_: Exception) {
+                AuthSession.expire(prefs, socket, sessionEvents)
                 null
             }
         }

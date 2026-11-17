@@ -38,6 +38,8 @@ import mb.delivery.operator.utils.courierServiceTypeLabel
 import mb.delivery.operator.utils.hasOrderAction
 import mb.delivery.operator.utils.toOrderActionLabel
 import mb.delivery.operator.utils.toOrderStatusLabel
+import mb.delivery.operator.utils.toPaymentStatusLabel
+import mb.delivery.operator.utils.toPaymentTypeLabel
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -436,6 +438,19 @@ class OrderFragment : BaseFragment() {
             binding?.tvDueValue?.text = getString(R.string.order_due_asap)
         }
         binding?.tvOrderTotalValue?.text = String.format("%s ₽", formatter.format(item.orderSum))
+        val paymentTypeRes = item.toPaymentTypeLabel()
+        if (paymentTypeRes != null) {
+            val typeText = getString(paymentTypeRes)
+            val statusRes = item.toPaymentStatusLabel()
+            binding?.llPaymentType?.visibility = View.VISIBLE
+            binding?.tvPaymentTypeValue?.text = if (statusRes != null) {
+                "$typeText · ${getString(statusRes)}"
+            } else {
+                typeText
+            }
+        } else {
+            binding?.llPaymentType?.visibility = View.GONE
+        }
         val kitchenStatus = getString(item.toOrderStatusLabel())
         val courierStatusRes = courierServiceStatusLabel(item.courierServiceStatus)
         binding?.tvStatusValue?.text = if (item.hasExternalCourierInfo() && courierStatusRes != null) {

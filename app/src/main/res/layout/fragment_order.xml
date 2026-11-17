@@ -52,7 +52,7 @@
                 android:layout_height="@dimen/dp16"
                 app:layout_constraintEnd_toEndOf="@+id/vTopBg"
                 app:layout_constraintStart_toStartOf="@+id/vTopBg"
-                app:layout_constraintTop_toBottomOf="@id/tvOrderTotalLabel" />
+                app:layout_constraintTop_toBottomOf="@id/llPaymentSummary" />
 
             <View
                 android:id="@+id/vBottomBg"
@@ -217,29 +217,70 @@
                 android:visibility="gone"
                 tools:ignore="MissingConstraints" />
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvOrderTotalLabel"
-                style="@style/TextStyle.Black.24"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:id="@+id/llPaymentSummary"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/dp24"
                 android:layout_marginTop="@dimen/dp16"
-                android:text="@string/order_single_total"
-                app:layout_constraintStart_toStartOf="@+id/vTopBg"
-                app:layout_constraintTop_toBottomOf="@+id/llOperatorActions" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvOrderTotalValue"
-                style="@style/TextStyle.Black.24"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp16"
                 android:layout_marginEnd="@dimen/dp24"
-                android:gravity="end"
+                android:orientation="horizontal"
                 app:layout_constraintEnd_toEndOf="@+id/vTopBg"
-                app:layout_constraintStart_toEndOf="@+id/tvOrderTotalLabel"
-                app:layout_constraintTop_toBottomOf="@+id/llOperatorActions"
-                tools:text="1 110 ₽" />
+                app:layout_constraintStart_toStartOf="@+id/vTopBg"
+                app:layout_constraintTop_toBottomOf="@+id/llOperatorActions">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/dp8"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvOrderTotalLabel"
+                        style="@style/TextStyle.Grey.20"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/order_single_total" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvOrderTotalValue"
+                        style="@style/TextStyle.Black.24"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dp4"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        tools:text="1 110 ₽" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/llPaymentType"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:visibility="gone"
+                    tools:visibility="visible">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvPaymentTypeLabel"
+                        style="@style/TextStyle.Grey.20"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/order_payment_label" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvPaymentTypeValue"
+                        style="@style/TextStyle.Black.24"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dp4"
+                        android:ellipsize="end"
+                        android:maxLines="2"
+                        tools:text="Онлайн · Оплачено" />
+                </LinearLayout>
+            </LinearLayout>
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvClientComment"

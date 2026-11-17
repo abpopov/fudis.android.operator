@@ -14,6 +14,10 @@ data class OrderApi(
     val orderType: Int?,
     @SerializedName("status")
     val status: Int?,
+    @SerializedName("payment_type")
+    val paymentType: Int?,
+    @SerializedName("payment_status")
+    val paymentStatus: Int?,
     @SerializedName("client_comment")
     val clientComment: String?,
     @SerializedName("persons_count")

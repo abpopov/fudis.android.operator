@@ -92,7 +92,7 @@ class OrderListFragment : BaseFragment() {
 
     private fun initObservers() {
         viewModel.status.observe(viewLifecycleOwner) { result ->
-            if (result is ResultEntity.Error) {
+            if (result is ResultEntity.Error && result.error.message.isNotEmpty()) {
                 Toast.makeText(requireContext(), result.error.message, Toast.LENGTH_SHORT).show()
             }
         }

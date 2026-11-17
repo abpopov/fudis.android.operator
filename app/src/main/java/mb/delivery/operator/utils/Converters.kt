@@ -68,6 +68,37 @@ fun OrderEntity.toOrderActionLabel(): Int {
 
 fun OrderEntity.hasOrderAction(): Boolean = getNextStatus() >= 0
 
+fun OrderEntity.isOfflinePayment(): Boolean =
+    paymentType == PAYMENT_TYPE_CASH || paymentType == PAYMENT_TYPE_TERMINAL
+
+fun OrderEntity.hasPaymentType(): Boolean = paymentType > 0
+
+@StringRes
+fun OrderEntity.toPaymentTypeLabel(): Int? {
+    if (!hasPaymentType()) return null
+    return when (paymentType) {
+        PAYMENT_TYPE_CASH -> R.string.order_payment_type_cash
+        PAYMENT_TYPE_TERMINAL -> R.string.order_payment_type_terminal
+        else -> R.string.order_payment_type_online
+    }
+}
+
+fun OrderEntity.shouldShowPaymentStatus(): Boolean =
+    hasPaymentType() && !isOfflinePayment() && paymentStatus != PAYMENT_STATUS_DEFAULT
+
+@StringRes
+fun OrderEntity.toPaymentStatusLabel(): Int? {
+    if (!shouldShowPaymentStatus()) return null
+    return when (paymentStatus) {
+        PAYMENT_STATUS_WAIT -> R.string.order_payment_status_wait
+        PAYMENT_STATUS_PAID -> R.string.order_payment_status_paid
+        PAYMENT_STATUS_HOLDED -> R.string.order_payment_status_holded
+        PAYMENT_STATUS_BAD -> R.string.order_payment_status_bad
+        PAYMENT_STATUS_REFUNDED -> R.string.order_payment_status_refunded
+        else -> null
+    }
+}
+
 @StringRes
 fun courierServiceTypeLabel(type: Int?): Int? {
     return when (type) {

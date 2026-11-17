@@ -67,6 +67,10 @@ abstract class BaseViewModel : ViewModel() {
         } catch (ex: UnknownHostException) {
             ResultEntity.Error(ErrorEntity(0, "host", "UnknownHostException", ex.message ?: ""), 997)
         } catch (ex: HttpException) {
+            if (ex.code() == 401) {
+                // Session expiry is handled by TokenAuthenticator / 401 interceptor → silent logout.
+                return ResultEntity.Error(ErrorEntity(401, "auth", "Unauthorized", ""), 401)
+            }
             val error = try {
                 val json = JSONObject(ex.response()?.errorBody()?.string() ?: "")
                 if (json.has("error")) {

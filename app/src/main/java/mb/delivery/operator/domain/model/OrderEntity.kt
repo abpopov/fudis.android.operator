@@ -21,6 +21,16 @@ const val ORDER_TYPE_SELFSERVICE = 10
 const val ORDER_TYPE_DELIVERY = 20
 const val ORDER_TYPE_RESTAURANT = 30
 
+const val PAYMENT_TYPE_CASH = 1
+const val PAYMENT_TYPE_TERMINAL = 3
+
+const val PAYMENT_STATUS_DEFAULT = 0
+const val PAYMENT_STATUS_WAIT = 1
+const val PAYMENT_STATUS_PAID = 2
+const val PAYMENT_STATUS_BAD = 3
+const val PAYMENT_STATUS_REFUNDED = 11
+const val PAYMENT_STATUS_HOLDED = 20
+
 @Parcelize
 data class OrderEntity(
     val id: Long,

@@ -184,7 +184,16 @@
     </plurals>
 
     <string name="order_single_back">Все заказы</string>
-    <string name="order_single_total">Итого к оплате</string>
+    <string name="order_single_total">Итого</string>
+    <string name="order_payment_label">Оплата</string>
+    <string name="order_payment_type_cash">Наличные</string>
+    <string name="order_payment_type_terminal">Картой курьеру</string>
+    <string name="order_payment_type_online">Онлайн</string>
+    <string name="order_payment_status_wait">Ожидает оплаты</string>
+    <string name="order_payment_status_paid">Оплачено</string>
+    <string name="order_payment_status_holded">Забронировано</string>
+    <string name="order_payment_status_bad">Не оплачено</string>
+    <string name="order_payment_status_refunded">Возврат</string>
     <string name="order_single_more">Техкарта</string>
     <string name="order_single_action_start">Начать</string>
     <string name="order_single_action_ready">Готово</string>

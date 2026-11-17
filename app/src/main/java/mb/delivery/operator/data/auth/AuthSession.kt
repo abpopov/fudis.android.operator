@@ -35,6 +35,6 @@ object AuthSession {
     fun expire(prefs: Prefs, socket: OperatorWebSocket, events: SessionEvents) {
         socket.clear()
         prefs.clearSession()
-        events.notifyExpired()
+        events.forceNotifyExpired()
     }
 }

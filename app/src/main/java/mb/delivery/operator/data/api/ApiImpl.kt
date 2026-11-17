@@ -63,6 +63,17 @@ class ApiImpl(
         builder.connectTimeout(TIMEOUT, TimeUnit.SECONDS)
         if (authenticator != null) {
             builder.authenticator(authenticator)
+            builder.addInterceptor { chain ->
+                val request = chain.request()
+                val response = chain.proceed(request)
+                if (response.code == 401) {
+                    val url = request.url.toString()
+                    if (!url.contains("/user/login") && !url.contains("/user/refresh-token")) {
+                        AuthSession.expire(prefs, socket, sessionEvents)
+                    }
+                }
+                response
+            }
         }
         if (BuildConfig.DEBUG) {
             val interceptor = HttpLoggingInterceptor()

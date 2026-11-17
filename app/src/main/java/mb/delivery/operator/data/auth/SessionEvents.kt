@@ -16,4 +16,10 @@ class SessionEvents {
     fun reset() {
         notified.set(false)
     }
+
+    /** Force re-notify even if a previous expire was already consumed. */
+    fun forceNotifyExpired() {
+        notified.set(false)
+        notifyExpired()
+    }
 }
